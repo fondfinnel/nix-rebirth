@@ -1,32 +1,24 @@
 # A baseline any derivation is built from, including some custom options.
 { self, inputs, ... }: {
 
-  flake.nixosModules.base = { lib, ... }:
+  flake.nixosModules.base = { lib, pkgs, ... }:
     with lib;
     {
 
-      options.device-type = lib.mkOption {
-        description = ''
-        Defaults for device type. One of:
-
-        "primary"
-        "secondary"
-        "server"
-        "virtual"
-      '';
-        type = lib.types.enum [
-          "primary"
-          "secondary"
-          "server"
-          "virtual"
-        ]; 
-
-        default = "secondary";
-      };
+      imports = [
+        inputs.home-manager.nixosModules.default
+        ./opts.nix
+      ];
 
 
       config = {
+
         nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+        };
       };
 
     };

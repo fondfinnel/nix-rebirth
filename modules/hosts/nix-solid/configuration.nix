@@ -6,5 +6,6 @@
 
     device-type = "primary";
 
+
   };
 }
