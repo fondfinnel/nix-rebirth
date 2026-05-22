@@ -1,0 +1,41 @@
+* Info
+:PROPERTIES:
+:ID:       5938d8a7-a512-4160-b51e-09a99e79388d
+:mtime:    [2026-05-22 Fri 14:59]
+:END:
+
+#+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
+[[file:.assets/2026-05-22_14-39-19_screenshot.png]]
+
+This is a rewrite of my personal NixOS configuration, implementing the dendritic formatting and cleaning up a lot of the spaghetti code in the process. Eventually, this will extend to other devices I'm looking to bring under the Nix umbrella.
+
+
+** File Structure
+
+*** =/modules=
+Contains any /nix code/ to be used within the repo itself. 
+
+**** =/base=
+Contains basic settings for all devices. Think timezone and all that stuff.
+
+**** =/hosts=
+Any device being managed under this repo has it's own segment of configuration, which takes in the modules it needs using flake-parts. Most settings are not defined here, simply brought together for one use. 
+
+***** nix-solid
+Main desktop machine.
+
+***** nix-liquid
+Laptop config. Utilizing disko and preservation for an impermanence setup, as it's light on storage and nothing on it is expected to last long term.
+
+***** nix-solidus
+Currently not in use, but when a test / temporary desktop machine is needed this will be used.
+
+* To-Do
+
+** TODO Figure out what the deal is with =flake.homeModules=
+
+** TODO Create a more consistent set of reproducable code, rather than copy pasting everything
+
+** TODO Bring in the essentials of the original repo
+
+** TODO Create a mechanism that tracks directories being used but not managed by Nix to pass along to preservation
