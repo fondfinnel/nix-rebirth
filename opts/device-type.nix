@@ -1,6 +1,9 @@
+# A baseline any derivation is built from, including some custom options.
 { self, inputs, ... }: {
+
   flake.nixosModules.base = { lib, ... }:
-    with lib; {
+    with lib;
+    {
 
       options.device-type = lib.mkOption {
         description = ''
@@ -21,5 +24,11 @@
         default = "secondary";
       };
 
-  };
+
+      config = {
+        nix.settings.experimental-features = [ "nix-command" "flakes" ];
+      };
+
+    };
+
 }
