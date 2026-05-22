@@ -1,6 +1,13 @@
-{ self, inputs, ... }: {
+{ self, inputs, config, pkgs, ... }: {
 
-  flake.homeModules.hyprland = { lib, self', pkgs, config, ... }: {
+  flake.homeModules.hyprland = { lib, self', pkgs, config, osConfig, ... }: let
+    hyprenable = osConfig.headless-check;
+    hyprctl = "${pkgs.hyprland}/bin/hyprctl";
+  in {
+
+    services.hypridle = {
+      enable = hyprenable;
+    };
 
     wayland.windowManager.hyprland = let
 
@@ -20,8 +27,13 @@
 
     in {
 
-      systemd.enable = config.wayland.windowManager.hyprland.enable;
+      enable = hyprenable;
+
+      # systemd service always in use
+      systemd.enable = hyprenable;
       systemd.variables = [ "--all" ];
+
+      configType = "hyprlang";
 
       settings = {
 
@@ -206,7 +218,8 @@
           "${mainMod}, mouse:273, resizewindow"
         ];
       };
-  };
+    };
 
   };
+
 }

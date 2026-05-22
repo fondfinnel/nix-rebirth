@@ -1,4 +1,9 @@
-{ lib, ... }: {
+{ lib, config, ... }: let
+  isheadless = lib.types.enum [
+    "server"
+    "virtual"
+  ];
+in {
 
   options.device-type = lib.mkOption {
     description = ''
@@ -17,6 +22,12 @@
     ]; 
 
     default = "secondary";
+  };
+
+  options.headless-check = lib.mkOption {
+    type = lib.types.bool; 
+    description = "Is this device intended to have a desktop environment?";
+    default = if config.device-type == isheadless then true else false;
   };
 
 }

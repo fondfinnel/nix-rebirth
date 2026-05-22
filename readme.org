@@ -32,10 +32,20 @@ Currently not in use, but when a test / temporary desktop machine is needed this
 
 * To-Do
 
-** TODO Figure out what the deal is with =flake.homeModules=
+** PROG Figure out what the deal is with =flake.homeModules=
 
 ** TODO Create a more consistent set of reproducable code, rather than copy pasting everything
 
 ** TODO Bring in the essentials of the original repo
 
 ** TODO Create a mechanism that tracks directories being used but not managed by Nix to pass along to preservation
+
+** TODO Create proper color definitions to be used repo-wide
+Modules that need this done to: 
+- [[file:modules/programs/kitty.nix]]
+- [[file:modules/desktops/hyprland.nix]]
+
+** TODO Figure out implementing home-manager in a clean way
+Currently doesn't appear to be tested at all. 
+
+  

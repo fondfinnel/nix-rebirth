@@ -4,7 +4,7 @@
 
     home.packages = let
       unison = "${pkgs.unison}/bin/unison";
-    in [(pkgs.writeShellApplication "sync-drive" /*bash*/ ''
+    in [(pkgs.writeShellScriptBin "sync-drive" /*bash*/ ''
 
       # check if flash drive is available
       if [ ! -e /dev/disk/by-uuid/5839-5F7F ]; then
