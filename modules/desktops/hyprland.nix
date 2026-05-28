@@ -2,6 +2,7 @@
 
   flake.homeModules.hyprland = { lib, self', pkgs, config, osConfig, ... }: let
     hyprenable = osConfig.headless-check;
+    highperf = if osConfig.device-type == "primary" then true else false;
     hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   in {
 
@@ -65,22 +66,22 @@
           rounding = 15;
           rounding_power = 2;
           shadow = { 
-            enabled = true;
+            enabled = highperf;
             range = 4;
             render_power = 3;
             color = "rgba(1a1a1aee)";
           };
           blur = {
-            enabled = true ;
+            enabled = highperf;
             size = 1;
             passes = 4;
-            special = true;
+            special = highperf;
             vibrancy = 0.1696;
           };
         };
 
         animations = {
-          enabled = true;
+          enabled = highperf;
           # bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
           animation = [ 
             "windows,1,0.5,default,gnomed"
@@ -102,11 +103,13 @@
           special_scale_factor = 0.9;
         };
 
+        # TODO add these window rules to their own modules / sets
         windowrule = [
           "match:initial_class ^(steam_app_*)$, tag game"
-          "float on, match:class ^(org.kde.keditfiletype)" # kde file type picker
-          "float on, match:title ^(Friends List)" # steam friends list
           "float on, match:title ^(Unlock Database - KeePassXC)" # keepass database prompt
+
+          "float on, match:initial_title ^(Open Files)" # gtk file type picker
+          "float on, match:class ^(org.kde.keditfiletype)" # qt file type picker
           "float on, match:title ^(KeePassXC - Passkey credentials)" # keepass passkey prompt
           "float on, no_anim on, match:class ^(rofi)"
           "workspace special:discord, no_initial_focus on, match:class ^(vesktop)"

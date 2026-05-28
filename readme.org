@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-05-22 Fri 14:59]
+:mtime:    [2026-05-28 Thu 14:02]
 :END:
 
 #+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
@@ -9,6 +9,14 @@
 
 This is a rewrite of my personal NixOS configuration, implementing the dendritic formatting and cleaning up a lot of the spaghetti code in the process. Eventually, this will extend to other devices I'm looking to bring under the Nix umbrella.
 
+** Goals
+To get a specific list to attempt consistency, I am going to spit out some rules on how this is going to play out.
+
+- Modules should only contain relevant derivations, leaving as much room for importing and merging attribute sets as possible.
+  - Window rules being defined alongside apps when applicable, for example.
+- Aim for efficiency in compilation, as well as maintainability. 
+
+ 
 
 ** File Structure
 
@@ -30,6 +38,51 @@ Laptop config. Utilizing disko and preservation for an impermanence setup, as it
 ***** nix-solidus
 Currently not in use, but when a test / temporary desktop machine is needed this will be used.
 
+** Custom options
+These can be messy after a while, so I want to write some of it down.
+
+*** device-type
+Defines a device's "type", as in broad category of what it's used for. One of four options, which enables or disables specific features by default.
+
+#+begin_src nix
+  options.device-type = lib.mkOption {
+    description = ''
+        Defaults for device type. One of:
+
+        "primary"
+        "secondary"
+        "server"
+        "virtual"
+      '';
+    type = lib.types.enum [
+      "primary"
+      "secondary"
+      "server"
+      "virtual"
+    ]; 
+
+    default = "secondary";
+  };
+#+end_src
+[[file:~/Projects/nix-rebirth/modules/base/opts.nix::options.device-type = lib.mkOption {]]
+
+*** headless-check
+This is a bool that defines, in a shorthand manner, if a device is intended to be interacted with directly on a frequent basis. This is mainly to restrict desktop environments and other unecessary packages from building on servers or virtual machines.
+
+When /true/, a device is intended to have a desktop environment and whatnot. When /false/, it is not. This is mostly to help in the logic elsewhere.
+
+#+begin_src nix
+  options.headless-check = lib.mkOption {
+    type = lib.types.bool; 
+    description = "Is this device intended to have a desktop environment? True for a desktop, false for headless (to simplify logic elsewhere).";
+    default = if config.device-type != isheadless then true else false;
+  };
+#+end_src
+[[file:~/Projects/nix-rebirth/modules/base/opts.nix::options.headless-check = lib.mkOption {]]
+
+*** floaters
+Any applications that need to be set for floating by default in tiling desktops. This is written by app titles.
+
 * To-Do
 
 ** PROG Figure out what the deal is with =flake.homeModules=
@@ -39,6 +92,7 @@ Currently not in use, but when a test / temporary desktop machine is needed this
 ** TODO Bring in the essentials of the original repo
 
 ** TODO Create a mechanism that tracks directories being used but not managed by Nix to pass along to preservation
+My main thing is the syncthing directories. Those can easily be passed along to preservation, but to make things clean and extendable it needs to be with a for loop of some sort.
 
 ** TODO Create proper color definitions to be used repo-wide
 Modules that need this done to: 

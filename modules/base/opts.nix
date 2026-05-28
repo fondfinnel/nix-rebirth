@@ -26,8 +26,14 @@ in {
 
   options.headless-check = lib.mkOption {
     type = lib.types.bool; 
-    description = "Is this device intended to have a desktop environment?";
-    default = if config.device-type == isheadless then true else false;
+    description = "Is this device intended to have a desktop environment? True for a desktop, false for headless (to simplify logic elsewhere).";
+    default = if config.device-type != isheadless then true else false;
+  };
+
+  options.floaters = lib.mkOption {
+    type = lib.types.list;
+    description = "Application windows that should be set to float within tiling deskto environments, by title.";
+    default = [];
   };
 
 }
