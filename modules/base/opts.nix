@@ -30,10 +30,9 @@ in {
     default = if config.device-type != isheadless then true else false;
   };
 
-  options.floaters = lib.mkOption {
-    type = lib.types.list;
-    description = "Application windows that should be set to float within tiling deskto environments, by title.";
-    default = [];
+  options.high-performance = lib.mkOption {
+    type = lib.types.bool;
+    description = "Does this computer have good resources?";
+    default = if config.device-type == "primary" then true else false;
   };
-
 }

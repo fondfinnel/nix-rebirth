@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-05-28 Thu 14:02]
+:mtime:    [2026-05-28 Thu 16:29]
 :END:
 
 #+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
@@ -80,8 +80,18 @@ When /true/, a device is intended to have a desktop environment and whatnot. Whe
 #+end_src
 [[file:~/Projects/nix-rebirth/modules/base/opts.nix::options.headless-check = lib.mkOption {]]
 
-*** floaters
-Any applications that need to be set for floating by default in tiling desktops. This is written by app titles.
+*** high-performance
+For when battery or performance isn't as much of a concern. If it's a primary device, it defaults to true.
+
+#+begin_src nix
+  options.high-performance = lib.mkOption {
+    type = lib.types.bool;
+    description = "Does this computer have good resources?";
+    default = if config.device-type == "primary" then true else false;
+  };
+#+end_src
+[[file:~/Projects/nix-rebirth/modules/base/opts.nix::options.high-performance = lib.mkOption {]]
+
 
 * To-Do
 

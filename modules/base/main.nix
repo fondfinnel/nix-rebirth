@@ -15,6 +15,7 @@
 
         system.stateVersion = "25.05";
         nix.settings.experimental-features = [ "nix-command" "flakes" ];
+        nixpkgs.config.allowUnfree = true;
 
         home-manager = {
           useGlobalPkgs = true;
@@ -27,9 +28,8 @@
           # every user should have these modules available
           sharedModules = [
 
-            {
-              home.stateVersion = "25.05";
-            }
+            self.homeModules.base
+            self.homeModules.bluetooth
 
           ] ++ lib.optionals (config.device-type == "primary") [
 
@@ -42,5 +42,10 @@
       };
 
     };
+
+  flake.homeModules.base = { osConfig, config, ... }: {
+    home.stateVersion = "25.05";
+    home.sessionVariables.SHELL = "${osConfig.users.users."${config.home.username}".shell}";
+  };
 
 }

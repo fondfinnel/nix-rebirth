@@ -1,4 +1,6 @@
-{ self, inputs, ... }: {
+{ self, inputs, config, ... }: let
+  check = config.headless-check;
+in {
 
   # TODO Better theming options
 
@@ -8,6 +10,8 @@
       def = lib.mkDefault;
       var = config.home.sessionVariables;
     in {
+
+      enable = check;
 
       font = def { # fonts
         package = pkgs.nerd-fonts.mononoki; # where the font is from

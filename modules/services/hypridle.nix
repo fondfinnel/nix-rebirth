@@ -1,8 +1,14 @@
-{ self, inputs, ... }: {
+{ self, inputs, config, ... }: let
+  hyprenable = config.headless-check;
+  highperf = config.high-performance;
+in {
 
-  flake.homeModules.hypridle = { osConfig, ... }: {
+  flake.homeModules.hypridle = { ... }: {
 
     services.hypridle = {
+
+      enable = hyprenable;
+
       settings = { # writes into ~/.config/hypr/hypridle.conf        
         general.after_sleep_cmd = "hyprctl dispatch dpms on";
         general.ignore_dbus_inhibit = false;
@@ -10,7 +16,7 @@
         listener = [
 
           { # lockscreen after ten mins, 1hr if desktop
-            timeout = if osConfig.networking.hostName == "NateNix" then 3600 else 600;
+            timeout = if highperf then 3600 else 600;
             on-timeout = "noctalia-shell ipc call lockScreen lock";
           }
 

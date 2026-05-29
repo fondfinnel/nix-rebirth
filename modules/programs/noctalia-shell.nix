@@ -1,11 +1,12 @@
-{ self, inputs, ... }: {
+{ self, inputs, config, ... }: let
+  enabled = config.headless-check;
+in {
 
 
-  flake.homeModules.noctalia-shell = { pkgs, lib, config, ... }: {
+  flake.homeModules.noctalia-shell = { pkgs, lib, ... }: {
 
-    options.cust.noctalia-shell.enable = lib.mkEnableOption "noctalia-shell";
     
-    config.systemd.user.services.noctalia-shell = lib.mkIf config.cust.noctalia-shell {
+    config.systemd.user.services.noctalia-shell = lib.mkIf enabled {
       Unit.Description = "Noctalia shell.";
       Install.WantedBy = [ "default.target" ];
 

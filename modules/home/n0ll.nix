@@ -18,6 +18,7 @@ in {
     # only necessary for importing home-manager as nixos-module
     environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
+    # likely removing once things are finalized, for testing purposes
     home-manager.users.n0ll = { ... }: {
       imports = [
         self.homeModules.n0ll-conf
@@ -38,16 +39,23 @@ in {
 
   flake.homeModules.n0ll-conf = { pkgs, osConfig, config, ... }: {
 
-    imports = [
-      self.homeModules.hyprland
-      self.homeModules.kitty
+    imports = with self.homeModules; [
+      hyprland
+      kitty
+      common-utils
+      gaming
+      creative
     ];
 
     home.sessionVariables = {
       EDITOR = "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emacs -nw";
-      SHELL = "${osConfig.users.users."${config.home.username}".shell}";
     };
 
-    programs.kitty.enable = true;
+    home.shellAliases = {
+      nshp = "nix-shell -p"; # installing programs temporarily
+      ":q" = "exit";
+      blkid = "sudo blkid";
+    };
+
   };
 }

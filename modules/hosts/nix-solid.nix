@@ -1,4 +1,43 @@
 { self, inputs, ... }: {
+
+  # Import modules as if root of flake
+  flake.nixosConfigurations.nix-solid = inputs.nixpkgs.lib.nixosSystem {
+    modules = [
+      self.nixosModules.base
+      self.nixosModules.nix-solid-conf
+      self.nixosModules.nix-solid-hw
+
+      self.nixosModules.bluetooth 
+    ];
+
+  };
+
+  # Most changes for system here
+  flake.nixosModules.nix-solid-conf = { pkgs, lib, config, ... }: {
+
+    networking.hostName = "nix-solid";
+    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
+    device-type = "primary";
+
+    boot.loader.limine = {
+      enable = true;
+      additionalFiles = { "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi"; };
+      extraEntries =
+        "/memtest86
+        protocol: chainload
+        path: boot():///efi/memtest86/memtest86.efi
+      ";
+    };
+    boot.loader.efi.canTouchEfiVariables = true;
+
+    imports = [
+      self.nixosModules.users-n0ll
+    ];
+
+  };
+
+  # Changes from hardware-configuration.nix
   flake.nixosModules.nix-solid-hw = { pkgs, lib, config,... }: {
 
     boot.initrd.availableKernelModules = [ "nvme" "ahci" "firewire_ohci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
@@ -7,9 +46,6 @@
     boot.extraModulePackages = [ ];
 
     boot.initrd.systemd.fido2.enable = true;
-
-
-    boot.loader.limine.enable = true;
 
     boot.initrd.luks.devices.enc-bt = {
       device = "/dev/disk/by-uuid/91471cb2-e390-47ff-a8cd-8995a75a67b4";
@@ -49,4 +85,5 @@
     hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   };  
+
 }

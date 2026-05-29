@@ -4,17 +4,14 @@
   highperf = config.high-performance;
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   # TODO write a function that passes along a series of titles to the floating window rule
-
 in {
 
-  flake.homeModules.hyprland = { lib, self', pkgs, ... }: {
+  flake.homeModules.hyprland = { lib, self', pkgs, ... }: let
+  in {
 
-    imports = [
-      self.homeModules.hypridle
-      self.homeModules.noctalia-shell
-      self.homeModules.gammastep
-      self.homeModules.wpaperd
-    ];
+    services.hypridle = {
+      enable = hyprenable;
+    };
 
     wayland.windowManager.hyprland = let
 
@@ -33,6 +30,7 @@ in {
       };
 
       mainMod = "SUPER";
+      myTerm = "kitty";
     in {
 
       enable = hyprenable;
@@ -197,8 +195,7 @@ in {
           "${mainMod} SHIFT, A, movetoworkspace, special:note"
           "${mainMod} SHIFT, D, movetoworkspace, special:discord"
           # Application shortcuts
-          "${mainMod}, return, exec, kitty" # open terminal
-
+          "${mainMod}, return, exec, ${myTerm}" # open terminal
           # disabled due to fuzzel no longer playing ball for some reason
           #"${mainMod}, R, exec, fuzzel -b ${colors.background}ee -t ${colors.text}ff -C ${colors.border}ff -s ${colors.border}ff -S ${colors.black}ff -w 50 -R"
           #"${mainMod}, R, exec, bemenu-run -i -c -l 10 -W 0.15 -B 1 -p run --single-instance"
