@@ -2,7 +2,7 @@
   system = config.nixpkgs.hostPlatform;
 in {
 
-  flake.nixosModules.users-n0ll = { pkgs, ... }: {
+  flake.nixosModules.users = { pkgs, ... }: {
     
     users.users.n0ll = {
       isNormalUser = true;
@@ -11,6 +11,7 @@ in {
       initialPassword = "123";
       shell = pkgs.fish;
       home = "/home/n0ll";
+      # TODO hashedPassword
     };
 
     programs.fish.enable = true;
@@ -45,6 +46,7 @@ in {
       common-utils
       gaming
       creative
+      keepassxc
     ];
 
     home.sessionVariables = {

@@ -1,7 +1,7 @@
 { self, inputs, config, ... }: {
 
   flake.homeModules.common-utils = { pkgs, config, ... }: let
-    face = config.home.file.".face";
+    face = config.home.file.".face".source;
   in{
 
     programs.fastfetch = {

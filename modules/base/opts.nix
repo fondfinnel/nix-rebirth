@@ -32,7 +32,7 @@ in {
 
   options.high-performance = lib.mkOption {
     type = lib.types.bool;
-    description = "Does this computer have good resources?";
+    description = "Does this computer have good resources? Defaults to false for non-server stuff.";
     default = if config.device-type == "primary" then true else false;
   };
 }

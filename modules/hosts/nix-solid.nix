@@ -15,6 +15,8 @@
   # Most changes for system here
   flake.nixosModules.nix-solid-conf = { pkgs, lib, config, ... }: {
 
+    # TODO add pipewire rule for DAC high quality out
+
     networking.hostName = "nix-solid";
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
@@ -32,7 +34,7 @@
     boot.loader.efi.canTouchEfiVariables = true;
 
     imports = [
-      self.nixosModules.users-n0ll
+      self.nixosModules.users
     ];
 
   };

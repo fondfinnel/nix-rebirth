@@ -43,9 +43,10 @@
 
     };
 
-  flake.homeModules.base = { osConfig, config, ... }: {
+  flake.homeModules.base = { osConfig, config, lib, ... }: {
     home.stateVersion = "25.05";
     home.sessionVariables.SHELL = "${osConfig.users.users."${config.home.username}".shell}";
+    home.file.".face".source = lib.mkDefault ./tempface.svg;
   };
 
 }
