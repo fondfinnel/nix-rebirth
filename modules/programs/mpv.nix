@@ -53,7 +53,7 @@ in {
           litterbox_expire = "24h";
         };
 
-        quack.ducksecs = 1;
+        quack.ducksecs = 0.5;
 
       };
 
