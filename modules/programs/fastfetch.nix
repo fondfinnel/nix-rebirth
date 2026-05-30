@@ -1,24 +1,16 @@
 { self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { pkgs, config, ... }: let
+  flake.homeModules.common-utils = { pkgs, config, lib, ... }: let
     face = config.home.file.".face".source;
   in{
 
-    programs.fastfetch = {
-
+    programs.fastfetch = lib.mkDefault {
       enable = true;
 
       settings = {
+        logo.padding.right = 1;
 
-        logo = { # specify logo itself on launch, more flexible
-          padding = {
-            right = 1;
-          };
-        };
-
-        display = {
-          separator = "  ";
-        };
+        display.separator = "  ";
 
         modules = [ 
           "title"
@@ -49,7 +41,7 @@
       };
     };
 
-    home.shellAliases.fetch = "${pkgs.jp2a} --colors --height=15 ${face} | fastfetch --logo - --processing-timeout 1";
+    home.shellAliases.fetch = lib.mkIf config.programs.fastfetch.enable "${pkgs.jp2a}/bin/jp2a --colors --height=15 ${face} | ${pkgs.fastfetch}/bin/fastfetch --logo - --processing-timeout 1";
 
   };
 
