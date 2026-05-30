@@ -6,6 +6,9 @@ in {
 
     programs.yazi = {
       enable = lib.mkDefault true;
+
+      
+      shellWrapperName = lib.mkDefault "y";
       settings = lib.mkDefault {
         mgr = {
           sort_by = "natural";

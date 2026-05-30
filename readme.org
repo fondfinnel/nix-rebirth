@@ -112,4 +112,6 @@ Modules that need this done to:
 ** TODO Figure out implementing home-manager in a clean way
 Currently doesn't appear to be tested at all. 
 
+** TODO Create a function to add email option to each user account
+There's gotta be a way to do it that isn't "make sure to write it for every user". 
   

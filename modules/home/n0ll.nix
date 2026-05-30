@@ -46,6 +46,7 @@ in {
       common-utils
       gaming
       creative
+      development
       keepassxc
     ];
 

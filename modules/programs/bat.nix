@@ -1,6 +1,6 @@
 { self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { pkgs, lib, ... }: let
+  flake.homeModules.common-utils = { pkgs, lib, config, ... }: let
     check = config.programs.bat.enable;
   in {
 
