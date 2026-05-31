@@ -29,9 +29,8 @@
           sharedModules = [
 
             self.homeModules.base
-            self.homeModules.bluetooth
 
-          ] ++ lib.optionals (config.device-type == "primary") [
+          ] ++ lib.optionals config.headless-check [
 
             self.homeModules.sync-drive
 

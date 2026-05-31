@@ -33,6 +33,10 @@
     };
     boot.loader.efi.canTouchEfiVariables = true;
 
+    home-manager.sharedModules = [
+      { services.mic-volume.enable = true; }
+    ];
+
     imports = [
       self.nixosModules.users
     ];

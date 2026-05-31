@@ -2,7 +2,7 @@
   check = config.headless-check == config.high-performance;
 in {
 
-  flake.nixosModules.default = { lib, ... }: {
+  flake.nixosModules.common-utils = { lib, config, ... }: {
 
     # base nixpkgs creates setcap wrapper, otherwise prompts sudo when running
     programs.gpu-screen-recorder.enable = lib.mkDefault check;
@@ -10,10 +10,10 @@ in {
   };
 
   flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }: let
-    check2 = config.programs.gpu-screen-recorder.enable == osConfig.programs.gpu-screen-recorder.enable;
+    check2 = check == osConfig.programs.gpu-screen-recorder.enable;
   in {
 
-    options.programs.gpu-screen-recorder.enable = lib.mkEnableOption "gpu-screen-recorder";
+    options.programs.gpu-screen-recorder.enable = lib.mkEnableOption "gpu-screen-recorder-check";
     config.programs.gpu-screen-recorder.enable = lib.mkDefault check;
 
     config.home.packages = lib.mkIf check [ pkgs.gpu-screen-recorder ];
