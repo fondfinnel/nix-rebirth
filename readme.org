@@ -96,16 +96,20 @@ For when battery or performance isn't as much of a concern. If it's a primary de
 * To-Do
 
 ** PROG Figure out what the deal is with =flake.homeModules=
+I'm getting it going, but deciding on if I should implement it similarly to my original repo or try doing a home-manager as a separate service.
 
-** TODO Create a more consistent set of reproducable code, rather than copy pasting everything
+** DONE Create a more consistent set of reproducable code, rather than copy pasting everything
+Marking done as it's going to be something that needs to be done throughout.
 
 ** TODO Bring in the essentials of the original repo
 
 ** TODO Create a mechanism that tracks directories being used but not managed by Nix to pass along to preservation
 My main thing is the syncthing directories. Those can easily be passed along to preservation, but to make things clean and extendable it needs to be with a for loop of some sort.
 
+Otherwise, directories can be fed to preservation on a module-by-module basis.
+
 ** TODO Create proper color definitions to be used repo-wide
-Modules that need this done to: 
+Some modules that need this done to: 
 - [[file:modules/programs/kitty.nix]]
 - [[file:modules/desktops/hyprland.nix]]
 
@@ -113,5 +117,7 @@ Modules that need this done to:
 Currently doesn't appear to be tested at all. 
 
 ** TODO Create a function to add email option to each user account
-There's gotta be a way to do it that isn't "make sure to write it for every user". 
-  
+There's gotta be a way to do it that isn't "make sure to write it for every user".  
+
+** TODO Write an internet radio service to self-host
+Would be cool.

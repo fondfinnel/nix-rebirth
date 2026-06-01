@@ -1,41 +1,40 @@
 # TODO for NAS: routine maintenance on music
 # TODO add preservation whitelisted dirs and files
+# TODO for NAS: Write different module for mpd as host
 
-{ config, pkgs, ... }: {
+{ config, pkgs, self, ... }: {
 
-  flake.homeModules.mpd = {
-	  imports = [
-	    ./beets/default.nix # organize library, tags
-	    ./mpd-discord-rpc/default.nix # display playback on discord
-      ./mpd-sima/default.nix # queue songs based on history
-	    ./mpd-mpris/default.nix # mpris service
-	    ./ncmpcpp/default.nix # classic tui client
-	    ./rmpc/default.nix # new tui client
-	    # ./cantata/default.nix # gui client
-	    ./sptlrx/default.nix # tui for lyrics
-	    ./mpdscribble/default.nix # scribble
-	    ./wiremix/default.nix # pipewire mixer
-	    ./zellij/default.nix # zellij layout for music
-	  ];
+  flake.homeModules.mpd = { lib, pkgs, config, osConfig, ... }: {
 
-    home.packages = [
-      pkgs.mpc
-      # wrap bpm-tag into bpm-calc, for rgbpm to use
-      # it needs to load bpm into the shell alongside bpm-tag cause something, redirects help output to null
-      (pkgs.writeShellScriptBin "bpm-calc" /*bash*/ ''
-        exec ${pkgs.bpm-tools}/bin/bpm -h > /dev/null 2>&1
-        exec ${pkgs.fd}/bin/fd -e mp2 -e mp3 -e flac -x ${pkgs.bpm-tools}/bin/bpm-tag -f'')
+    imports = with self.homeModules; [
+      beets
     ];
 
-	  services.mpd = {
-	    enable = true;
-      # TODO reassign value if server is acting as host, connecting as client
+    home.packages = lib.mkIf config.services.mpd.enable [
+      pkgs.mpc
+      (pkgs.writeShellScriptBin "newmusic" ''
+      cd ${config.services.mpd.musicDirectory} &&
+        ${pkgs.beets}/bin/beet import -q unsorted &&
+        ${pkgs.sacad}/bin/sacad_r -i unsorted 1400 cover.jpg &&
+        ${pkgs.loudgain}/bin/rgbpm unsorted -b &&
+        ${pkgs.fd}/bin/fd -C unsorted -t file -x ${pkgs.bpm-tools}/bin/bpm-tag -f
+       '')
+    ];
+
+	  services.mpd = let
+      check = if osConfig.device-type == "primary" then true else
+        if osConfig.device-type == "server" then true
+        else false;
+      musicDirectory = config.services.mpd.musicDirectory;
+    in {
+	    enable = lib.mkDefault check;
+      # TODO reassign values if server is acting as host, connecting as client
       musicDirectory = "/mnt/NAS/Media/Music";
-      playlistDirectory = "${config.services.mpd.musicDirectory}/playlists/";
-      dbFile = "${config.home.homeDirectory}/.config/mpd/database";
+      playlistDirectory = "${musicDirectory}/playlists";
+      dbFile = "${musicDirectory}/.database/mpd/database";
       extraConfig = ''
-      sticker_file "${config.home.homeDirectory}/.config/mpd/sticker.sql"
-      log_file "${config.home.homeDirectory}/.config/mpd/log"
+      sticker_file "${musicDirectory}/.database/mpd/${config.home.username}_sticker.sql"
+      log_file "${musicDirectory}/.database/mpd/${config.home.username}_log"
 
       audio_output { # foo output for visualizers, such as cava
         type "fifo"
@@ -44,11 +43,13 @@
         format "44100:16:2"
       }
 
+      ${if config.services.pipewire.enable then ''
       audio_output { # pipewire output
         type "pipewire"
         name "PipeWire"
         format "384000:f:2"
       }
+      '' else ''''}
 
       replaygain "auto"
       max_output_buffer_size "16384"
@@ -56,20 +57,24 @@
     '';
       extraArgs = [ "--verbose" ];
 	  };
-
-    home.shellAliases.newmusic = let
-      sacad_r = "${pkgs.sacad}/bin/sacad_r";
-      rgbpm = "${pkgs.loudgain}/bin/rgbpm";
-    in "cd ${config.services.mpd.musicDirectory} && \
-        beet import -q unsorted && \
-        ${sacad_r} -i unsorted 1400 cover.jpg && \
-        ${rgbpm} unsorted -q";
+    services.mpd-mpris.enable = lib.mkDefault config.services.mpd.enable;
 
 	  # set the mpd mixramp settings after build
 	  # home.activation.mpd-mixramp-setup = lib.hm.dag.entryAfter ["installPackages"] ''
     #    ${pkgs.mpc}/bin/mpc mixrampdelay 1
     #    ${pkgs.mpc}/bin/mpc mixrampdb -12
     #  '';
+
+    services.mpd-discord-rpc = {
+      enable = lib.mkDefault config.programs.vesktop.enable;
+
+      settings.format = {
+        details = "$title";
+        state = "$artist";
+      };
+    };
+
+
   };
 
 }

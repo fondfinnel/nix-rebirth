@@ -48,6 +48,7 @@ in {
       creative
       development
       keepassxc
+      mpd
     ];
 
     home.sessionVariables = {
@@ -60,5 +61,12 @@ in {
       blkid = "sudo blkid";
     };
 
+    services.mpdscribble.endpoints."last.fm" = {
+      username = "natervader13";
+      # TODO SOPS
+      # passwordFile = osConfig.sops.secrets."keys/n0ll/lastfm".path; 
+    };
+
   };
+
 }

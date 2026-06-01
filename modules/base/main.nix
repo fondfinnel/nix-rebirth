@@ -21,6 +21,9 @@
           useGlobalPkgs = true;
           useUserPackages = true;
 
+          backupFileExtension = "backup";
+          overwriteBackup = true;
+
           extraSpecialArgs = {
             inherit (self) inputs outputs;
           };
@@ -46,6 +49,7 @@
     home.stateVersion = "25.05";
     home.sessionVariables.SHELL = "${osConfig.users.users."${config.home.username}".shell}";
     home.file.".face".source = lib.mkDefault ./tempface.svg;
+
   };
 
 }
