@@ -7,7 +7,7 @@ in {
     options.programs.mpd-crossfade.enable = lib.mkEnableOption "mpd-crossfade";
     config.programs.mpd-crossfade.enable = lib.mkDefault check;
 
-    systemd.user.services.mpd-crossfade = let
+    config.systemd.user.services.mpd-crossfade = let
       check = (osConfig.device-type == "primary") == (config.services.mpd.enable == true);
     in lib.mkIf check {
       Unite.Description = "Crossfades track when not playing through an album.";
@@ -17,10 +17,10 @@ in {
       Service.RestartSec = 10;
 
       Service.Type = "simple";
-      Service.ExecStart = ( pkgs.writeShellScript "mpd-crossfade-service" /*bash*/
-        let
+      Service.ExecStart = let
           mpc = "${pkgs.mpc}/bin/mpc";
-        in ''
+        in ( pkgs.writeShellScript "mpd-crossfade-service" /*bash*/
+        ''
           if [ $(${mpc} status %state%) != "playing" ]; then
             exit
           fi

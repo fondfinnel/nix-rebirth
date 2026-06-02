@@ -2,16 +2,16 @@
   check = config.headless-check;
 in {
 
-  flakes.nixosModules.common-utils = { config, lib, ... }: {
+  flake.nixosModules.common-utils = { config, lib, ... }: {
 
     services.kdeconnect.enable = lib.mkDefault check;
 
   };
 
-  flake.homeModules.common-utils = { pkgs, lib, config, ... }: {
+  flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }: {
 
     services.kdeconnect = {
-      enable = lib.mkDefault osConfig.services.kdeconnect.enable;
+      enable = lib.mkDefault check;
       indicator = config.services.kdeconnect.enable;
     };
 

@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-05-28 Thu 16:29]
+:mtime:    [2026-06-06 Sat 13:50]
 :END:
 
 #+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
@@ -21,7 +21,7 @@ To get a specific list to attempt consistency, I am going to spit out some rules
 ** File Structure
 
 *** =/modules=
-Contains any /nix code/ to be used within the repo itself. 
+Contains any /nix code/ to be used within the repo itself. This includes anything wrapped (shell scripts and the like).
 
 **** =/base=
 Contains basic settings for all devices. Think timezone and all that stuff.
@@ -121,3 +121,5 @@ There's gotta be a way to do it that isn't "make sure to write it for every user
 
 ** TODO Write an internet radio service to self-host
 Would be cool.
+
+** TODO Add nix-index with nix-index-database
