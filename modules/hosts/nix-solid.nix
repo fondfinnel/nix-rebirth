@@ -18,7 +18,7 @@
     # TODO add pipewire rule for DAC high quality out
 
     networking.hostName = "nix-solid";
-    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+    nixpkgs.hostPlatform = "x86_64-linux";
 
     device-type = "primary";
 
@@ -33,12 +33,16 @@
     };
     boot.loader.efi.canTouchEfiVariables = true;
 
+    hardware.keyboard.zsa.enable = true;
+    hardware.keyboard.qmk.enable = true;
+
     home-manager.sharedModules = [
       { services.mic-volume.enable = true; }
     ];
 
     imports = [
       self.nixosModules.users
+      self.nixosModules.gaming
     ];
 
   };

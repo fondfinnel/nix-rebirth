@@ -33,6 +33,7 @@ in{
 
         services.openssh.enable = lib.mkDefault true;
         services.envfs.enable = lib.mkDefault check;
+        services.printing.enable = lib.mkDefault check;
 
         security.polkit.enable = true;
         security.polkit.adminIdentities = [ "unix-group:wheel" ];
