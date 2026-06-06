@@ -1,5 +1,7 @@
 # A baseline any derivation is built from.
-{ self, inputs, ... }: {
+{ self, inputs, config, ... }: let
+  check = config.headless-check;
+in{
 
   flake.nixosModules.base = { lib, pkgs, config, ... }:
     with lib;
@@ -15,11 +17,22 @@
 
       config = {
 
+
+        zramSwap = {
+          enable = lib.mkDefault true;
+          priority = 100;
+          algorithm = "zstd";
+          memoryPercent = 50;
+        };
+
         system.stateVersion = "25.05";
         nix.settings.experimental-features = [ "nix-command" "flakes" ];
         nixpkgs.config.allowUnfree = true;
 
+        networking.networkmanager.enable = lib.mkDefault true;
+
         services.openssh.enable = lib.mkDefault true;
+        services.envfs.enable = lib.mkDefault check;
 
         security.polkit.enable = true;
         security.polkit.adminIdentities = [ "unix-group:wheel" ];
