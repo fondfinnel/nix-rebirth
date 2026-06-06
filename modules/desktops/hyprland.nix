@@ -7,7 +7,7 @@
 
 in {
 
-  flake.homeModules.hyprland = { lib, self', pkgs, ... }: {
+  flake.homeModules.hyprland = { lib, self', pkgs, osConfig, ... }: {
 
     imports = [
       self.homeModules.hypridle

@@ -8,6 +8,7 @@
       imports = [
         inputs.home-manager.nixosModules.default
         self.nixosModules.common-utils
+        self.nixosModules.greetd
         ./opts.nix
       ];
 
