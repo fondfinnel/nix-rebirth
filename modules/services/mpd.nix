@@ -59,12 +59,6 @@
 	  };
     services.mpd-mpris.enable = lib.mkDefault config.services.mpd.enable;
 
-	  # set the mpd mixramp settings after build
-	  # home.activation.mpd-mixramp-setup = lib.hm.dag.entryAfter ["installPackages"] ''
-    #    ${pkgs.mpc}/bin/mpc mixrampdelay 1
-    #    ${pkgs.mpc}/bin/mpc mixrampdb -12
-    #  '';
-
     services.mpd-discord-rpc = {
       enable = lib.mkDefault config.programs.vesktop.enable;
 

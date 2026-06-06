@@ -7,6 +7,7 @@
 
       imports = [
         inputs.home-manager.nixosModules.default
+        self.nixosModules.common-utils
         ./opts.nix
       ];
 
@@ -16,6 +17,11 @@
         system.stateVersion = "25.05";
         nix.settings.experimental-features = [ "nix-command" "flakes" ];
         nixpkgs.config.allowUnfree = true;
+
+        services.openssh.enable = lib.mkDefault true;
+
+        security.polkit.enable = true;
+        security.polkit.adminIdentities = [ "unix-group:wheel" ];
 
         home-manager = {
           useGlobalPkgs = true;
@@ -47,7 +53,10 @@
 
   flake.homeModules.base = { osConfig, config, lib, ... }: {
     home.stateVersion = "25.05";
-    home.sessionVariables.SHELL = "${osConfig.users.users."${config.home.username}".shell}";
+
+    # inherit user's assigned shell
+    home.sessionVariables.SHELL = lib.mkDefault "${osConfig.users.users."${config.home.username}".shell}";
+
     home.file.".face".source = lib.mkDefault ./tempface.svg;
 
   };

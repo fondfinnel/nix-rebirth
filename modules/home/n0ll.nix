@@ -61,6 +61,8 @@ in {
       blkid = "sudo blkid";
     };
 
+    programs.ledger.enable = true;
+
     services.mpdscribble.endpoints."last.fm" = {
       username = "natervader13";
       # TODO SOPS

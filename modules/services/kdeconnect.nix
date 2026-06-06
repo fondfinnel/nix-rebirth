@@ -4,7 +4,7 @@ in {
 
   flake.nixosModules.common-utils = { config, lib, ... }: {
 
-    services.kdeconnect.enable = lib.mkDefault check;
+    programs.kdeconnect.enable = lib.mkDefault check;
 
   };
 

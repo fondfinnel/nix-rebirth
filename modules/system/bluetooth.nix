@@ -1,24 +1,23 @@
 { self, inputs, ... }: {
 
-  flake.nixosModules.bluetooth = { lib, ... }: {
+  flake.nixosModules.bluetooth = { lib, config, ... }: {
 
     hardware.bluetooth = {
-      enable = true;
-      powerOnBoot = true;
+      enable = lib.mkDefault true;
+      powerOnBoot = lib.mkDefault config.hardware.bluetooth.enable;
     };
-    services.blueman.enable = true;
+    services.blueman.enable = lib.mkDefault config.hardware.bluetooth.enable;
 
   };
 
   # home changes for devices with bluetooth
   # imported at base as shared module
-  flake.homeModules.common-utils = { pkgs, osConfig, lib, ... }: let
-    check = osConfig.hardware.bluetooth.enable;
-  in {
+  flake.homeModules.common-utils = { pkgs, osConfig, lib, ... }: {
 
-    home.packages = lib.mkIf check [
+    home.packages = lib.mkIf osConfig.hardware.bluetooth.enable [
       pkgs.bluetui
     ];
 
   };
+
 }
