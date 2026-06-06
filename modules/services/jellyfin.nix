@@ -1,0 +1,63 @@
+# TODO cloudflared rules
+# TODO other management tools
+{ self, inputs, config, ... }: let
+  check = config.device-type == "server";
+in {
+
+  flake.nixosModules.jellyfin = { lib, config, self, ... }: {
+
+    imports = lib.mkIf check [
+      self.nixosModules.tunarr
+    ];
+
+    services.jellyfin = {
+      enable = lib.mkDefault check;
+
+      hardwareAcceleration.enable = lib.mkDefault true;
+      hardwareAcceleration.type = "qsv";
+      
+      # TODO link it to zfs dataset location
+      dataDir = "/mnt/Apps/jellyfin/jellyfin";
+
+      transcoding = lib.mkDefault {
+        enableHardwareEncoding = true;
+        hardwareEncodingCodecs = {
+          av1 = true;
+          hevc = true;
+        };
+
+        enableHardwareDecoding = true;
+        hardwareDecodingCodecs = let x = true; in {
+          vp9 = x;
+          vp8 = x;
+          vc1 = x;
+          mpeg2 = x;
+          hevc = x;
+          hevcRExt10bit = x;
+          hevcRExt12bit = x;
+          h264 = x;
+          av1 = x; 
+        };
+      };
+
+    };
+
+  };
+
+  flake.nixosModules.jellyfin-vue = { lib, config, pkgs, ... }: {
+
+    # alt webgui in development
+    # probably will not use
+    virtualization.oci-containers.containers.jellyfin-vue = {
+      image = "jellyfin/jellyfin-vue";
+
+      ports = [
+        "30014:80"
+      ];
+
+      dependsOn = [ "jellyfin" ];
+    };
+
+  };
+
+}

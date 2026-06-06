@@ -105,7 +105,7 @@ in {
         { on = "<C-p>"; run = "plugin clipboard -- --action=paste"; desc = "Paste from system clipboard"; }
 
         { on = "<C-m>"; run = "plugin drag"; desc = "Drag and drop"; }
-        { on = [ "g" "j"]; run = "plugin jjui"; desc = "Run jjui";l } 
+        { on = [ "g" "j"]; run = "plugin jjui"; desc = "Run jjui"; } 
 
         { on = [ "g" "o" ]; run = "plugin recycle-bin"; desc = "Open recycle-bin"; } 
 
@@ -120,7 +120,7 @@ in {
 
         { on = "<C-s>"; run = "plugin kdeconnect-send"; desc = "Send file(s) via KDE Connect"; }
 
-        { on = "Z"; run = "plugin yafg"; desc = "Search via fzf"; };
+        { on = "Z"; run = "plugin yafg"; desc = "Search via fzf"; }
         
       ];
 
