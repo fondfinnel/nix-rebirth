@@ -1,6 +1,6 @@
 { self, inputs, config, ... }: {
 
-  flake.homeModules.devlopment = { pkgs, lib, config, ... }: let d = lib.mkDefault; in {
+  flake.homeModules.development = { pkgs, lib, config, ... }: let d = lib.mkDefault; in {
 
     programs.git = {
 
