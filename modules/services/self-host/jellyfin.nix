@@ -4,10 +4,10 @@
   check = config.device-type == "server";
 in {
 
-  flake.nixosModules.jellyfin = { lib, config, self, ... }: {
+  flake.nixosModules.self-host = { lib, config, self, ... }: {
 
     imports = lib.mkIf check [
-      self.nixosModules.tunarr
+      # self.nixosModules.jellyfin-vue
     ];
 
     services.jellyfin = {

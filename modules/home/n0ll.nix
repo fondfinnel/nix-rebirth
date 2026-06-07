@@ -17,6 +17,9 @@ in {
 
     programs.fish.enable = true;
 
+    users.groups.libvirtd.members = [ "n0ll" ];
+    programs.weylus.users = ["n0ll"];
+
     # only necessary for importing home-manager as nixos-module
     environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
