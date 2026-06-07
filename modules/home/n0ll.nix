@@ -42,7 +42,7 @@ in {
     ];
   };
 
-  flake.homeModules.n0ll-conf = { pkgs, osConfig, config, ... }: {
+  flake.homeModules.n0ll-conf = { pkgs, osConfig, config, lib, ... }: {
 
     imports = with self.homeModules; [
       hyprland
@@ -57,7 +57,7 @@ in {
     ];
 
     home.sessionVariables = {
-      EDITOR = "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emacs -nw";
+      EDITOR = "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emac";
     };
 
     home.shellAliases = {
@@ -66,12 +66,17 @@ in {
       blkid = "sudo blkid";
     };
 
+    sops = {
+      defaultSopsFile = ./n0ll-secrets.yaml;
+      defaultSopsFormat = "yaml";
+      validateSopsFiles = true;
+    };
+
     programs.ledger.enable = true;
 
     services.mpdscribble.endpoints."last.fm" = {
       username = "natervader13";
-      # TODO SOPS
-      passwordFile = osConfig.sops.secrets."keys/n0ll/lastfm".path; 
+      passwordFile = config.sops.secrets."lastfm".path; 
     };
 
 

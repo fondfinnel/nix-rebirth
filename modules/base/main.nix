@@ -9,9 +9,10 @@ in{
 
       imports = [
         inputs.home-manager.nixosModules.default
+        inputs.sops-nix.nixosModules.sops
         self.nixosModules.common-utils
-        self.nixosModules.greetd
-        ./opts.nix
+            self.nixosModules.greetd
+            ./opts.nix
       ];
 
 
@@ -36,6 +37,15 @@ in{
 
         security.polkit.enable = true;
         security.polkit.adminIdentities = [ "unix-group:wheel" ];
+        sops = {
+          defaultSopsFile = ./secrets.yaml;
+          defaultSopsFormat = "yaml";
+          validateSopsFiles = true;
+
+          age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+          age.keyFile = "/var/lib/sops-nix/key.txt";
+          age.generateKey = true;
+        };
 
         home-manager = {
           useGlobalPkgs = true;
@@ -52,6 +62,8 @@ in{
           sharedModules = [
 
             self.homeModules.base
+
+            inputs.sops-nix.homeManagerModules.sops
 
           ] ++ lib.optionals config.headless-check [
 

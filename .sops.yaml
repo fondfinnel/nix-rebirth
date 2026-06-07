@@ -1,0 +1,16 @@
+keys:
+  - &users:
+    - &n0ll age1nqmfr4wxlapuzlnw2xe52jazxgxymzfww7awah4t5xgdyk8mz4cqyeae5d
+  - &hosts:
+    - &nix-solid age19ulmwhz5j0v9xj5ajktzu9zq380yhkpwq0sdn53asua6kg88fvkqkn9h75
+creation_rules:
+  - path_regex: secrets.yaml$
+    key_groups:
+      - age:
+          - *n0ll
+          - *nix-solid
+
+  - path_regex: n0ll-secrets.yaml$
+    key_groups:
+      - age:
+          - *n0ll
