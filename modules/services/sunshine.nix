@@ -10,6 +10,7 @@ in {
       settings = {
         # sunshine_name = config.networking.hostName;
         port = 47989;
+        # TODO sops
         # credentials_file = config.sops.secrets."sunshine".path;
       };
       capSysAdmin = lib.mkDefault enable; # required for DRM/KMS screen capture

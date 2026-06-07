@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-06-06 Sat 13:50]
+:mtime:    [2026-06-07 Sun 10:40]
 :END:
 
 #+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
@@ -30,13 +30,16 @@ Contains basic settings for all devices. Think timezone and all that stuff.
 Any device being managed under this repo has it's own segment of configuration, which takes in the modules it needs using flake-parts. Most settings are not defined here, simply brought together for one use. 
 
 ***** nix-solid
-Main desktop machine.
+Main desktop machine. May use disko in the future for management, but as of now it's not necessary. 
 
 ***** nix-liquid
 Laptop config. Utilizing disko and preservation for an impermanence setup, as it's light on storage and nothing on it is expected to last long term.
 
 ***** nix-solidus
 Currently not in use, but when a test / temporary desktop machine is needed this will be used.
+
+***** nix-heaven
+NAS machine. Most, if not all, self-hosted services.
 
 ** Custom options
 These can be messy after a while, so I want to write some of it down.
@@ -92,10 +95,16 @@ For when battery or performance isn't as much of a concern. If it's a primary de
 #+end_src
 [[file:~/Projects/nix-rebirth/modules/base/opts.nix::options.high-performance = lib.mkOption {]]
 
+** Shared options
+
+*** Firefox
+Firefox profiles are declared with the user's profile itself. They get re-used with any of it's derivitives that can be declared in the same way (LibreWolf, Floorp, etc). By default, LibreWolf is enabled instead of Firefox. 
+
+There may be better ways to declare which one is enabled for the user, such as stating the package that Firefox builds on, but for the moment it's just conditional.
 
 * To-Do
 
-** PROG Figure out what the deal is with =flake.homeModules=
+** PROG Figure out how to handle home-manager
 I'm getting it going, but deciding on if I should implement it similarly to my original repo or try doing a home-manager as a separate service.
 
 ** DONE Create a more consistent set of reproducable code, rather than copy pasting everything
@@ -103,7 +112,7 @@ Marking done as it's going to be something that needs to be done throughout.
 
 ** TODO Bring in the essentials of the original repo
 
-** TODO Create a mechanism that tracks directories being used but not managed by Nix to pass along to preservation
+** TODO Create a mechanism that tracks directories being used but /not managed by Nix/ to pass along to preservation
 My main thing is the syncthing directories. Those can easily be passed along to preservation, but to make things clean and extendable it needs to be with a for loop of some sort.
 
 Otherwise, directories can be fed to preservation on a module-by-module basis.
@@ -119,7 +128,10 @@ Currently doesn't appear to be tested at all.
 ** TODO Create a function to add email option to each user account
 There's gotta be a way to do it that isn't "make sure to write it for every user".  
 
+The objective with this is to have a seamless method of accessing an assigned email for each user. This is particularly useful when in the context of the NAS machine. 
+
 ** TODO Write an internet radio service to self-host
-Would be cool.
+Would be cool. A neat little project of sorts.
 
 ** TODO Add nix-index with nix-index-database
+Just needs some setup, would be helpful.

@@ -12,7 +12,6 @@ in {
       enable = config.programs.wthrr.enable;
       text = ''
       (
-        address: "Pittsburgh,US",
         language: "en_US",
         forecast: [day, week],
         units: (
