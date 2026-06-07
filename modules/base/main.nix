@@ -17,7 +17,6 @@ in{
 
       config = {
 
-
         zramSwap = {
           enable = lib.mkDefault true;
           priority = 100;
