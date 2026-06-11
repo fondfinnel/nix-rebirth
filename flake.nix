@@ -2,11 +2,11 @@
   description = "Rewrite of my NixOS repo, using flake-parts as a base.";
 
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     import-tree.url = "github:denful/import-tree";
-
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/master"; 
@@ -18,7 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    preservation.url = "github:nix-community/preservatoin";
+    preservation.url = "github:nix-community/preservation";
     
     disko.url = "github:/nix-community/disko";
     
@@ -26,7 +26,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    +
   };
 
   outputs = inputs:

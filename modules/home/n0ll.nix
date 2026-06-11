@@ -72,6 +72,16 @@ in {
       validateSopsFiles = true;
     };
 
+    programs.ssh.matchBlocks."git" = {
+      host = "github.com codeberg.org";
+      user = "git";
+      identityFile = [
+        "~/.ssh/id_basilisk"
+        "~/.ssh/id_gekko"
+        "~/.ssh/id_ed25519"
+      ];
+    };
+
     programs.ledger.enable = true;
 
     services.mpdscribble.endpoints."last.fm" = {
