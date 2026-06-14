@@ -19,6 +19,8 @@ in {
 
     };
 
+    home.persistence."/persistent".directories = [ "Games" ];
+
   };
 
 }
