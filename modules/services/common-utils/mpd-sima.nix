@@ -7,6 +7,7 @@ in {
     options.services.mpd-sima.enable = lib.mkEnableOption "mpd-sima";
     config.services.mpd-sima.enable = lib.mkDefault check;
 
+    config.home.persistence."/persistent".directories = lib.mkIf config.services.mpd-sima.enable [ "${config.xdg.dataHome}/mpd_sima" ];
 
     config.systemd.user.services.mpd-sima = lib.mkIf config.services.mpd-sima.enable {
 
@@ -30,8 +31,8 @@ in {
             queue_length = 4;
             user_db = false;
             # TODO Persistence
-            var_dir = "${config.home.homeDirectory}/.local/share/mpd_sima";
-            db_file = "${config.home.homeDirectory}/.local/share/mpd_sima/sima.db";
+            var_dir = "${config.xdg.dataHome}/mpd_sima";
+            db_file = "${config.xdg.dataHome}/mpd_sima/sima.db";
           };
 
           crop.consume = 20;

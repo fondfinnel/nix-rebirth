@@ -50,23 +50,29 @@
         format "384000:f:2"
       }
       '' else ''''}
-
       replaygain "auto"
       max_output_buffer_size "16384"
       mixramp_analyzer "yes"
     '';
+
       extraArgs = [ "--verbose" ];
+
 	  };
+
     services.mpd-mpris.enable = lib.mkDefault config.services.mpd.enable;
 
     services.mpd-discord-rpc = {
-      enable = lib.mkDefault config.programs.vesktop.enable;
+      enable = lib.mkDefault (config.programs.vesktop.enable && config.services.mpd.enable);
 
       settings.format = {
         details = "$title";
         state = "$artist";
       };
     };
+
+    home.persistence."/persistent".directories = [
+      config.services.mpd.musicDirectory      
+    ];
 
 
   };

@@ -7,6 +7,11 @@ in {
     programs.zoxide.enable = lib.mkDefault true;
     home.shellAliases.cd = "z";
 
+    # keep the zoxide database
+    home.persistence."/persistent".directories = [
+      "${config.xdg.dataHome}/zoxide"
+    ];
+
   };
 
 

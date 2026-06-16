@@ -48,5 +48,6 @@ in {
 
   };
 
+  # TODO syncthing
 
 }

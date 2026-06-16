@@ -8,7 +8,7 @@ in {
     programs.firefox = {
       enable = lib.mkDefault (!config.programs.librewolf.enable && check);
 
-      profiles."${config.home.username}".settings = { # Settings inside about:config, writes to user.js
+      profiles."${config.home.username}".settings = lib.mkDefault { # Settings inside about:config, writes to user.js
         "browser.startup.homepage" =  "about:blank"; # Page that firefox sets home as
         "middlemouse.paste" = false;
         "general.autoScroll" = true;
@@ -53,7 +53,7 @@ in {
         };
 
 
-      policies = { # ref: https://mozilla.github.io/policy-templates/
+      policies = lib.mkDefault { # ref: https://mozilla.github.io/policy-templates/
 
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
@@ -81,9 +81,11 @@ in {
         SearchBar = "unified";
       };
 
-      };
-
     };
+
+    home.persistence."/persistent".directories = lib.mkIf config.programs.firefox.enable [ ".mozilla" ];
+
+  };
 
 
 }

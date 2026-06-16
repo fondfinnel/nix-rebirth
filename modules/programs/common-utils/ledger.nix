@@ -12,6 +12,8 @@
       };
     };
 
+    home.persistence."/persist".files = lib.mkIf config.programs.ledger.enable config.programs.ledger.settings.file;
+
   };
 
 }

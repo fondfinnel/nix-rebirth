@@ -68,6 +68,9 @@
       };
     };
 
+    # TODO confirm
+    home.persistence."/persistent".files = [ "${config.xdg.configHome}/beets/library.db" ];
+
   };
 
 

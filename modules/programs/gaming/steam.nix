@@ -13,5 +13,13 @@
 
   };
 
+  flake.homeModules.gaming = { lib, config, pkgs, ... }: {
+    home.persistence."/persistent".directories = [
+      "${config.xdg.dataHome}/Steam"
+      ".steam"
+      ".cache/steam"
+    ];
+  };
+
 
 }

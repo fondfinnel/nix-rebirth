@@ -9,6 +9,8 @@ in {
 
     config.home.packages = lib.mkIf (config.programs.clonehero.enable == true) [ pkgs.clonehero ];
 
+    # TODO impermanence
+
   };
 
 

@@ -9,9 +9,11 @@ in {
       default = check;
     };
 
-    config.home.packages = lib.mkIf (config.programs.bottles.enable == true) [
+    config.home.packages = lib.mkIf config.programs.bottles.enable [
       (pkgs.bottles.override { removeWarningPopup = true; })
     ];
+
+    config.home.persistence."/persistent".directories = lib.mkIf config.programs.bottles.enable [ "${config.xdg.dataHome}/bottles" ];
 
   };
 

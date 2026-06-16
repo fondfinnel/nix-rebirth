@@ -7,10 +7,18 @@ in {
     options.programs.heroic.enable = lib.mkEnableOption "heroic";
     config.programs.heroic.enable = lib.mkDefault check;
 
-    config.home.packages = lib.mkIf (config.programs.heroic.enable == true) [
+    config.home.packages = lib.mkIf config.programs.heroic.enable [
       pkgs.heroic
       pkgs.gogdl
     ];
+
+    # TODO confirm
+    config.home.persistence."/persistent".directories = [
+      "${config.xdg.configHome}/heroic"
+      "${config.xdg.configHome}/legendary"
+      "${config.home.homeDirectory}/Games"
+    ];
+
 
   };
 

@@ -1,7 +1,10 @@
 # TODO Sync emacs config in a cleaner way between machines
 { self, inputs, config, ... }: {
 
-  flake.homeModules.development = { config, lib, pkgs, ... }: {
+  flake.homeModules.development = { config, lib, pkgs, ... }: let
+    # is emacs daemon or program enabled
+    ck = (config.services.emacs.enable || config.programs.emacs.enable);
+  in {
 
     services.emacs = lib.mkDefault {
       enable = true;
@@ -14,7 +17,7 @@
                                    then lib.mkDefault "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emacs"
                                    else lib.mkDefault null;
 
-    home.packages = with pkgs; lib.mkIf config.services.emacs.enable [
+    home.packages = with pkgs; lib.mkIf ck [
       ledger
       nil # nix
       python312Packages.python-lsp-server # python
@@ -28,14 +31,16 @@
       xclip # org-download
     ];
 
-    xdg.mimeApps.defaultApplications = let x = "emacsclient.desktop"; in {
+    xdg.mimeApps.defaultApplications = let x = "emacsclient.desktop"; in lib.mkIf ck {
       "application/xml" = [ x ];
       "text/plain" = [ x ];
       "text/markdown" = [ x ];
       "text/org" = [ x ];
     };
 
-    programs.bash.shellAliases.em = "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emacs -nw";
+    home.shellAliases.em = lib.mkIf ck "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emacs -nw";
+
+    home.persistence."/persistent".directories = lib.mkIf ck [ "${config.xdg.configHome}/emacs" ];
 
   };
 
