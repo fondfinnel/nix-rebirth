@@ -2,9 +2,7 @@
   check = config.high-performance;
 in {
 
-  # TODO SOPS
-
-  flake.homeModules.creative = { pkgs, lib, config, ... }: {
+  flake.homeModules.creative = { pkgs, lib, config, osConfig, ... }: {
 
     options.programs.makemkv.enable = lib.mkEnableOption "makemkv";
     config.programs.makemkv.enable = lib.mkDefault check;
@@ -21,6 +19,10 @@ in {
       libaacs
       libbdplus
     ];
+
+    config.sops.secrets."makemkv" = {
+      path = "${config.home.homeDirectory}/.MakeMKV/settings.conf";
+    };
 
   };
 

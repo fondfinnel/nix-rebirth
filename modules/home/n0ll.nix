@@ -69,6 +69,7 @@ in {
     sops = {
       defaultSopsFile = ./n0ll-secrets.yaml;
       defaultSopsFormat = "yaml";
+      age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
       validateSopsFiles = true;
     };
 
