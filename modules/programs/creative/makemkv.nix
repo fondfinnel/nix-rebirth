@@ -20,6 +20,9 @@ in {
       libbdplus
     ];
 
+    # might be worth trying this alternatively
+    # https://github.com/Mic92/sops-nix#templates
+
     config.sops.secrets."makemkv" = {
       path = "${config.home.homeDirectory}/.MakeMKV/settings.conf";
     };

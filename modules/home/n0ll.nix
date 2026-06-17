@@ -3,7 +3,7 @@
   check = config.device-type == "primary";
 in {
 
-  flake.nixosModules.users = { pkgs, ... }: {
+  flake.nixosModules.users = { pkgs, lib, config, ... }: {
     
     users.users.n0ll = {
       isNormalUser = true;
@@ -12,7 +12,15 @@ in {
       initialPassword = "123";
       shell = pkgs.fish;
       home = "/home/n0ll";
+      hashedPasswordFile = config.sops.secrets."users/n0ll".path;
+      openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ../../keys/n0ll;
       # TODO hashedPassword
+    };
+
+    sops.secrets."users/n0ll" = rec {
+      owner = config.users.users.n0ll.name;
+      group = owner;
+      neededForUsers = true;      
     };
 
     programs.fish.enable = true;
