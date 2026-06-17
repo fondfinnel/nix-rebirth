@@ -1,5 +1,10 @@
 { self, inputs, config, ... }: {
 
+  flake.nixosModules.common-utils = { ... }: {
+    services.openssh.enable = true;
+  };
+
+
   # https://youtu.be/3CeXbONjIgE
   flake.homeModules.common-utils = { pkgs, lib, config, ... }:
     let

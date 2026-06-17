@@ -70,7 +70,7 @@ in {
         drag = drag;  # may need to install ripdrag externally
 
         full-border.package = full-border;
-        full-border.setup = true;
+        # full-border.setup = true;
 
         jjui = jjui;
         recycle-bin = recycle-bin;
