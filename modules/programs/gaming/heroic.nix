@@ -12,11 +12,10 @@ in {
       pkgs.gogdl
     ];
 
-    # TODO confirm
-    config.home.persistence."/persistent".directories = [
+    config.home.persistence."/persistent".directories = lib.mkIf config.programs.heroic.enable [
       "${config.xdg.configHome}/heroic"
-      "${config.xdg.configHome}/legendary"
-      "${config.home.homeDirectory}/Games"
+      "${config.xdg.dataHome}/heroic"
+      "${config.home.homeDirectory}/Games/Heroic"
     ];
 
 

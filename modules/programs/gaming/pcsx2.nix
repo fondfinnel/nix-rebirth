@@ -9,10 +9,8 @@ in {
 
     config.home.packages = lib.mkIf config.programs.pcsx2.enable [ pkgs.pcsx2-bin ];
 
-    # TODO confirm
     config.home.persistence."/persistent".directories = lib.mkIf config.programs.pcsx2.enable [
       "${config.xdg.configHome}/PCSX2"
-      "${config.xdg.dataHome}/PCSX2"
     ];
  
 

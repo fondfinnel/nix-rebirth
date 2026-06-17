@@ -26,7 +26,7 @@ in {
       };
     };
 
-    # TODO impermanence
+    home.persistence."/persist".directories = [ ".var/app/com.core447.StreamController" ];
 
   };
 

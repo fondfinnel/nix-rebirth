@@ -9,7 +9,7 @@ in {
 
     config.home.packages = lib.mkIf (config.programs.clonehero.enable == true) [ pkgs.clonehero ];
 
-    # TODO impermanence
+    home.persistence."/persist".directories = [ "${config.xdg.configHome}/unity3d/srylain Inc_/Clone Hero" ];
 
   };
 

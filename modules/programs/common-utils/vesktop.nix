@@ -126,7 +126,8 @@ in {
       };
     };
 
-    # TODO impermanence
+
+    home.persistence."/persist".directories = [ "${config.xdg.configHome}/vesktop" ];
 
   };
 

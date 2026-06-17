@@ -10,6 +10,9 @@ in{
       imports = [
         inputs.home-manager.nixosModules.default
         inputs.sops-nix.nixosModules.sops
+        inputs.impermanence.nixosModules.impermanence
+        self.nixosModules.impermanence-default
+
         self.nixosModules.common-utils
         self.nixosModules.greetd
         ./opts.nix

@@ -64,36 +64,42 @@
       inputs.disko.nixosModules.disko
       self.nixosModules.preservation-default
     ];
-    preservation.enable = true;
+      preservation.enable = true;
+      
+      
+      disko.devices.nodev."/" = {
+        fsType = "tmpfs";
+        mountOptions = [ "size=50%" "defaults" ];
+      };
 
-    # mostly rewritten from https://haseebmajid.dev/posts/2024-07-30-how-i-setup-btrfs-and-luks-on-nixos-using-disko/
-    disko.devices.disk = {
+      # mostly rewritten from https://haseebmajid.dev/posts/2024-07-30-how-i-setup-btrfs-and-luks-on-nixos-using-disko/
+      disko.devices.disk = {
 
-      nvme0n1 = {
+        main = {
 
-        # define the device itself
-        type = "disk";
-        device = "/dev/sda";
+          # define the device itself
+          type = "disk";
+          device = "/dev/sda";
 
-        content = {
+          content = {
 
-          # set up the boot partition
-          type = "gpt";
-          partitions.ESP = {
-            label = "boot";
-            name = "ESP";
-            size = "512M";
-            type = "EF00";
+            # set up the boot partition
+            type = "gpt";
+            partitions.ESP = {
+              label = "boot";
+              name = "ESP";
+              size = "512M";
+              type = "EF00";
 
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot";
-              mountOptions = [ "defaults" ];
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "defaults" ];
+              };
+
             };
-
-          };
-          # define the root partition under luks encrypt
+            # define the root partition under luks encrypt
             partitions.luks = {
               size = "100%";
               label = "luks";
@@ -143,16 +149,16 @@
                     "/log".mountOptions = [ "subvol=log" ] ++ n;
 
                     "/swap".mountpoint = "/swap";
-                    "/swap".swap.swapfile.size = "8G";
-                  };
+                     "/swap".swap.swapfile.size = "8G";
+                   };
 
-                };
+                 };
 
-              };
+               };
 
-            };
+             };
 
-          };
+           };
 
         };
 
@@ -160,7 +166,7 @@
 
       fileSystems."/persist".neededForBoot = true;
       fileSystems."/var/log".neededForBoot = true;
-    }
+  }
 
   };
 

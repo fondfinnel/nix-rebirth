@@ -9,8 +9,7 @@ in {
 
     config.home.packages = lib.mkIf (config.programs.dolphin-emu.enable == true) [ pkgs.dolphin-emu ];
 
-    # TODO confirm
-    config.home.persistence."/persistent".directories = lib.mkIf config.programs.dolphin-emu.enable [ "${config.xdg.dataHome}/dolphin-emu" ];
+    config.home.persistence."/persistent".directories = lib.mkIf config.programs.dolphin-emu.enable [ "${config.xdg.configHome}/dolphin-emu" ];
 
   };
 
