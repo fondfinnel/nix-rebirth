@@ -126,7 +126,6 @@ in {
       };
     };
 
-
     home.preserve.directories = [ ".config/vesktop" ];
 
   };

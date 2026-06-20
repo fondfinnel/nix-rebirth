@@ -15,7 +15,6 @@ in {
     config.home.preserve.directories = lib.mkIf config.programs.heroic.enable [
       ".config/heroic"
       ".local/share/heroic"
-      "${config.home.homeDirectory}/Games/Heroic"
     ];
 
 

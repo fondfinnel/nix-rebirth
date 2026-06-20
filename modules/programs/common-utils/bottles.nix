@@ -13,6 +13,7 @@ in {
       (pkgs.bottles.override { removeWarningPopup = true; })
     ];
 
+
     config.home.preserve.directories = lib.mkIf config.programs.bottles.enable [ ".local/share/bottles" ];
 
   };
