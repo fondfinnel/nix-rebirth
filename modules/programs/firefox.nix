@@ -83,7 +83,7 @@ in {
 
     };
 
-    home.persistence."/persistent".directories = lib.mkIf config.programs.firefox.enable [ ".mozilla" ];
+    home.preserve.directories = lib.mkIf config.programs.firefox.enable [ ".mozilla" ];
 
   };
 

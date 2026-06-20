@@ -16,7 +16,7 @@
 
   flake.homeModules.impermanence-default = { ... }: {
     
-    home.persistence."/persistent" = {
+    home.preserve = {
       
       directories = [
         

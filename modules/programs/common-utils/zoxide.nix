@@ -8,7 +8,7 @@ in {
     home.shellAliases.cd = "z";
 
     # keep the zoxide database
-    home.persistence."/persistent".directories = [
+    home.preserve.directories = [
       ".local/share/zoxide"
     ];
 

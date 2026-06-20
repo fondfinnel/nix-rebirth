@@ -149,8 +149,8 @@
                     "/log".mountOptions = [ "subvol=log" ] ++ n;
 
                     "/swap".mountpoint = "/swap";
-                     "/swap".swap.swapfile.size = "8G";
-                   };
+                    "/swap".swap.swapfile.size = "8G";
+                  };
 
                  };
 

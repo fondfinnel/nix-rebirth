@@ -70,7 +70,7 @@
       };
     };
 
-    home.persistence."/persistent".files = [ ".config/beets/library.db" ];
+    home.preserve.files = [ ".config/beets/library.db" ];
 
   };
 

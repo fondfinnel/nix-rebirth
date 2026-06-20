@@ -26,7 +26,7 @@ in {
       };
     };
 
-    config.home.persistence."/persist".directories = [ ".var/app/com.core447.StreamController" ];
+    config.home.preserve.directories = [ ".var/app/com.core447.StreamController" ];
 
   };
 

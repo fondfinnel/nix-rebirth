@@ -37,7 +37,7 @@ in {
 
     };
 
-    home.persistence."/persistent".directories = lib.mkIf config.programs.librewolf.enable [ "${config.home.homeDirectory}/.librewolf" ];
+    home.preserve.directories = lib.mkIf config.programs.librewolf.enable [ "${config.home.homeDirectory}/.librewolf" ];
 
   };
 

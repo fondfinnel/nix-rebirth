@@ -19,7 +19,7 @@ in {
 
     };
 
-    home.persistence."/persistent".directories = [ "Games" ];
+    home.preserve.directories = [ "Games" ];
 
   };
 

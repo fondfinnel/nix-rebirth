@@ -12,7 +12,7 @@ in {
       pkgs.gogdl
     ];
 
-    config.home.persistence."/persistent".directories = lib.mkIf config.programs.heroic.enable [
+    config.home.preserve.directories = lib.mkIf config.programs.heroic.enable [
       ".config/heroic"
       ".local/share/heroic"
       "${config.home.homeDirectory}/Games/Heroic"

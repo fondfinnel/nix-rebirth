@@ -70,7 +70,7 @@
       };
     };
 
-    home.persistence."/persistent".directories = [
+    home.preserve.directories = [
       config.services.mpd.musicDirectory      
     ];
 

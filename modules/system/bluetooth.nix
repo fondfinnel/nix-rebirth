@@ -8,7 +8,7 @@
     };
     services.blueman.enable = lib.mkDefault config.hardware.bluetooth.enable;
 
-    environment.persistence."/persistent".directories = [ "/var/lib/bluetooth" ];
+    environment.preserve.directories = [ "/var/lib/bluetooth" ];
 
   };
 

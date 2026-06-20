@@ -127,7 +127,7 @@ in {
     };
 
 
-    home.persistence."/persist".directories = [ ".config/vesktop" ];
+    home.preserve.directories = [ ".config/vesktop" ];
 
   };
 

@@ -9,7 +9,7 @@ in {
 
     config.home.packages = lib.mkIf (config.programs.clonehero.enable == true) [ pkgs.clonehero ];
 
-    config.home.persistence."/persist".directories = [ ".config/unity3d/srylain Inc_/Clone Hero" ];
+    config.home.preserve.directories = [ ".config/unity3d/srylain Inc_/Clone Hero" ];
 
   };
 

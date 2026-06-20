@@ -9,7 +9,7 @@ in {
 
     config.home.packages = lib.mkIf (config.programs.dolphin-emu.enable == true) [ pkgs.dolphin-emu ];
 
-    config.home.persistence."/persistent".directories = lib.mkIf config.programs.dolphin-emu.enable [ ".config/dolphin-emu" ];
+    config.home.preserve.directories = lib.mkIf config.programs.dolphin-emu.enable [ ".config/dolphin-emu" ];
 
   };
 
