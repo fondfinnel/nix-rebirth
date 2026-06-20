@@ -10,8 +10,6 @@ in{
       imports = [
         inputs.home-manager.nixosModules.default
         inputs.sops-nix.nixosModules.sops
-        inputs.impermanence.nixosModules.impermanence
-        self.nixosModules.impermanence-default
 
         self.nixosModules.common-utils
         self.nixosModules.greetd
@@ -49,32 +47,11 @@ in{
           age.keyFile = "/var/lib/sops-nix/key.txt";
           age.generateKey = true;
          };
+
+        environment.preserve.directories = [
+          config.sops.age.keyFile          
+        ] ++ config.sops.age.sshKeyPaths;
  
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          
-          backupFileExtension = "backup";
-          overwriteBackup = true;
-          
-          extraSpecialArgs = {
-            inherit (self) inputs outputs;
-          };
-          
-          # every user should have these modules available
-          sharedModules = [
-            
-            self.homeModules.base
-              
-            inputs.sops-nix.homeManagerModules.sops
-            
-          ] ++ lib.optionals config.headless-check [
-            
-            self.homeModules.sync-drive
-            
-          ];
-          
-        };
       }; 
 
     };

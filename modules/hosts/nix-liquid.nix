@@ -52,8 +52,6 @@
       # declare partition scheme
       self.nixosModules.nix-liquid-disko
 
-      self.nixosModules.nix-liquid-preserve
-
     ];
 
   };  
@@ -62,112 +60,100 @@
 
     imports = [
       inputs.disko.nixosModules.disko
-      self.nixosModules.preservation-default
     ];
-      preservation.enable = true;
-      
-      
-      disko.devices.nodev."/" = {
-        fsType = "tmpfs";
-        mountOptions = [ "size=50%" "defaults" ];
-      };
+    preservation.enable = true;
+    
+    
+    disko.devices.nodev."/" = {
+      fsType = "tmpfs";
+      mountOptions = [ "size=50%" "defaults" ];
+    };
 
-      # mostly rewritten from https://haseebmajid.dev/posts/2024-07-30-how-i-setup-btrfs-and-luks-on-nixos-using-disko/
-      disko.devices.disk = {
+    # mostly rewritten from https://haseebmajid.dev/posts/2024-07-30-how-i-setup-btrfs-and-luks-on-nixos-using-disko/
+    disko.devices.disk = {
 
-        main = {
+      main = {
 
-          # define the device itself
-          type = "disk";
-          device = "/dev/sda";
+        # define the device itself
+        type = "disk";
+        device = "/dev/sda";
 
-          content = {
+        content = {
 
-            # set up the boot partition
-            type = "gpt";
-            partitions.ESP = {
-              label = "boot";
-              name = "ESP";
-              size = "512M";
-              type = "EF00";
+          # set up the boot partition
+          type = "gpt";
+          partitions.ESP = {
+            label = "boot";
+            name = "ESP";
+            size = "512M";
+            type = "EF00";
 
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-                mountOptions = [ "defaults" ];
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+              mountOptions = [ "defaults" ];
+            };
+
+          };
+          # define the root partition under luks encrypt
+          partitions.luks = {
+            size = "100%";
+            label = "luks";
+
+            # luks part contains what?
+            # located in /dev/mapper
+            content = {
+              type = "luks";
+              name = "cryptroot";
+
+              extraOpenArgs = [
+                "--allow-discards"
+                "--perf-no_read_workqueue"
+                "--perf-no_write_workqueue"
+              ];
+
+              settings.crypttabExtraOpts = [
+                "fido2-device=auto"
+                "token-timeout=5"
+              ];
+
+              # the unencrypted data
+              content = let
+
+                # define shared mountOptions
+                n = [ "compress=zstd" "noatime" ];
+
+              in {
+                type = "btrfs";
+                extraArgs = [ "-L" "nixos" "-f" ];
+
+                subvolumes = {
+
+                  "/nix".mountpoint = "/nix";
+                  "/nix".mountOptions = [ "subvol=nix" ] ++ n;
+
+                  "/persist".mountpoint = "/persist";
+                  "/persist".mountOptions = [ "subvol=persist" ] ++ n;
+
+                  "/swap".mountpoint = "/swap";
+                  "/swap".swap.swapfile.size = "8G";
+                };
+
               };
 
             };
-            # define the root partition under luks encrypt
-            partitions.luks = {
-              size = "100%";
-              label = "luks";
 
-              # luks part contains what?
-              # located in /dev/mapper
-              content = {
-                type = "luks";
-                name = "cryptroot";
-
-                extraOpenArgs = [
-                  "--allow-discards"
-                  "--perf-no_read_workqueue"
-                  "--perf-no_write_workqueue"
-                ];
-
-                settings.crypttabExtraOpts = [
-                  "fido2-device=auto"
-                  "token-timeout=5"
-                ];
-
-                # the unencrypted data
-                content = let
-
-                  # define shared mountOptions
-                  n = [ "compress=zstd" "noatime" ];
-
-                in {
-
-                  type = "btrfs";
-                  extraArgs = [ "-L" "nixos" "-f" ];
-
-                  subvolumes = {
-                    "/root".mountpoint = "/";
-                    "/root".mountOptions = [ "subvol=root" ] ++ n;
-
-                    "/home".mountpoint = "/home";
-                    "/home".mountOptions = [ "subvol=home" ] ++ n;
-
-                    "/nix".mountpoint = "/nix";
-                    "/nix".mountOptions = [ "subvol=nix" ] ++ n;
-
-                    "/persist".mountpoint = "/persist";
-                    "/persist".mountOptions = [ "subvol=persist" ] ++ n;
-                    
-                    "/log".mountpoint = "/var/log";
-                    "/log".mountOptions = [ "subvol=log" ] ++ n;
-
-                    "/swap".mountpoint = "/swap";
-                    "/swap".swap.swapfile.size = "8G";
-                  };
-
-                 };
-
-               };
-
-             };
-
-           };
+          };
 
         };
 
       };
 
-      fileSystems."/persist".neededForBoot = true;
-      fileSystems."/var/log".neededForBoot = true;
-  }
+    };
 
+    fileSystems."/persist".neededForBoot = true;
+    fileSystems."/nix".neededForBoot = true;
   };
 
 }

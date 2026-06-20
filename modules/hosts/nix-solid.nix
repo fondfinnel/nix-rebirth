@@ -57,8 +57,6 @@
 
     boot.initrd.systemd.fido2.enable = true;
 
-    environment.persistence."/persist".enable = false;
-
     boot.initrd.luks.devices.enc-bt = {
       device = "/dev/disk/by-uuid/91471cb2-e390-47ff-a8cd-8995a75a67b4";
       preLVM = true;

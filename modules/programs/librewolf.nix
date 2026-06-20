@@ -5,7 +5,7 @@ in {
   flake.homeModules.librewolf = { pkgs, config, lib, ... }: {
 
     programs.librewolf = {
-      enable = lib.mkDefault check;
+      enable = lib.mkDefault false;
 
       # import the firefox config
       profiles."${config.home.username}" = config.programs.firefox.profiles."${config.home.username}" // {

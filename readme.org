@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-06-20 Sat 11:10]
+:mtime:    [2026-06-20 Sat 19:51]
 :END:
 
 #+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
@@ -94,6 +94,34 @@ For when battery or performance isn't as much of a concern. If it's a primary de
 #+end_src
 [[file:~/Projects/nix-rebirth/modules/base/opts.nix::options.high-performance = lib.mkOption {]]
 
+*** preservation wrappers
+Impermanence is goofy, I couldn't get it going despite my best efforts. The main reason I wanted to use impermanence is due to how it integrates into home-manager as well. That, I thought, would be a lot cleaner considering how I've been building things using home-manager for majority of userspace configs.
+
+I ended up using the infrastructure that had come out of doing that and going to preservation instead. Preservation being a lot more cooperative, meant more success and less headroom in other ways. But no home-manager meant I had to come up with an in-house solution for managing user preserved directories in a similar manner.
+
+Here is the main chunk of the preservation itself, where everything is merged into it's own options.
+
+#+begin_src nix
+    config.preservation.enable = lib.mkDefault false;
+    config.preservation.preserveAt."/persist" = {
+
+      directories = config.environment.preserve.directories ++ [
+        "/etc/nixos"
+        "/var/lib/NetworkManager"
+        "/var/lib/nixos"
+        "/etc/ssh"
+      ];
+
+      files = config.environment.preserve.files;
+
+
+      users = lib.mapAttrs (name: user: {
+        files = user.home.preserve.files or [];
+        directories = user.home.preserve.directories or [];
+      }) config.home-manager.users;
+#+end_src
+
+
 ** Shared options
 
 *** Firefox
@@ -111,10 +139,8 @@ Marking done as it's going to be something that needs to be done throughout.
 
 ** TODO Bring in the essentials of the original repo
 
-** TODO Create a mechanism that tracks directories being used but /not managed by Nix/ to pass along to preservation
-My main thing is the syncthing directories. Those can easily be passed along to preservation, but to make things clean and extendable it needs to be with a for loop of some sort.
-
-Otherwise, directories can be fed to preservation on a module-by-module basis.
+** DONE Create a mechanism that tracks directories being used but /not managed by Nix/ to pass along to preservation
+Marking done, as there's now a code snippet for preservation that does a similar function. 
 
 ** TODO Create proper color definitions to be used repo-wide
 Some modules that need this done to: 
