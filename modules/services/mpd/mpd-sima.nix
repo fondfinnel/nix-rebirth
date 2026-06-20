@@ -7,7 +7,7 @@ in {
     options.services.mpd-sima.enable = lib.mkEnableOption "mpd-sima";
     config.services.mpd-sima.enable = lib.mkDefault check;
 
-    config.home.persistence."/persistent".directories = lib.mkIf config.services.mpd-sima.enable [ "${config.xdg.dataHome}/mpd_sima" ];
+    config.home.persistence."/persistent".directories = lib.mkIf config.services.mpd-sima.enable [ ".local/share/mpd_sima" ];
 
     config.systemd.user.services.mpd-sima = lib.mkIf config.services.mpd-sima.enable {
 

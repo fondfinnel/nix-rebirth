@@ -1,5 +1,7 @@
 { self, inputs, config, ... }: {
 
+  # TODO rewrite to allow use with other services (i.e. Jellyfin)
+
   flake.homeModules.beets = { config, lib, pkgs, ... }: {
 
     home.packages = lib.mkIf config.programs.beets.enable [
@@ -68,7 +70,7 @@
       };
     };
 
-    home.persistence."/persistent".files = [ "${config.xdg.configHome}/beets/library.db" ];
+    home.persistence."/persistent".files = [ ".config/beets/library.db" ];
 
   };
 

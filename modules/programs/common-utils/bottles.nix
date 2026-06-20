@@ -13,7 +13,7 @@ in {
       (pkgs.bottles.override { removeWarningPopup = true; })
     ];
 
-    config.home.persistence."/persistent".directories = lib.mkIf config.programs.bottles.enable [ "${config.xdg.dataHome}/bottles" ];
+    config.home.persistence."/persistent".directories = lib.mkIf config.programs.bottles.enable [ ".local/share/bottles" ];
 
   };
 

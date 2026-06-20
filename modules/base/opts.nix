@@ -35,4 +35,5 @@ in {
     description = "Does this computer have good resources? Defaults to false for non-server stuff.";
     default = if config.device-type == "primary" then true else false;
   };
+
 }

@@ -9,7 +9,7 @@ in {
 
     # keep the zoxide database
     home.persistence."/persistent".directories = [
-      "${config.xdg.dataHome}/zoxide"
+      ".local/share/zoxide"
     ];
 
   };

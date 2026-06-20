@@ -127,7 +127,7 @@ in {
     };
 
 
-    home.persistence."/persist".directories = [ "${config.xdg.configHome}/vesktop" ];
+    home.persistence."/persist".directories = [ ".config/vesktop" ];
 
   };
 

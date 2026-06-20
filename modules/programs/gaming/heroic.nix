@@ -13,8 +13,8 @@ in {
     ];
 
     config.home.persistence."/persistent".directories = lib.mkIf config.programs.heroic.enable [
-      "${config.xdg.configHome}/heroic"
-      "${config.xdg.dataHome}/heroic"
+      ".config/heroic"
+      ".local/share/heroic"
       "${config.home.homeDirectory}/Games/Heroic"
     ];
 

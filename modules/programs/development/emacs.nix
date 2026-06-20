@@ -40,7 +40,7 @@
 
     home.shellAliases.em = lib.mkIf ck "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emacs -nw";
 
-    home.persistence."/persistent".directories = lib.mkIf ck [ "${config.xdg.configHome}/emacs" ];
+    home.persistence."/persistent".directories = lib.mkIf ck [ ".config/emacs" ];
 
   };
 

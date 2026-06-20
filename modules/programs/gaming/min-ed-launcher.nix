@@ -10,7 +10,7 @@ in {
     config.home.packages = lib.mkIf (config.programs.min-ed-launcher.enable == true) [ pkgs.min-ed-launcher ];
 
     config.home.persistence."/persist".directories = [
-      "${config.xdg.configHome}/min-ed-launcher"
+      ".config/min-ed-launcher"
     ];
 
   };
