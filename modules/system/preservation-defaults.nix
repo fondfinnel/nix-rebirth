@@ -14,5 +14,24 @@
 
   };
 
+  flake.homeModules.impermanence-default = { ... }: {
+    
+    home.persistence."/persistent" = {
+      
+      directories = [
+        
+        "Videos"
+        "Pictures"
+        "Music"
+        "Documents"
+        "Desktop"
+        "Public"
+        "Templates"
+        ".config/nixos"
+        
+      ];
+      
+    };
 
-}
+
+  }

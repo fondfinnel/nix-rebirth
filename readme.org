@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-06-07 Sun 10:40]
+:mtime:    [2026-06-20 Sat 11:10]
 :END:
 
 #+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
@@ -17,7 +17,6 @@ To get a specific list to attempt consistency, I am going to spit out some rules
 - Aim for efficiency in compilation, as well as maintainability. 
 
  
-
 ** File Structure
 
 *** =/modules=

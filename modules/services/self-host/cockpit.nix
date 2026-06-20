@@ -2,7 +2,7 @@
   check = config.device-type == "server";
 in {
 
-  flake.nixosModules.cockpit = { lib, config, pkgs, ... }: {
+  flake.nixosModules.self-host = { lib, config, pkgs, ... }: {
 
     services.cockpit = {
       enable = lib.mkDefault check;
