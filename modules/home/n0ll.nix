@@ -62,6 +62,7 @@ in {
       keepassxc
       mpd
       firefox
+      sync-drive
     ];
 
     home.sessionVariables = {
@@ -78,6 +79,11 @@ in {
       defaultSopsFile = ./n0ll-secrets.yaml;
       defaultSopsFormat = "yaml";
       age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
+      age.sshKeyPaths = [
+        config.sops.secrets."ssh".path
+        config.sops.secrets."ssh-basilisk".path
+        config.sops.secrets."ssh-gekko".path
+      ];
       validateSopsFiles = true;
 
       secrets."ssh".path = "${config.home.homeDirectory}/.ssh/id_ed25519";

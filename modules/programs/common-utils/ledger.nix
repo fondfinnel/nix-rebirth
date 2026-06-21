@@ -12,7 +12,7 @@
       };
     };
 
-    home.preserve.files = lib.mkIf config.programs.ledger.enable config.programs.ledger.settings.file;
+    home.preserve.directories = lib.mkIf config.programs.ledger.enable [ "org" ];
 
   };
 

@@ -34,8 +34,8 @@
 
 
       users = lib.mapAttrs (name: user: {
-        files = user.home.preserve.files or [];
-        directories = user.home.preserve.directories or [];
+        files = user.home.preserve.files;
+        directories = user.home.preserve.directories;
       }) config.home-manager.users;
 
     };

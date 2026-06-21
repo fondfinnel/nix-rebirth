@@ -40,7 +40,7 @@
 
     home.shellAliases.em = lib.mkIf ck "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emacs -nw";
 
-    home.preserve.directories = lib.mkIf ck [ ".config/emacs" ];
+    home.preserve.directories = lib.mkIf ck [ ".config/emacs" "org" ];
 
   };
 

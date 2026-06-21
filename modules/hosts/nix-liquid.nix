@@ -6,6 +6,7 @@
       self.nixosModules.base
       self.nixosModules.nix-liquid-conf
       self.nixosModules.nix-liquid-hw
+      self.nixosModules.share-nas
 
       self.nixosModules.bluetooth 
       self.nixosModules.kanata
@@ -37,6 +38,18 @@
 
     home-manager.sharedModules = [
       { services.mic-volume.enable = true; }
+      {
+        
+      wayland.windowManager.hyprland.settings = {
+            monitor = [
+              "eDP-1, preferred, auto, 1"
+            ];
+            bind = [ # disable or enable mousepad manually
+              "SUPER SHIFT ALT CTRL, t, exec, hyprctl keyword 'device[synaptics-tm3276-022]:enabled' false & notify-send 'Touchpad disabled'"
+              "SUPER SHIFT ALT, t, exec, hyprctl keyword 'device[synaptics-tm3276-022]:enabled' true & notify-send 'Touchpad enabled'"
+            ];
+          };
+      }
     ];
 
     imports = [
@@ -68,6 +81,7 @@
 
     fileSystems."/persist".neededForBoot = true;
     fileSystems."/nix".neededForBoot = true;
+    # fileSystems."/etc/ssh".neededForBoot = true;
     
     
     disko.devices.nodev."/" = {
