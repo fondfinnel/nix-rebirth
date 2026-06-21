@@ -83,7 +83,7 @@ in {
         toggle-pane = toggle-pane;
 
         kdeconnect-send.package = kdeconnect-send;
-        kdeconnect-send.setup = true;
+        # kdeconnect-send.setup = true;
         kdeconnect-send.settings.auto_select_single = false;
 
         yafg = yafg;
@@ -114,7 +114,7 @@ in {
         { on = [ "C" "w" ]; run = "plugin convert -- --extension='webp'"; desc = "Convert to webp"; } 
 
         { on = [ "c" "a" ]; run = "plugin compress"; desc = "Compress"; } 
-        { on = [ "c" "p" ]; run = "plugin compress -p'"; desc = "Compress with password"; } 
+        { on = [ "c" "p" ]; run = "plugin compress -p"; desc = "Compress with password"; } 
 
         { on = "M"; run = "plugin mount"; desc = "View mounts"; }
 

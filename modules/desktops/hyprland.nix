@@ -14,6 +14,7 @@ in {
       self.homeModules.noctalia-shell
       self.homeModules.gammastep
       self.homeModules.wpaperd
+      self.homeModules.walker
     ];
 
     wayland.windowManager.hyprland = let
@@ -102,7 +103,6 @@ in {
         };
 
         dwindle = {
-          pseudotile = "yes";
           preserve_split = "yes";
           # no_gaps_when_only = 0;
           special_scale_factor = 0.9;
@@ -153,7 +153,7 @@ in {
           "${mainMod}, F, togglefloating" # toggle floating active window
           "${mainMod}, P, pseudo" # pseudotiling, keep floating size in tiled sections
           "${mainMod}, M, fullscreen, 1" # maximize active app
-          "${mainMod}, N, togglesplit" # change split
+          # "${mainMod}, N, togglesplit" # change split
           "${mainMod} SHIFT, M, fullscreen" # fullscreen active window
           ## Move window focus with vim keys
           "${mainMod}, h, movefocus, l" # left
@@ -203,8 +203,9 @@ in {
           #"${mainMod}, R, exec, fuzzel -b ${colors.background}ee -t ${colors.text}ff -C ${colors.border}ff -s ${colors.border}ff -S ${colors.black}ff -w 50 -R"
           #"${mainMod}, R, exec, bemenu-run -i -c -l 10 -W 0.15 -B 1 -p run --single-instance"
           #"${mainMod}, R, exec, anyrun"
-          "${mainMod}, R, exec, ${pkgs.noctalia-shell}/bin/noctalia-shell ipc call launcher toggle"
+          # "${mainMod}, R, exec, ${pkgs.noctalia-shell}/bin/noctalia-shell ipc call launcher toggle"
           # "${mainMod}, R, exec, rofi -show drun"
+          "${mainMod}, R, exec, ${pkgs.walker}/bin/walker"
           "${mainMod}, T, exec, rofi -show window"
           ## media playback
           ",XF86AudioPlay, exec, mpc toggle"

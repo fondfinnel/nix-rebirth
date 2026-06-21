@@ -18,6 +18,8 @@ in{
       age.keyFile = "/var/lib/sops-nix/key.txt";
       age.generateKey = true;
     };
+
+    environment.preserve.files = [ "/var/lib/sops-nix/key.txt" ] ++ config.sops.age.sshKeyPaths;
     
   };
 

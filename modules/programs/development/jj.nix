@@ -6,7 +6,7 @@
       enable = d true;
 
       settings = {
-        "${config.home.username}" = {
+        user = {
           name = d config.home.username;
           email = d "";
         };
@@ -30,8 +30,8 @@
         };
 
         snapshot.auto-update-stale = true;
-        fsmonitor.backend = pkgs.watchman;
-        watchman.register_snapshot_trigger = true;
+        # fsmonitor.backend = pkgs.watchman;
+        # watchman.register_snapshot_trigger = true;
 
         colors = let
 
@@ -68,7 +68,6 @@
         templates.log = "builtin_log_oneline";
       };
     };
-    programs.bash.shellAliases.j = lib.mkIf config.programs.jujutsu.enable "jj";
 
     programs.jjui = {
       enable = d config.programs.jujutsu.enable;
@@ -78,7 +77,7 @@
         ui.ui.tracer.enabled = true;
       };
     };
-    programs.bash.shellAliases.jj = lib.mkIf config.programs.jjui.enable "jjui";
+    home.shellAliases.ju = lib.mkIf config.programs.jjui.enable "jjui";
 
   };
 

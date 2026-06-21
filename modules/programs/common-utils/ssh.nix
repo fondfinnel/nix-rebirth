@@ -33,6 +33,9 @@
         ".ssh/sockets/keep".text = "# Managed by Home Manager";
       } // publicKeyEntries;
 
+      home.preserve.directories = [ ".ssh" ];
+
     };
+
 
 }

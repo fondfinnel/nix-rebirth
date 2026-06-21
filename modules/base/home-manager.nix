@@ -38,6 +38,17 @@
 
     home.file.".face".source = lib.mkDefault ./tempface.svg;
 
+    sops = {
+      
+      defaultSopsFile = lib.mkDefault ./secrets.yaml;
+      defaultSopsFormat = "yaml";
+      validateSopsFiles = true;
+
+      age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh" ];
+      age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
+      age.generateKey = true;
+    };
+
   };
 
 }

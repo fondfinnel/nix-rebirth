@@ -79,6 +79,20 @@ in {
       defaultSopsFormat = "yaml";
       age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
       validateSopsFiles = true;
+
+      secrets."ssh".path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+      secrets."ssh-basilisk".path = "${config.home.homeDirectory}/.ssh/id_basilisk";
+      secrets."ssh-gekko".path = "${config.home.homeDirectory}/.ssh/id_gekko";
+    };
+
+    home.preserve.directories = [
+      ".config/nix-rebirth"
+      ".config/sops"
+    ];
+
+    programs.jujutsu.settings.user = {
+      name = "Nathaniel Fagan";
+      email = "natervader13@gmail.com";
     };
 
     programs.ssh.matchBlocks."git" = {

@@ -8,7 +8,7 @@ in {
       enable = lib.mkDefault check;
       useTextGreeter = lib.mkDefault true;
 
-      settings.default_session = lib.mkDefault {
+      settings.default_session = {
         command = "${pkgs.tuigreet}/bin/tuigreet --time --sessions ${pkgs.hyprland}/bin/start-hyprland";
         user = config.users.users.n0ll.name;
       };

@@ -8,6 +8,7 @@
       self.nixosModules.nix-liquid-hw
 
       self.nixosModules.bluetooth 
+      self.nixosModules.kanata
     ];
 
   };
@@ -61,84 +62,88 @@
     imports = [
       inputs.disko.nixosModules.disko
     ];
+
     preservation.enable = true;
+
+    fileSystems."/persist".neededForBoot = true;
+    fileSystems."/nix".neededForBoot = true;
     
     
     disko.devices.nodev."/" = {
       fsType = "tmpfs";
-      mountOptions = [ "size=50%" "defaults" ];
+      mountOptions = [ "size=50%" "mode=755" ];
     };
 
     # mostly rewritten from https://haseebmajid.dev/posts/2024-07-30-how-i-setup-btrfs-and-luks-on-nixos-using-disko/
-    disko.devices.disk = {
+    disko.devices.disk.main = {
 
-      main = {
+      # define the device itself
+      type = "disk";
+      device = "/dev/sda";
 
-        # define the device itself
-        type = "disk";
-        device = "/dev/sda";
+      content = {
 
-        content = {
+        # set up the boot partition
+        type = "gpt";
 
-          # set up the boot partition
-          type = "gpt";
-          partitions.ESP = {
-            label = "boot";
-            name = "ESP";
-            size = "512M";
-            type = "EF00";
+        partitions.boot = {
+          name = "boot";
+          size = "1M";
+          type = "EF02";
+        };
 
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot";
-              mountOptions = [ "defaults" ];
-            };
+        partitions.esp = {
+          name = "ESP";
+          size = "1G";
+          type = "EF00";
 
+          content = {
+            type = "filesystem";
+            format = "vfat";
+            mountpoint = "/boot";
           };
-          # define the root partition under luks encrypt
-          partitions.luks = {
-            size = "100%";
-            label = "luks";
+        };
 
-            # luks part contains what?
-            # located in /dev/mapper
-            content = {
-              type = "luks";
-              name = "cryptroot";
+        # define the root partition under luks encrypt
+        partitions.luks = {
+          
+          size = "100%";
+          label = "luks";
 
-              extraOpenArgs = [
-                "--allow-discards"
-                "--perf-no_read_workqueue"
-                "--perf-no_write_workqueue"
-              ];
+          # luks part contains what?
+          # located in /dev/mapper
+          content = {
+            type = "luks";
+            name = "cryptroot";
 
-              settings.crypttabExtraOpts = [
-                "fido2-device=auto"
-                "token-timeout=5"
-              ];
+            extraOpenArgs = [
+              "--allow-discards"
+              "--perf-no_read_workqueue"
+              "--perf-no_write_workqueue"
+            ];
 
-              # the unencrypted data
-              content = let
+            settings.crypttabExtraOpts = [
+              "fido2-device=auto"
+              "token-timeout=5"
+            ];
 
-                # define shared mountOptions
-                n = [ "compress=zstd" "noatime" ];
+            # the unencrypted data
+            content = let
 
-              in {
-                type = "btrfs";
-                extraArgs = [ "-L" "nixos" "-f" ];
+              # define shared mountOptions
+              n = [ "compress=zstd" "noatime" ];
 
-                subvolumes = {
+            in {
+              type = "btrfs";
+              extraArgs = [  "-f" ];
 
-                  "/nix".mountpoint = "/nix";
-                  "/nix".mountOptions = [ "subvol=nix" ] ++ n;
+              subvolumes = {
 
-                  "/persist".mountpoint = "/persist";
-                  "/persist".mountOptions = [ "subvol=persist" ] ++ n;
+                "/nix".mountpoint = "/nix";
+                "/nix".mountOptions = [ "subvol=nix" ] ++ n;
 
-                  "/swap".mountpoint = "/swap";
-                  "/swap".swap.swapfile.size = "8G";
-                };
+                "/persist".mountpoint = "/persist";
+                "/persist".mountOptions = [ "subvol=persist" ] ++ n;
 
               };
 
@@ -152,8 +157,6 @@
 
     };
 
-    fileSystems."/persist".neededForBoot = true;
-    fileSystems."/nix".neededForBoot = true;
   };
 
 }

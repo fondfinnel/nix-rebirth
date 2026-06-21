@@ -24,7 +24,7 @@ in {
       };
 
       plugins = [
-        # { name = "pure"; src = pkgs.fishPlugins.pure.src; } 
+        { name = "pure"; src = pkgs.fishPlugins.pure.src; } 
         { name = "humantime-fish"; src = pkgs.fishPlugins.humantime-fish.src; }
       ];
 
