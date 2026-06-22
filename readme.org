@@ -131,8 +131,8 @@ There may be better ways to declare which one is enabled for the user, such as s
 
 * To-Do
 
-** PROG Figure out how to handle home-manager
-I'm getting it going, but deciding on if I should implement it similarly to my original repo or try doing a home-manager as a separate service.
+** DONE Figure out how to handle home-manager
+I'll be using home-manager in a similar system. Especially with the custom preservation options, it'd be the wiser move. 
 
 ** DONE Create a more consistent set of reproducable code, rather than copy pasting everything
 Marking done as it's going to be something that needs to be done throughout.

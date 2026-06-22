@@ -19,7 +19,7 @@ in {
 
     sops.secrets."users/n0ll" = rec {
       owner = config.users.users.n0ll.name;
-      group = owner;
+      group = config.users.users.n0ll.group;
       neededForUsers = true;      
     };
 

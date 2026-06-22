@@ -18,11 +18,7 @@
         self.homeModules.base
 
         inputs.sops-nix.homeManagerModules.sops
-
-      ] ++ lib.optionals config.headless-check [
-
-        self.homeModules.sync-drive
-
+        inputs.nix-index-database.homeModules.default
       ];
 
     };
@@ -37,6 +33,8 @@
     home.sessionVariables.SHELL = lib.mkDefault "${osConfig.users.users."${config.home.username}".shell}";
 
     home.file.".face".source = lib.mkDefault ./tempface.svg;
+
+    programs.nix-index.enable = true;
 
     sops = {
       
