@@ -35,6 +35,7 @@
     home.file.".face".source = lib.mkDefault ./tempface.svg;
 
     programs.nix-index.enable = true;
+    home.preserve.directories = [ ".cache/nix-index" ];
 
     sops = {
       
@@ -42,7 +43,7 @@
       defaultSopsFormat = "yaml";
       validateSopsFiles = true;
 
-      age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh" ];
+      # age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh" ];
       age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
       age.generateKey = true;
     };

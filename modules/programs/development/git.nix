@@ -6,14 +6,12 @@
 
       enable = d true;
 
-      settings = {      
+      settings = lib.mkDefault {
         init.defaultBranch = d "main";
         pull.rebase = d true;
         color.ui = d "auto";
         push.autoSetupRemote = d true;
-      };
 
-      settings = lib.mkDefault {
         "${config.home.username}" = {
           name = d config.home.username;
           email = d "";

@@ -1,11 +1,9 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check && config.services.mpd.enable;
-in {
+{ self, inputs, config, ... }:  {
 
   flake.homeModules.mpd = { pkgs, lib, config, ... }: {
 
     options.services.mpd-sima.enable = lib.mkEnableOption "mpd-sima";
-    config.services.mpd-sima.enable = lib.mkDefault check;
+    config.services.mpd-sima.enable = lib.mkDefault config.services.mpd.enable;
 
     config.home.preserve.directories = lib.mkIf config.services.mpd-sima.enable [ ".local/share/mpd_sima" ];
 
@@ -60,7 +58,7 @@ in {
         })}
      '');
     };
-  };
+};
 
 
 }

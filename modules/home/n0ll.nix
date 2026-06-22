@@ -9,12 +9,12 @@ in {
       isNormalUser = true;
       description = "Nathaniel Fagan";
       extraGroups = [ "uinput" "networkmanager" "wheel" "cdrom" "libvirtd" "kvm" "dialout" "tty" ];
-      initialPassword = "123";
-      shell = pkgs.fish;
-      home = "/home/n0ll";
-      hashedPasswordFile = config.sops.secrets."users/n0ll".path;
-      openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ../../keys/n0ll;
-      # TODO hashedPassword
+        shell = pkgs.fish;
+        home = "/home/n0ll";
+        hashedPasswordFile = config.sops.secrets."users/n0ll".path;
+        openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ../../keys/n0ll;
+        # uncomment when installing fresh system
+        # initialPassword = "123";
     };
 
     sops.secrets."users/n0ll" = rec {

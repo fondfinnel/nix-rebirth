@@ -36,6 +36,8 @@ in{
 
         services.printing.enable = lib.mkDefault check;
 
+        users.mutableUsers = false;
+
         security.polkit.enable = true;
         security.polkit.adminIdentities = [ "unix-group:wheel" ];
         sops = {
@@ -46,12 +48,12 @@ in{
           age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
           age.keyFile = "/var/lib/sops-nix/key.txt";
           age.generateKey = true;
-         };
+        };
 
         environment.preserve.directories = [
           config.sops.age.keyFile          
         ] ++ config.sops.age.sshKeyPaths;
- 
+        
       }; 
 
     };

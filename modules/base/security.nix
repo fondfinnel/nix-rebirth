@@ -5,6 +5,7 @@ in{
   flake.nixosModules.base = { lib, config, pkgs, ... }: {
 
     services.openssh.enable = lib.mkDefault true;
+    services.openssh.authorizedKeysInHomedir = true;
     services.envfs.enable = lib.mkDefault check;
 
     security.polkit.enable = true;
