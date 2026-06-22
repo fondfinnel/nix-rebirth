@@ -1,5 +1,5 @@
 { self, inputs, config, ... }: let
-  check = config.headless-check == config.high-performance;
+  check = config.headless-check && config.high-performance;
 in {
 
   flake.homeModules.common-utils = { pkgs, lib, config, ... }: {
@@ -26,7 +26,7 @@ in {
       };
     };
 
-    config.home.preserve.directories = [ ".var/app/com.core447.StreamController" ];
+    config.home.preserve.directories = lib.mkIf config.programs.streamcontroller.enable [ ".var/app/com.core447.StreamController" ];
 
   };
 

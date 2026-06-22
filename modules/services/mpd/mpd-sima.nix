@@ -1,5 +1,5 @@
 { self, inputs, config, ... }: let
-  check = config.headless-check;
+  check = config.headless-check && config.services.mpd.enable;
 in {
 
   flake.homeModules.mpd = { pkgs, lib, config, ... }: {

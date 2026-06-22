@@ -1,5 +1,5 @@
 { self, inputs, config, ... }: let
-  check = config.headless-check == config.high-performance;
+  check = config.headless-check && config.high-performance;
 in {
 
   flake.homeModules.gaming = { pkgs, lib, config, ... }: {

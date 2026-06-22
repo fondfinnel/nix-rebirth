@@ -2,6 +2,8 @@
 
   flake.nixosModules.common-utils = { ... }: {
     services.openssh.enable = true;
+
+    environment.preserve.directories = [ "/etc/ssh" ];
   };
 
 
@@ -22,10 +24,11 @@
 
       programs.ssh = {
         enable = true;
-        controlPersist = "10m";
+        enableDefaultConfig = false;
         settings."*" = {
           VisualHostKey = true;
           AddKeysToAgent = true;
+          controlPersist = "10m";
         };
       };
 

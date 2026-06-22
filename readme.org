@@ -137,7 +137,7 @@ I'll be using home-manager in a similar system. Especially with the custom prese
 ** DONE Create a more consistent set of reproducable code, rather than copy pasting everything
 Marking done as it's going to be something that needs to be done throughout.
 
-** TODO Bring in the essentials of the original repo
+** DONE Bring in the essentials of the original repo
 
 ** DONE Create a mechanism that tracks directories being used but /not managed by Nix/ to pass along to preservation
 Marking done, as there's now a code snippet for preservation that does a similar function. 
@@ -147,7 +147,7 @@ Some modules that need this done to:
 - [[file:modules/programs/kitty.nix]]
 - [[file:modules/desktops/hyprland.nix]]
 
-** TODO Figure out implementing home-manager in a clean way
+** DONE Figure out implementing home-manager in a clean way
 Currently doesn't appear to be tested at all. 
 
 ** TODO Create a function to add email option to each user account
@@ -158,10 +158,10 @@ The objective with this is to have a seamless method of accessing an assigned em
 ** TODO Write an internet radio service to self-host
 Would be cool. A neat little project of sorts.
 
-** TODO Add nix-index with nix-index-database
+** DONE Add nix-index with nix-index-database
 Just needs some setup, would be helpful.
 
-** TODO Various fixes
+** DONE Various fixes
 
 #+begin_src sh
 evaluation warning: n0ll profile: The option `programs.ssh.controlPersist' defined in `/nix/store/a6kkx6xwlalp20c6wpg3x2g91nvi8s9c-source/modules/programs/common-utils/ssh.nix, via option flake.homeModules.common-utils' has been renamed to `programs.ssh.settings.*.ControlPersist'.

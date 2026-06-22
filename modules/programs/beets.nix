@@ -70,7 +70,7 @@
       };
     };
 
-    home.preserve.files = [ ".config/beets/library.db" ];
+    home.preserve.files = lib.mkIf config.programs.beets.enable [ ".config/beets/library.db" ];
 
   };
 

@@ -6,7 +6,7 @@
 
       enable = d true;
 
-      extraConfig = {      
+      settings = {      
         init.defaultBranch = d "main";
         pull.rebase = d true;
         color.ui = d "auto";
