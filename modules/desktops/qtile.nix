@@ -130,7 +130,7 @@
           size = 9;
         };
       };
-      programs.helix.settings.theme = "base16_terminal";
+      # programs.helix.settings.theme = "base16_terminal";
     }];
     # end of home
 

@@ -50,8 +50,8 @@ in {
           gaps_in = 2;
           gaps_out = 6;
           border_size = 1;
-          "col.active_border" = "rgba(${colors.borderfull})"; # rgba(${colors.bordertrans}) 90deg";
-          "col.inactive_border" = "rgba(${colors.border}1a)";      
+          # "col.active_border" = "rgba(${colors.borderfull})"; # rgba(${colors.bordertrans}) 90deg";
+          # "col.inactive_border" = "rgba(${colors.border}1a)";      
           layout = "master";
           allow_tearing = false;
         };
@@ -75,7 +75,7 @@ in {
             enabled = highperf;
             range = 4;
             render_power = 3;
-            color = "rgba(1a1a1aee)";
+            # color = "rgba(1a1a1aee)";
           };
           blur = {
             enabled = highperf;

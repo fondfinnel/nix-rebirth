@@ -25,6 +25,10 @@ in {
       # authKeyFile = config.sops.secrets."tailscale-auth".path;
     };
 
+    environment.preserve.directories = [
+      "/var/lib/tailscale/"
+    ];
+
   };
 
 }
