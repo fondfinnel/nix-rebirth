@@ -19,7 +19,7 @@
     networking.hostName = "nix-liquid";
     nixpkgs.hostPlatform = "x86_64-linux";
 
-    device-type = "primary";
+    device-type = "secondary";
 
     boot.loader.limine = {
       enable = true;
@@ -52,6 +52,7 @@
 
       # declare partition scheme
       self.nixosModules.nix-liquid-disko
+      inputs.nixos-hardware.nixosModules.lenovo-thinkpad.t480
 
     ];
 

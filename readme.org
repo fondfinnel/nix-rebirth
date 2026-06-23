@@ -66,7 +66,6 @@ Defines a device's "type", as in broad category of what it's used for. One of fo
     default = "secondary";
   };
 #+end_src
-[[file:~/Projects/nix-rebirth/modules/base/opts.nix::options.device-type = lib.mkOption {]]
 
 *** headless-check
 This is a bool that defines, in a shorthand manner, if a device is intended to be interacted with directly on a frequent basis. This is mainly to restrict desktop environments and other unecessary packages from building on servers or virtual machines.
@@ -80,7 +79,6 @@ When /true/, a device is intended to have a desktop environment and whatnot. Whe
     default = if config.device-type != isheadless then true else false;
   };
 #+end_src
-[[file:~/Projects/nix-rebirth/modules/base/opts.nix::options.headless-check = lib.mkOption {]]
 
 *** high-performance
 For when battery or performance isn't as much of a concern. If it's a primary device, it defaults to true.
@@ -92,7 +90,6 @@ For when battery or performance isn't as much of a concern. If it's a primary de
     default = if config.device-type == "primary" then true else false;
   };
 #+end_src
-[[file:~/Projects/nix-rebirth/modules/base/opts.nix::options.high-performance = lib.mkOption {]]
 
 *** preservation wrappers
 Impermanence is goofy, I couldn't get it going despite my best efforts. The main reason I wanted to use impermanence is due to how it integrates into home-manager as well. That, I thought, would be a lot cleaner considering how I've been building things using home-manager for majority of userspace configs.
@@ -143,9 +140,6 @@ Marking done as it's going to be something that needs to be done throughout.
 Marking done, as there's now a code snippet for preservation that does a similar function. 
 
 ** TODO Create proper color definitions to be used repo-wide
-Some modules that need this done to: 
-- [[file:modules/programs/kitty.nix]]
-- [[file:modules/desktops/hyprland.nix]]
 
 ** DONE Figure out implementing home-manager in a clean way
 Currently doesn't appear to be tested at all. 
@@ -193,3 +187,4 @@ evaluation warning: The user 'n0ll' has multiple of the options
                     ,* users.users."n0ll".initialPassword: "123"
 #+end_src
 
+** TODO Add hardware flake for better laptop experience
