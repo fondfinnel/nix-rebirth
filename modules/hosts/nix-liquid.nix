@@ -52,7 +52,7 @@
 
       # declare partition scheme
       self.nixosModules.nix-liquid-disko
-      inputs.nixos-hardware.nixosModules.lenovo-thinkpad.t480
+      inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
 
     ];
 

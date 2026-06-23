@@ -32,7 +32,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:nix-community/nixos-hardware/master";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:

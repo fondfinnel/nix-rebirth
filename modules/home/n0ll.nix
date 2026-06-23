@@ -113,6 +113,7 @@ in {
     };
 
 
+    stylix.targets.firefox.enable = false;
     programs.firefox.profiles."${config.home.username}" = {
 
       name = config.home.username;
