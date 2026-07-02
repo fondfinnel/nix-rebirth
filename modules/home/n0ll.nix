@@ -96,6 +96,29 @@ in {
       ".config/sops"
     ];
 
+    stylix = {
+      opacity = {
+        terminal = 0.9;
+        popups = 0.9;
+      };
+
+      fonts = rec {
+        serif = monospace;
+        sansSerif = monospace;
+        emoji = monospace;
+
+        monospace = {
+          package = pkgs.nerd-fonts.sauce-code-pro;
+          name = "SauceCodePro Nerd Font Mono";
+        };
+
+        sizes = {
+          applications = 12;
+          terminal = 10;
+        };
+      };
+    };
+
     programs.jujutsu.settings.user = {
       name = "Nathaniel Fagan";
       email = "natervader13@gmail.com";
@@ -119,7 +142,6 @@ in {
     };
 
 
-    stylix.targets.firefox.enable = false;
     programs.firefox.profiles."${config.home.username}" = {
 
       name = config.home.username;

@@ -15,17 +15,17 @@ in{
       defaultSopsFormat = "yaml";
       validateSopsFiles = true;
 
-      age.sshKeyPaths = if
-        config.preservation.enable then [ "/persist/etc/ssh/ssh_host_ed25519_key" ]
-        else [ "/etc/ssh/ssh_host_ed25519_key" ];
+      age.sshKeyPaths = if config.preservation.enable then [ "/persist/etc/ssh/ssh_host_ed25519_key" ]
+                        else [ "/etc/ssh/ssh_host_ed25519_key" ];
       age.keyFile = if config.preservation.enable then "/persist/var/lib/sops-nix/key.txt"
                     else "/var/lib/sops-nix/key.txt";
       age.generateKey = true;
     };
 
-    environment.preserve.directories = [
-      config.sops.age.keyFile          
-    ] ++ config.sops.age.sshKeyPaths;
+    environment.preserve.files = [
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/var/lib/sops-nix/key.txt"
+    ];
     
   };
 
