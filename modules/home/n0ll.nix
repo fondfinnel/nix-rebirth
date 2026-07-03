@@ -172,6 +172,7 @@ in {
         keepassxc-browser
         youtube-high-definition
         simple-translate
+        old-reddit-redirect
       ];
 
       extensions.settings = {

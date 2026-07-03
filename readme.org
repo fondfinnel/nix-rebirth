@@ -139,18 +139,29 @@ Marking done as it's going to be something that needs to be done throughout.
 ** DONE Create a mechanism that tracks directories being used but /not managed by Nix/ to pass along to preservation
 Marking done, as there's now a code snippet for preservation that does a similar function. 
 
-** TODO Create proper color definitions to be used repo-wide
+** DONE Create proper color definitions to be used repo-wide
+Stylix more or less does this.
 
 ** DONE Figure out implementing home-manager in a clean way
 Currently doesn't appear to be tested at all. 
 
-** TODO Create a function to add email option to each user account
+
+** Server things
+*** TODO Create a function to add email option to each user account
 There's gotta be a way to do it that isn't "make sure to write it for every user".  
 
 The objective with this is to have a seamless method of accessing an assigned email for each user. This is particularly useful when in the context of the NAS machine. 
 
-** TODO Write an internet radio service to self-host
+*** TODO Write an internet radio service to self-host
 Would be cool. A neat little project of sorts.
+
+*** TODO Cloudflared
+*** TODO Import custom docker images for stuff unavailable in nixpkgs
+Probably a good idea to have a dedicated area to have apps like this store shit.
+
+- [ ] fireShare
+- [ ] tunarr
+- [ ] tubearchivist
 
 ** DONE Add nix-index with nix-index-database
 Just needs some setup, would be helpful.
@@ -187,4 +198,4 @@ evaluation warning: The user 'n0ll' has multiple of the options
                     ,* users.users."n0ll".initialPassword: "123"
 #+end_src
 
-** TODO Add hardware flake for better laptop experience
+** DONE Add hardware flake for better laptop experience
