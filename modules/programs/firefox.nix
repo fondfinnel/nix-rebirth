@@ -8,6 +8,8 @@ in {
     programs.firefox = {
       enable = lib.mkDefault (!config.programs.librewolf.enable && check);
 
+      configPath = lib.mkDefault "${config.xdg.configHome}/mozilla/firefox";
+
       profiles."${config.home.username}".settings = lib.mkDefault { # Settings inside about:config, writes to user.js
         "browser.startup.homepage" =  "about:blank"; # Page that firefox sets home as
         "middlemouse.paste" = false;
@@ -32,25 +34,25 @@ in {
         "browser.search.suggest.enabled.private" = false;
         "browser.urlbar.suggest.searches" = false;
         # "browser.urlbar.showSearchSuggestionsFirst" = false;
-          "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-          "browser.newtabpage.activity-stream.feeds.snippets" = false;
-          "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
-          "browser.newtabpage.activity-stream.section.highlights.includeBookmarks" = false;
-          "browser.newtabpage.activity-stream.section.highlights.includeDownloads" = false;
-          "browser.newtabpage.activity-stream.section.highlights.includeVisited" = false;
-          "browser.newtabpage.activity-stream.showSponsored" = false;
-          "browser.newtabpage.activity-stream.system.showSponsored" = false;
-          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-          # # Enable user CSS
-          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-          "layers.acceration.force-enabled" = true;
-          "layout.css.backdrop-filter.enabled" = true;
-          "svg.context-properties.content.enabled" = true;
-          "network.cookie.lifetimePolicy" = 0;
-          "cookiebanners.service.mode" = 2; # block cookie banners
-          "userChrome.autohide.back_button" = true;
-          "userChrome.autohide.forward_button" = true;
-        };
+        "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+        "browser.newtabpage.activity-stream.feeds.snippets" = false;
+        "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
+        "browser.newtabpage.activity-stream.section.highlights.includeBookmarks" = false;
+        "browser.newtabpage.activity-stream.section.highlights.includeDownloads" = false;
+        "browser.newtabpage.activity-stream.section.highlights.includeVisited" = false;
+        "browser.newtabpage.activity-stream.showSponsored" = false;
+        "browser.newtabpage.activity-stream.system.showSponsored" = false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+        # # Enable user CSS
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "layers.acceration.force-enabled" = true;
+        "layout.css.backdrop-filter.enabled" = true;
+        "svg.context-properties.content.enabled" = true;
+        "network.cookie.lifetimePolicy" = 0;
+        "cookiebanners.service.mode" = 2; # block cookie banners
+        "userChrome.autohide.back_button" = true;
+        "userChrome.autohide.forward_button" = true;
+      };
 
 
       policies = lib.mkDefault { # ref: https://mozilla.github.io/policy-templates/

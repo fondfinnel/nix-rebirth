@@ -7,6 +7,8 @@ in {
     programs.librewolf = {
       enable = lib.mkDefault false;
 
+      configPath = lib.mkDefault "${config.xdg.configHome}/librewolf";
+
       # import the firefox config
       profiles."${config.home.username}" = config.programs.firefox.profiles."${config.home.username}" // {
 
