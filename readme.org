@@ -202,16 +202,6 @@ evaluation warning: The user 'n0ll' has multiple of the options
 ** DONE Add hardware flake for better laptop experience
 
 ** TODO Bring in the rest
-- qbittorrent
-- mpdscribble
-- playerctl
-- ps3-disc-dumper
-- rimsort
-- rpcs3
-- streamcontroller
 - smb share
 - syncthing
-- qpwgraph
-- easyeffects
-- dragon-drop
   

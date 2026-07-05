@@ -4,6 +4,8 @@ in {
 
   flake.homeModules.common-utils = { pkgs, lib, config, ... }: {
 
+    home.packages = lib.mkIf config.programs.yazi.enable [ pkgs.ripdrag ];
+
     programs.yazi = {
       enable = lib.mkDefault true;
 

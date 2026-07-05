@@ -32,12 +32,9 @@ in {
     environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
     # likely removing once things are finalized, for testing purposes
-    home-manager.users.n0ll = { ... }: {
-      imports = [
-        self.homeModules.n0ll-conf
-      ];
-
-    };
+    home-manager.users.n0ll.imports = [
+      self.homeModules.n0ll-conf
+    ];
 
   };
 
@@ -63,6 +60,7 @@ in {
       mpd
       firefox
       sync-drive
+      qbittorrent
     ];
 
     home.sessionVariables = {
@@ -89,6 +87,8 @@ in {
       secrets."ssh".path = "${config.home.homeDirectory}/.ssh/id_ed25519";
       secrets."ssh-basilisk".path = "${config.home.homeDirectory}/.ssh/id_basilisk";
       secrets."ssh-gekko".path = "${config.home.homeDirectory}/.ssh/id_gekko";
+
+      secrets."lastfm".path = "${config.home.homeDirectory}/.config/mpdscribble.key";
     };
 
     home.preserve.directories = [
@@ -118,6 +118,11 @@ in {
         };
       };
     };
+    
+    services.mpdscribble.endpoints."last.fm" = {
+      username = "natervader13";
+      passwordFile = config.sops.secrets."lastfm".path; 
+    };
 
     programs.jujutsu.settings.user = {
       name = "Nathaniel Fagan";
@@ -136,11 +141,7 @@ in {
 
     programs.ledger.enable = true;
 
-    services.mpdscribble.endpoints."last.fm" = {
-      username = "natervader13";
-      passwordFile = config.sops.secrets."lastfm".path; 
-    };
-
+    programs.rimsort.enable = osConfig.headless-check;
 
     programs.firefox.profiles."${config.home.username}" = {
 
