@@ -43,6 +43,7 @@
     imports = [
       self.nixosModules.users
       self.nixosModules.gaming
+      self.nixosModules.amd
     ];
 
   };

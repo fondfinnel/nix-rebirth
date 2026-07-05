@@ -46,7 +46,10 @@
       rocmPackages.rocminfo
       rocmPackages.rocm-runtime
     ];
-    home-manager.sharedModules = [{ programs.btop.package = pkgs.btop.override { rocmSupport = lib.mkDefault config.hardware.amdgpu.initrd.enable; }; }];
+
+    home-manager.sharedModules = [{
+      programs.btop.package = pkgs.btop-rocm;
+    }];
 
   };
 
