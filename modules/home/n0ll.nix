@@ -89,6 +89,7 @@ in {
       secrets."ssh-gekko".path = "${config.home.homeDirectory}/.ssh/id_gekko";
 
       secrets."lastfm".path = "${config.home.homeDirectory}/.config/mpdscribble.key";
+      secrets."syncthing".owner = config.home.username;
     };
 
     home.preserve.directories = [

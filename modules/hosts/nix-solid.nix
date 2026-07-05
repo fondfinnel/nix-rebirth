@@ -24,17 +24,6 @@
     high-performance = true;
     headless-check = true;
 
-    boot.loader.limine = {
-      enable = true;
-      additionalFiles = { "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi"; };
-      extraEntries =
-        "/memtest86
-        protocol: chainload
-        path: boot():///efi/memtest86/memtest86.efi
-      ";
-    };
-    boot.loader.efi.canTouchEfiVariables = true;
-
     hardware.keyboard.zsa.enable = true;
     hardware.keyboard.qmk.enable = true;
 
