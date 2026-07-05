@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check && config.high-performance;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.gaming = { pkgs, lib, config, ... }: {
+  flake.homeModules.gaming = { pkgs, lib, config, osConfig, ... }: let
+    check = osConfig.headless-check && osConfig.high-performance;
+  in {
 
     options.programs.ryujinx.enable = lib.mkEnableOption "ryujinx";
     config.programs.ryujinx.enable = lib.mkDefault check;

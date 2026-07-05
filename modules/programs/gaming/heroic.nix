@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check && config.high-performance;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.gaming = { pkgs, lib, config, ... }: {
+  flake.homeModules.gaming = { pkgs, lib, config, osConfig, ... }: let
+    check = osConfig.headless-check && osConfig.high-performance;
+  in {
 
     options.programs.heroic.enable = lib.mkEnableOption "heroic";
     config.programs.heroic.enable = lib.mkDefault check;

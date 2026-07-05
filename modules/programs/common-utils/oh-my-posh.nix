@@ -7,7 +7,7 @@
       check = config.home.sessionVariables.SHELL == pkgs.fish;
     in {
       # default when using fish
-      enable = lib.mkDefault check;
+      enable = lib.mkDefault false;
       useTheme = lib.mkDefault "tiwahu";
       # sonicboom_dark
       # craver

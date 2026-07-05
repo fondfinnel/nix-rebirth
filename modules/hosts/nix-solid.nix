@@ -21,6 +21,8 @@
     nixpkgs.hostPlatform = "x86_64-linux";
 
     device-type = "primary";
+    high-performance = true;
+    headless-check = true;
 
     boot.loader.limine = {
       enable = true;
@@ -36,14 +38,16 @@
     hardware.keyboard.zsa.enable = true;
     hardware.keyboard.qmk.enable = true;
 
-    home-manager.sharedModules = [
-      { services.mic-volume.enable = true; }
-    ];
+    home-manager.sharedModules = [{
+      services.mic-volume.enable = true;
+      services.streamcontroller.enable = true;
+    }];
 
     imports = [
       self.nixosModules.users
       self.nixosModules.gaming
       self.nixosModules.amd
+      self.nixosModules.virt-manager
     ];
 
   };

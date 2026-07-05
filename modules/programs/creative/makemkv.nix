@@ -1,16 +1,16 @@
-{ self, inputs, config, ... }: let
-  check = config.high-performance;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.creative = { pkgs, lib, config, osConfig, ... }: {
+  flake.homeModules.creative = { pkgs, lib, config, osConfig, ... }: let
+    check = osConfig.high-performance;
+  in {
 
     options.programs.makemkv.enable = lib.mkEnableOption "makemkv";
     config.programs.makemkv.enable = lib.mkDefault check;
 
-    config.home.packages =  with pkgs; lib.mkIf (config.programs.makemkv.enable == true) [
+    config.home.packages =  with pkgs; lib.mkIf config.programs.makemkv.enable [
       makemkv
       tvnamer
-      mktoolnix
+      mkvtoolnix
 
       mediainfo
 

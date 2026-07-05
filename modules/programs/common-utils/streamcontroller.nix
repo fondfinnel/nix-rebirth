@@ -1,18 +1,18 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check && config.high-performance;
-in {
+{ self, inputs, config, ... }:  {
 
-  flake.homeModules.common-utils = { pkgs, lib, config, ... }: {
+  flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }: let
+    check = osConfig.headless-check && osConfig.high-performance;
+  in {
 
-    options.programs.streamcontroller.enable = lib.mkEnableOption "streamcontroller";
-    config.programs.streamcontroller.enable = lib.mkDefault false;
+    options.services.streamcontroller.enable = lib.mkEnableOption "streamcontroller";
+    config.services.streamcontroller.enable = lib.mkDefault false;
 
-    config.home.packages = lib.mkIf config.programs.streamcontroller.enable [ 
+    config.home.packages = lib.mkIf config.services.streamcontroller.enable [ 
       pkgs.streamcontroller
       pkgs.python313Packages.streamcontroller-plugin-tools
     ]; 
 
-    config.systemd.user.services.streamcontroller = lib.mkIf config.programs.streamcontroller.enable {
+    config.systemd.user.services.streamcontroller = lib.mkIf config.services.streamcontroller.enable {
       Unit.Description = "Control Elgato Stream Deck";
       Install.WantedBy = [ "default.target" ];
 
@@ -26,7 +26,7 @@ in {
       };
     };
 
-    config.home.preserve.directories = lib.mkIf config.programs.streamcontroller.enable [ ".var/app/com.core447.StreamController" ];
+    config.home.preserve.directories = lib.mkIf config.services.streamcontroller.enable [ ".var/app/com.core447.StreamController" ];
 
   };
 

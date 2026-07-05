@@ -4,16 +4,17 @@
     "/mnt/NAS/Media/Photos/DSLR/wallpaper";
   # "/mnt/NAS/Media/Photos/Wallpapers/anime-manga";
   # "/mnt/NAS/Media/Photos/Wallpapers";
-  check = if config.device-type == "primary" then true else false;
+  check = config.device-type == "primary";
+  check2 = config.headless-check;
 
 in {
 
-  flake.homeModules.wpaperd = { pkgs, ... }: let
+  flake.homeModules.wpaperd = { pkgs, lib, ... }: let
     backuppape = pkgs.nixos-artwork.wallpapers.binary-black;
   in {
     
     services.wpaperd = {
-      enable = check;
+      enable = lib.mkDefault check2;
 
       settings.any = {
         path = if check then papedirectory else backuppape;

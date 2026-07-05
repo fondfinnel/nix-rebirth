@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check && config.high-performance;
-in {
+{ self, inputs, config, ... }:{
 
-  flake.homeModules.common-utils = { pkgs, lib, config, ... }: {
+  flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }:  let
+    check = osConfig.headless-check && osConfig.high-performance;
+  in {
 
     options.programs.protonup-rs.enable = lib.mkEnableOption "protonup-rs";
     config.programs.protonup-rs.enable = lib.mkDefault check;

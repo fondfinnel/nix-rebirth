@@ -1,10 +1,10 @@
-{ self, inputs, config, ... }: let
-  check = config.device-type == "primary";
-in {
+{ self, inputs, config, ... }: {
 
-  flake.nixosModules.gaming = { lib, config, pkgs, ... }: {
+  flake.nixosModules.gaming = { lib, config, pkgs, ... }: let
+    check = config.device-type == "primary";
+  in {
 
-    services.sunshine = lib.mkDefault rec {
+    services.sunshine = rec {
       enable = check;
       autoStart = lib.mkDefault enable;
       settings = {
@@ -15,6 +15,11 @@ in {
       capSysAdmin = lib.mkDefault enable; # required for DRM/KMS screen capture
       openFirewall = lib.mkDefault enable;
     };
+
+    sops.secrets."sunshine" = {      
+      owner = config.users.users.root.name;
+      group = config.users.users.root.group;
+    }; 
 
   };
 

@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.high-performance;
-in {
+{ self, inputs, config, ... }:  {
 
-  flake.nixosModules.virt-manager = { pkgs, lib, config, ... }: {
+  flake.nixosModules.virt-manager = { pkgs, lib, config, ... }: let
+    check = config.high-performance;
+  in {
 
     virtualisation = {
       libvirtd.enable = lib.mkDefault check;

@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check && config.high-performance;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.nixosModules.gaming = { lib, config, pkgs, ... }: {
+  flake.nixosModules.gaming = { lib, config, pkgs, ... }: let
+    check = config.headless-check && config.high-performance;
+  in {
     
     programs.steam = {
       enable = lib.mkDefault check;

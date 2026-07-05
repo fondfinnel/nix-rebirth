@@ -10,15 +10,17 @@
 
     environment.preserve.directories = [ "/var/lib/bluetooth" ];
 
+    home-manager.sharedModules = [ self.homeModules.bluetooth ];
+
   };
 
-  # home changes for devices with bluetooth
-  # imported at base as shared module
-  flake.homeModules.common-utils = { pkgs, osConfig, lib, ... }: {
+  flake.homeModules.bluetooth = { pkgs, osConfig, lib, ... }: lib.mkIf osConfig.hardware.bluetooth.enable {
 
-    home.packages = lib.mkIf osConfig.hardware.bluetooth.enable [
+    home.packages = [
       pkgs.bluetui
     ];
+
+    services.mpris-proxy.enable = true; 
 
   };
 

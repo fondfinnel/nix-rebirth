@@ -1,7 +1,7 @@
 { self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { pkgs, lib, config, ... }: let
-      check = config.services.pipewire.enable;
+  flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }: let
+    check = osConfig.services.pipewire.enable;
   in{
 
     options.programs.wiremix.enable = lib.mkEnableOption "wiremix";

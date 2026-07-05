@@ -62,5 +62,13 @@ in{
     
   };
 
+  flake.homeModules.base = { pkgs, ... }: {
+
+    home.packages = [
+      pkgs.sops
+    ];
+
+  };
+
 
 }

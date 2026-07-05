@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.high-performance == config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.creative = { pkgs, lib, ... }: {
+  flake.homeModules.creative = { pkgs, lib, osConfig, ... }: let
+    check = osConfig.high-performance && osConfig.headless-check;
+  in {
 
     programs.obs-studio = {
       enable = lib.mkDefault check;

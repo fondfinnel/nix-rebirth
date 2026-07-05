@@ -162,6 +162,7 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 - [ ] fireShare
 - [ ] tunarr
 - [ ] tubearchivist
+*** TODO calibre-server and calibre-web
 
 ** DONE Add nix-index with nix-index-database
 Just needs some setup, would be helpful.
@@ -199,3 +200,18 @@ evaluation warning: The user 'n0ll' has multiple of the options
 #+end_src
 
 ** DONE Add hardware flake for better laptop experience
+
+** TODO Bring in the rest
+- qbittorrent
+- mpdscribble
+- playerctl
+- ps3-disc-dumper
+- rimsort
+- rpcs3
+- streamcontroller
+- smb share
+- syncthing
+- qpwgraph
+- easyeffects
+- dragon-drop
+  

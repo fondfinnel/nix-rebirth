@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.high-performance == config.headless-check;
-in {
+{ self, inputs, config, ... }:  {
 
-  flake.homeModules.gaming = { lib, pkgs, osConfig, config, ... }: {
+  flake.homeModules.gaming = { lib, pkgs, osConfig, config, ... }: let
+    check = osConfig.high-performance && osConfig.headless-check;
+  in {
 
     programs.lutris = {
 
@@ -19,7 +19,7 @@ in {
 
     };
 
-    home.preserve.directories = [ "Games" ];
+    home.preserve.directories = lib.mkIf config.programs.lutris.enable [ "Games" ];
 
   };
 

@@ -3,6 +3,7 @@
   # TODO colors
   # TODO lockscreen
   # TODO file imports
+  # TODO rewrite
   flake.nixosModules.qtile = { lib, config, pkgs, ... }: let
     # myBackground = ../assets/evangelion-fear.jpg;
     color.LightGreen = "#33ff00";
