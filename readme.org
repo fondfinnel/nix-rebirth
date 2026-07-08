@@ -203,5 +203,4 @@ evaluation warning: The user 'n0ll' has multiple of the options
 
 ** TODO Bring in the rest
 - smb share
-- syncthing
   

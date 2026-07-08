@@ -17,7 +17,7 @@
 
   flake.homeModules.gaming = { lib, osConfig, config, pkgs, ... }: {
     home.preserve.directories = lib.mkIf osConfig.programs.steam.enable [
-      "${config.xdg.dataHome}/Steam"
+      ".local/share/Steam"
       ".steam"
       ".cache/steam"
     ];

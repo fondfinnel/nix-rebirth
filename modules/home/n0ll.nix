@@ -61,6 +61,7 @@ in {
       firefox
       sync-drive
       qbittorrent
+      syncthing
     ];
 
     home.sessionVariables = {

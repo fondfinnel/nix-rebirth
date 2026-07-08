@@ -70,9 +70,12 @@
       };
     };
 
-    home.preserve.directories = [
-      config.services.mpd.musicDirectory      
-    ];
+    # presrve music directory if it is located outside of /mnt
+    home.preserve.directories = lib.mkIf
+      (!lib.strings.hasPrefix "/mnt" config.services.mpd.musicDirectory)
+      [
+        config.services.mpd.musicDirectory      
+      ];
 
 
   };

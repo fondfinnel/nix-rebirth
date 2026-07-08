@@ -19,3 +19,9 @@ creation_rules:
           - *n0ll
           - *nix-solid
           - *nix-liquid
+
+  - path_regex: host-secrets.yaml$
+    key_groups:
+      - age:
+          - *n0ll
+          - *hosts
