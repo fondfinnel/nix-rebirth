@@ -1,24 +1,20 @@
-{ self, inputs, config, pkgs, ... }: let
+{ self, inputs, config, pkgs, ... }: {
 
-  papedirectory =
-    "/mnt/NAS/Media/Photos/DSLR/wallpaper";
-  # "/mnt/NAS/Media/Photos/Wallpapers/anime-manga";
-  # "/mnt/NAS/Media/Photos/Wallpapers";
-  check = config.device-type == "primary";
-  check2 = config.headless-check;
-
-in {
-
-  flake.homeModules.wpaperd = { pkgs, lib, ... }: let
+  flake.homeModules.wpaperd = { pkgs, lib, config, osConfig, ... }: let
     backuppape = pkgs.nixos-artwork.wallpapers.binary-black;
+    papedirectory =
+      "/mnt/NAS/Media/Photos/DSLR/wallpaper";
+    # "/mnt/NAS/Media/Photos/Wallpapers/anime-manga";
+    # "/mnt/NAS/Media/Photos/Wallpapers";
+    check2 = osConfig.headless-check;
   in {
     
     services.wpaperd = {
       enable = lib.mkDefault check2;
 
       settings.any = {
-        path = if check then papedirectory else backuppape;
-        duration = if check then "5m" else "1h";
+        path = if osConfig.device-type == "primary" then papedirectory else backuppape;
+        duration = if osConfig.device-type == "primary" then "5m" else "1h";
         mode = "center"; # use fit-border-color when it gets the next version
         sorting = "random";
       };  

@@ -50,6 +50,7 @@
         format "384000:f:2"
       }
       '' else ''''}
+
       replaygain "auto"
       max_output_buffer_size "16384"
       mixramp_analyzer "yes"

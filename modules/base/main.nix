@@ -40,7 +40,6 @@ in{
 
         security.polkit.enable = true;
         security.polkit.adminIdentities = [ "unix-group:wheel" ];
-
         
       }; 
 

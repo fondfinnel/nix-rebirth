@@ -89,8 +89,8 @@ in {
       secrets."ssh-basilisk".path = "${config.home.homeDirectory}/.ssh/id_basilisk";
       secrets."ssh-gekko".path = "${config.home.homeDirectory}/.ssh/id_gekko";
 
-      secrets."lastfm".path = "${config.home.homeDirectory}/.config/mpdscribble.key";
-      secrets."syncthing".owner = config.home.username;
+      secrets."lastfm".name = "lastfm";
+      secrets."syncthing".name = "syncthing";
     };
 
     home.preserve.directories = [
@@ -115,8 +115,8 @@ in {
         };
 
         sizes = {
-          applications = 12;
-          terminal = 10;
+          applications = 10;
+          terminal = 9;
         };
       };
     };

@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in{
+{ self, inputs, config, ... }: {
 
-  flake.nixosModules.base = { lib, config, pkgs, ... }: {
+  flake.nixosModules.base = { lib, config, pkgs, ... }: let
+    check = config.headless-check;
+  in {
 
     services.openssh.enable = lib.mkDefault true;
     services.openssh.authorizedKeysInHomedir = true;
@@ -20,8 +20,16 @@ in{
       age.keyFile = if config.preservation.enable then "/persist/var/lib/sops-nix/key.txt"
                     else "/var/lib/sops-nix/key.txt";
       age.generateKey = true;
-    };
 
+      secrets = let
+        sopsFile = ./host-secrets.yaml;
+        reloadUnits = [ "syncthing.service" ];
+      in {
+        "${config.networking.hostName}/syncthing/cert" = { inherit sopsFile reloadUnits; };
+        "${config.networking.hostName}/syncthing/key" = { inherit sopsFile reloadUnits; };
+      };
+
+    };
     environment.systemPackages = with pkgs; [
       yubioath-flutter # gui tool
       yubikey-manager # cli tool `ykman`
@@ -69,6 +77,5 @@ in{
     ];
 
   };
-
 
 }

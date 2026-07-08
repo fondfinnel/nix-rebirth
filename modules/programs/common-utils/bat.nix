@@ -15,7 +15,7 @@
       ];
     };
 
-    programs.bash.shellAliases = lib.mkIf check {
+    home.shellAliases = lib.mkIf check {
       cat = "bat";
       man = "batman";
       watch = "batwatch";

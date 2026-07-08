@@ -8,27 +8,20 @@
     relativeDirs = lib.map (f: lib.removePrefix "${config.home.homeDirectory}/" f) dirs;
 
     # filter out anything outside of home
-    filteredDirs = builtins.filter (path: !lib.strings.hasPrefix "/" path) relativeDirs;
+    filteredDirs = builtins.filter (path: !lib.strings.hasPrefix "/mnt" path) relativeDirs;
   in {
 
     home.preserve.directories = [
       ".config/syncthing"
     ] ++ filteredDirs;
 
-    sops.secrets = let
-      sopsFile = ./hosts-secrets.yaml;
-      reloadUnits = [ "syncthing.service" ];
-    in {
-      "${osConfig.networking.hostName}/syncthing/cert" = { inherit sopsFile reloadUnits; };
-      "${osConfig.networking.hostName}/syncthing/key" = { inherit sopsFile reloadUnits; };
-    };
 
     services.syncthing = { 
       enable = true;
       guiAddress = "localhost:8384"; # Local access to the GUI
 
-      cert = config.sops.secrets."${osConfig.networking.hostName}/syncthing/cert".path;
-      key = config.sops.secrets."${osConfig.networking.hostName}/syncthing/key".path;
+      cert = osConfig.sops.secrets."${osConfig.networking.hostName}/syncthing/cert".path;
+      key = osConfig.sops.secrets."${osConfig.networking.hostName}/syncthing/key".path;
 
       settings = {
         guiCredentials.username = config.home.username;
@@ -77,7 +70,7 @@
         folders = let
 
           devices = [
-            "phone" "desktop" "laptop" "boox"
+            "phone" "nix-solid" "laptop" "boox"
           ];
           versioning = {
             type="simple";

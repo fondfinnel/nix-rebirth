@@ -26,7 +26,7 @@
 
   };
 
-  flake.homeModules.base = { osConfig, config, lib, ... }: {
+  flake.homeModules.base = { osConfig, config, lib, pkgs, ... }: {
     home.stateVersion = lib.mkDefault osConfig.system.stateVersion;
 
     # inherit user's assigned shell
@@ -48,6 +48,8 @@
       age.generateKey = true;
 
     };
+
+    home.packages = [ pkgs.nerd-fonts.symbols-only ];
 
   };
 

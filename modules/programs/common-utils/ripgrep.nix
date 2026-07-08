@@ -8,8 +8,6 @@ in {
     programs.ripgrep-all.enable = lib.mkDefault config.programs.ripgrep.enable;
     home.packages = lib.mkIf config.programs.ripgrep.enable [ pkgs.repgrep ];
 
-    home.shellAliases.grep = lib.mkIf config.programs.ripgrep.enable "rg";
-
   };
 
 

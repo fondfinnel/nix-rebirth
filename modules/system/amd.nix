@@ -15,21 +15,24 @@
 
     hardware = {
 
+      enableAllFirmware = true;
+
       amdgpu = {
         initrd.enable = true;
         opencl.enable = true;
+        zluda.enable = true;
       };
 
       # Extra packages, support and shit
       graphics = {
+        enable = true;
+        enable32Bit = true;
         extraPackages = with pkgs; [
           rocmPackages.clr
           libva
           libva-utils
           libva-vdpau-driver
         ];
-        enable = true;
-        enable32Bit = true;
       };
     };
 

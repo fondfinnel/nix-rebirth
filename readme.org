@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-06-20 Sat 19:51]
+:mtime:    [2026-07-07 Tue 22:47]
 :END:
 
 #+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
@@ -126,6 +126,17 @@ Firefox profiles are declared with the user's profile itself. They get re-used w
 
 There may be better ways to declare which one is enabled for the user, such as stating the package that Firefox builds on, but for the moment it's just conditional.
 
+
+** On testing
+Easy temporary test builds from this flake can be done with this:
+
+#+begin_src sh :tangle no
+set NH_FLAKE "/home/n0ll/Projects/nix-rebirth"
+nh os test -H nix-solid -d always -n | bat --plain
+#+end_src
+
+Redirects /nh/ to use the flake, and does a test build without activating it to show the diff, paged in bat.
+
 * To-Do
 
 ** DONE Figure out how to handle home-manager
@@ -201,6 +212,6 @@ evaluation warning: The user 'n0ll' has multiple of the options
 
 ** DONE Add hardware flake for better laptop experience
 
-** TODO Bring in the rest
-- smb share
+** DONE Bring in the rest
+  
   

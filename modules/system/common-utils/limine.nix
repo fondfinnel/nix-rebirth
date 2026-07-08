@@ -10,6 +10,7 @@
         protocol: chainload
         path: boot():///efi/memtest86/memtest86.efi
       ";
+      style.wallpapers = [ ];
     };
     boot.loader.efi.canTouchEfiVariables = true;
 };

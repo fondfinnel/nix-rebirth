@@ -7,7 +7,13 @@
       enable = lib.mkDefault true;
       autoEnable = lib.mkDefault true;
 
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark.yaml";
+      base16Scheme = lib.mkDefault "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+
+      cursor = lib.mkDefault {
+        name = "capitaine-cursors";
+        package = pkgs.capitaine-cursors;
+        size = 24;
+      };
     };
   };
 

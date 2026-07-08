@@ -11,15 +11,15 @@
       "exec"
       "user"
       "users"
-      "vers=3.0"
-      "uid=1000"
-      "gid=100"
-      "_netdev"
+      # "vers=3.0"
+      # "uid=1000"
+      # "gid=100"
+      # "_netdev"
       "credentials=${config.sops.secrets."smb/cred".path}"
     ];
-    nas_ip = "truenas"; # TODO sops
+    nas_ip = "nate-truenas"; # TODO sops
   in {
-  
+    
     environment.systemPackages = [ pkgs.cifs-utils ];
 
     sops.secrets = let
@@ -51,15 +51,11 @@
       options = automount_opts;
     };
 
+    # Tune firewall for CIFS
     networking.firewall.extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
 
-    home-manager.users.n0ll = { pkgs, ... }: let
-      alias = { 
-        savememe = "cd '/home/n0ll/NAS/Media/Photos/Other Junk/3 stupid/2026' && yt-dlp";
-      };
-    in {
-      programs.zsh.shellAliases = alias;
-      programs.fish.shellAbbrs = alias;
+    home-manager.users.n0ll = { pkgs, ... }: {
+      home.shellAliases.savememe = "cd '/home/n0ll/NAS/Media/Photos/Other Junk/3 stupid/2026' && yt-dlp";
     };
 
   };

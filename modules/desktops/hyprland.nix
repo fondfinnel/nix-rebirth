@@ -1,13 +1,14 @@
 { self, inputs, config, pkgs, ... }: let
 
-  hyprenable = config.headless-check;
-  highperf = config.high-performance;
-  hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   # TODO write a function that passes along a series of titles to the floating window rule
 
 in {
 
-  flake.homeModules.hyprland = { lib, self', pkgs, osConfig, ... }: {
+  flake.homeModules.hyprland = { lib, self', pkgs, osConfig, config, ... }: let
+    hyprenable = osConfig.headless-check;
+    highperf = osConfig.high-performance;
+    hyprctl = "${pkgs.hyprland}/bin/hyprctl";
+  in {
 
     imports = [
       self.homeModules.hypridle
@@ -18,20 +19,6 @@ in {
     ];
 
     wayland.windowManager.hyprland = let
-
-      colors = { # RGB values, no alpha
-        border = "b0ac99"; #b0ac99
-        borderfull = "${colors.border}ff";
-        bordertrans = "${colors.border}66";
-        bordertransrgb = "rgba(176, 172, 153, 0.4)";
-        text = "1e1e27"; #1e1e27
-        background = "1f1f28"; #1f1f28
-        backgroundfull = "${colors.background}ff";
-        backgroundtrans = "${colors.background}66";
-        backgroundtransrgb = "rgba(31, 31, 40, 0.7)";
-        backgroundrgb = "rgba(31, 31, 40, 1)";
-        black = "0000000"; #000000
-      };
 
       mainMod = "SUPER";
     in {
@@ -50,8 +37,6 @@ in {
           gaps_in = 2;
           gaps_out = 6;
           border_size = 1;
-          # "col.active_border" = "rgba(${colors.borderfull})"; # rgba(${colors.bordertrans}) 90deg";
-          # "col.inactive_border" = "rgba(${colors.border}1a)";      
           layout = "master";
           allow_tearing = false;
         };
@@ -199,14 +184,8 @@ in {
           # Application shortcuts
           "${mainMod}, return, exec, kitty" # open terminal
 
-          # disabled due to fuzzel no longer playing ball for some reason
-          #"${mainMod}, R, exec, fuzzel -b ${colors.background}ee -t ${colors.text}ff -C ${colors.border}ff -s ${colors.border}ff -S ${colors.black}ff -w 50 -R"
-          #"${mainMod}, R, exec, bemenu-run -i -c -l 10 -W 0.15 -B 1 -p run --single-instance"
-          #"${mainMod}, R, exec, anyrun"
-          # "${mainMod}, R, exec, ${pkgs.noctalia-shell}/bin/noctalia-shell ipc call launcher toggle"
-          # "${mainMod}, R, exec, rofi -show drun"
           "${mainMod}, R, exec, ${pkgs.walker}/bin/walker"
-          "${mainMod}, T, exec, rofi -show window"
+          "${mainMod}, T, exec, ${pkgs.walker}/bin/walker -m windows"
           ## media playback
           ",XF86AudioPlay, exec, mpc toggle"
           ",XF86AudioNext, exec, mpc next"
@@ -233,6 +212,6 @@ in {
       };
     };
 
-  };
+    };
 
 }

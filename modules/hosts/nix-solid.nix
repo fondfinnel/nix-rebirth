@@ -8,6 +8,7 @@
       self.nixosModules.nix-solid-hw
 
       self.nixosModules.bluetooth 
+      self.nixosModules.share-nas
     ];
 
   };
@@ -28,8 +29,35 @@
     hardware.keyboard.qmk.enable = true;
 
     home-manager.sharedModules = [{
+
       services.mic-volume.enable = true;
       services.streamcontroller.enable = true;
+
+      wayland.windowManager.hyprland.settings = {
+        monitor = [
+          # Monitors, requires specific placement or else placement is confused
+          "desc:Samsung Electric Company S22C650,preferred,-1920x0,1" # secondary, left
+          "desc:ViewSonic Corporation XG2701 SERIES 0x01010101,highrr,0x0,1" # primary monitor
+          "desc:Dell Inc. DELL 1708FP KU789739AACY,preferred,1920x0,1" # seconary, right
+        ];
+        exec-once = let
+          delay = "sleep 5; ";
+        in [
+          "[workspace 3 silent]${delay}kitty rmpc"
+          "[workspace 5 silent]${delay}thunderbird"
+          "[workspace special:magic silent]kitty rmpc"
+          "[workspace special:discord silent]${delay}vesktop --disable-gpu --start-minimized && ${delay}vesktop"
+          "${delay}keepassxc"
+          "${delay}steam -silent"
+          "${delay}qbittorrent"
+        ];
+
+        windowrule = [
+          # open pip windows on secondary display
+          "fullscreen 1, match:title ^(Picture-in-Picture)"
+          "monitor HDMI-A-1, match:title ^(Picture-in-Picture)"
+        ];
+      };
     }];
 
     imports = [
@@ -50,6 +78,8 @@
     boot.extraModulePackages = [ ];
 
     boot.initrd.systemd.fido2.enable = true;
+
+    preservation.enable = false;
 
     boot.initrd.luks.devices.enc-bt = {
       device = "/dev/disk/by-uuid/91471cb2-e390-47ff-a8cd-8995a75a67b4";
