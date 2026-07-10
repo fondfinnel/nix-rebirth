@@ -90,7 +90,9 @@ in {
       secrets."ssh-gekko".path = "${config.home.homeDirectory}/.ssh/id_gekko";
 
       secrets."lastfm".name = "lastfm";
-      secrets."syncthing".name = "syncthing";
+      secrets."syncthing/gui".name = "syncthing-gui";
+      secrets."syncthing/${osConfig.networking.hostName}/cert".name = "syncthing-cert";
+      secrets."syncthing/${osConfig.networking.hostName}/key".name = "syncthing-key"; 
     };
 
     home.preserve.directories = [

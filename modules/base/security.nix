@@ -21,14 +21,6 @@
                     else "/var/lib/sops-nix/key.txt";
       age.generateKey = true;
 
-      secrets = let
-        sopsFile = ./host-secrets.yaml;
-        reloadUnits = [ "syncthing.service" ];
-      in {
-        "${config.networking.hostName}/syncthing/cert" = { inherit sopsFile reloadUnits; };
-        "${config.networking.hostName}/syncthing/key" = { inherit sopsFile reloadUnits; };
-      };
-
     };
     environment.systemPackages = with pkgs; [
       yubioath-flutter # gui tool

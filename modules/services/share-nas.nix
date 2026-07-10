@@ -11,10 +11,12 @@
       "exec"
       "user"
       "users"
+      "nofail"
+      "x-systemd.requires=network-online.target"
       # "vers=3.0"
-      # "uid=1000"
-      # "gid=100"
-      # "_netdev"
+      "uid=1000"
+      "gid=100"
+      "_netdev"
       "credentials=${config.sops.secrets."smb/cred".path}"
     ];
     nas_ip = "nate-truenas"; # TODO sops

@@ -20,12 +20,12 @@
       enable = true;
       guiAddress = "localhost:8384"; # Local access to the GUI
 
-      cert = osConfig.sops.secrets."${osConfig.networking.hostName}/syncthing/cert".path;
-      key = osConfig.sops.secrets."${osConfig.networking.hostName}/syncthing/key".path;
+      cert = config.sops.secrets."syncthing/${osConfig.networking.hostName}/cert".path;
+      key = config.sops.secrets."syncthing/${osConfig.networking.hostName}/key".path;
 
       settings = {
         guiCredentials.username = config.home.username;
-        guiCredentials.password = config.sops.secrets."syncthing".path;
+        guiCredentials.password = config.sops.secrets."syncthing/gui".path;
 
         gui = {
           theme = "black";
