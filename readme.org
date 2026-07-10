@@ -172,7 +172,7 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 
 - [x] fireShare
 - [x] tunarr
-- [ ] tubearchivist
+- [x] tubearchivist
 *** TODO calibre-server and calibre-web
 
 ** DONE Add nix-index with nix-index-database

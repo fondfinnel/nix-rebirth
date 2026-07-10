@@ -4,7 +4,10 @@
   check = config.device-type == "server";
 in {
 
-  flake.nixosModules.self-host = { lib, config, self, ... }: {
+  flake.nixosModules.self-host = { lib, config, self, ... }: let
+    # TODO link it to zfs dataset location
+    mainDir = "/mnt/Apps";
+  in {
 
     imports = lib.mkIf check [
       # self.nixosModules.jellyfin-vue
@@ -16,8 +19,8 @@ in {
       hardwareAcceleration.enable = lib.mkDefault true;
       hardwareAcceleration.type = "qsv";
       
-      # TODO link it to zfs dataset location
-      dataDir = "/mnt/Apps/jellyfin/jellyfin";
+      dataDir = "${mainDir}/jellyfin/data";
+      configDir = "${mainDir}/jellyfin/config";
 
       transcoding = lib.mkDefault {
         enableHardwareEncoding = true;
