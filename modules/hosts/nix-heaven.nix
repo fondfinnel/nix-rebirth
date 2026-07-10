@@ -1,10 +1,12 @@
 { self, inputs, config, ... }: {
 
   flake.nixosConfigurations.nix-heaven = inputs.nixpkgs.lib.nixosSystem {
-    imports = [
+    modules = [
       self.nixosModules.base
       self.nixosModules.nix-heaven-conf
       self.nixosModules.nix-heaven-hw
+      self.nixosModules.users
+      self.nixosModules.self-host
     ];
   };
 
