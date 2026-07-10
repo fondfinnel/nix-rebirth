@@ -19,7 +19,7 @@
     home.shellAliases = lib.mkDefault {
       ls = "lsd";
       l = "lsd --header -l";
-      tree = "lsd --tree";
+      tree = "lsd --tree --depth 2";
     };
 
   };

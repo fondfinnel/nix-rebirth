@@ -13,33 +13,43 @@ in {
       # self.nixosModules.jellyfin-vue
     ];
 
-    services.jellyfin = {
-      enable = lib.mkDefault check;
+    containers.jellyfin-container = {
 
-      hardwareAcceleration.enable = lib.mkDefault true;
-      hardwareAcceleration.type = "qsv";
-      
-      dataDir = "${mainDir}/jellyfin/data";
-      configDir = "${mainDir}/jellyfin/config";
+      autoStart = true;
+      ephemeral = false;
 
-      transcoding = lib.mkDefault {
-        enableHardwareEncoding = true;
-        hardwareEncodingCodecs = {
-          av1 = true;
-          hevc = true;
-        };
+      config = { containerPkgs, ... }: {
 
-        enableHardwareDecoding = true;
-        hardwareDecodingCodecs = let x = true; in {
-          vp9 = x;
-          vp8 = x;
-          vc1 = x;
-          mpeg2 = x;
-          hevc = x;
-          hevcRExt10bit = x;
-          hevcRExt12bit = x;
-          h264 = x;
-          av1 = x; 
+        services.jellyfin = {
+          enable = lib.mkDefault check;
+
+          hardwareAcceleration.enable = lib.mkDefault true;
+          hardwareAcceleration.type = "qsv";
+
+          dataDir = "${mainDir}/jellyfin/data";
+          configDir = "${mainDir}/jellyfin/config";
+          # uses port 8096, does not have option for that yet
+
+          transcoding = lib.mkDefault {
+            enableHardwareEncoding = true;
+            hardwareEncodingCodecs = {
+              av1 = true;
+              hevc = true;
+            };
+
+            enableHardwareDecoding = true;
+            hardwareDecodingCodecs = let x = true; in {
+              vp9 = x;
+              vp8 = x;
+              vc1 = x;
+              mpeg2 = x;
+              hevc = x;
+              hevcRExt10bit = x;
+              hevcRExt12bit = x;
+              h264 = x;
+              av1 = x; 
+            };
+          };
         };
       };
 

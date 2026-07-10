@@ -14,8 +14,7 @@
 
       environment = {
         LOG_LEVEL = "INFO";
-      } ++ lib.optionals (config.hardware.nvidia.modesetting.enable == true) {
-        NVIDIA_VISIBLE_DEVICES = "all";
+        NVIDIA_VISIBLE_DEVICES = lib.mkIf config.hardware.nvidia.modesetting.enable "all";
       };
 
       dependsOn = [ "jellyfin" ];
