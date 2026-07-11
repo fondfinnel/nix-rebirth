@@ -6,7 +6,7 @@
 
     sops.secrets."fireshare".name = "fireshare";
 
-    virtualization.oci-containers.containers.fireshare = {
+    virtualisation.oci-containers.containers.fireshare = {
       image = "shaneisrael/fireshare";
       ports = [
         # untested

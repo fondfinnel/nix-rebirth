@@ -4,7 +4,7 @@ in {
 
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: {
 
-    services.adguard = {
+    services.adguardhome = {
       enable = lib.mkDefault check;
       mutableSettings = lib.mkDefault true;
       port = 3000;

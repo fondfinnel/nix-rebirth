@@ -2,7 +2,7 @@
 
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: {
  
-    virtualization.oci-containers.containers.tunarr = {
+    virtualisation.oci-containers.containers.tunarr = {
       image = "chrisbenincasa/tunarr";
       ports = [
         "127.0.0.1:31111:8000" # redirect webui to port 31111, lan only
@@ -17,7 +17,7 @@
         NVIDIA_VISIBLE_DEVICES = lib.mkIf config.hardware.nvidia.modesetting.enable "all";
       };
 
-      dependsOn = [ "jellyfin" ];
+      # dependsOn = [ "jellyfin" ];
     };
 
   };

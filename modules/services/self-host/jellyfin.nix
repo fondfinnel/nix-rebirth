@@ -9,9 +9,9 @@ in {
     mainDir = "/mnt/Apps";
   in {
 
-    imports = lib.mkIf check [
-      # self.nixosModules.jellyfin-vue
-    ];
+    # imports = lib.mkIf check [
+    # self.nixosModules.jellyfin-vue
+    # ];
 
     containers.jellyfin-container = {
 
@@ -37,7 +37,6 @@ in {
               hevc = true;
             };
 
-            enableHardwareDecoding = true;
             hardwareDecodingCodecs = let x = true; in {
               vp9 = x;
               vp8 = x;
@@ -61,7 +60,7 @@ in {
 
     # alt webgui in development
     # probably will not use
-    virtualization.oci-containers.containers.jellyfin-vue = {
+    virtualisation.oci-containers.containers.jellyfin-vue = {
       image = "jellyfin/jellyfin-vue";
 
       ports = [
