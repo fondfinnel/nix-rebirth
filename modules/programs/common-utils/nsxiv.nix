@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { pkgs, lib, config, ... }: {
+  flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }: let
+    check = osConfig.headless-check;
+  in {
 
     options.programs.nsxiv.enable = lib.mkEnableOption "nsxiv";
     config.programs.nsxiv.enable = lib.mkDefault check;
@@ -10,7 +10,7 @@ in {
     config.home.packages = lib.mkIf config.programs.nsxiv.enable [ pkgs.nsxiv ];
     config.xdg.mimeApps.defaultApplications =
       let x = "nsxiv.desktop"; in
-      lib.mkIf config.programs.nsxiv.enable lib.mkDefault
+      lib.mkIf config.programs.nsxiv.enable
         {
           "image/png" = [x];
           "image/jpg" = [x];

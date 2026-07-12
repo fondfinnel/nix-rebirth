@@ -1,6 +1,7 @@
 { self, inputs, config, ... }: {
 
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
+    # TODO dir
     mainDir = "/path/to/dir";
   in {
 
