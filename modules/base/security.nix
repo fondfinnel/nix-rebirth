@@ -8,7 +8,8 @@
     services.openssh.authorizedKeysInHomedir = true;
     services.envfs.enable = lib.mkDefault check;
 
-    security.polkit.enable = true;
+    security.polkit.enable = lib.mkDefault true;
+
     security.polkit.adminIdentities = [ "unix-group:wheel" ];
     sops = {
       defaultSopsFile = ./secrets.yaml;
@@ -51,7 +52,7 @@
       u2f = {
         enable = true;
         settings.cue = true;
-        settings.authFile = "${config.users.users.n0ll.home}/.config/Yubico/u2f_keys";
+        settings.authFile = config.home-manager.users.n0ll.sops.secrets."u2f_keys".path;
       };
     };
 

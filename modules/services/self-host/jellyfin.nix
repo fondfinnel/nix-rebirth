@@ -18,6 +18,16 @@ in {
       autoStart = true;
       ephemeral = false;
 
+      bindMounts.app-data = {
+        mountPoint = "/data";
+        hostPath = "${mainDir}/jellyfin/data";
+      };
+
+      bindMounts.app-config = {
+        mountPoint = "/config";
+        hostPath = "${mainDir}/jellyfin/config";
+      };
+
       config = { containerPkgs, ... }: {
 
         services.jellyfin = {
@@ -26,8 +36,8 @@ in {
           hardwareAcceleration.enable = lib.mkDefault true;
           hardwareAcceleration.type = "qsv";
 
-          dataDir = "${mainDir}/jellyfin/data";
-          configDir = "${mainDir}/jellyfin/config";
+          dataDir = "/data";
+          configDir = "/config";
           # uses port 8096, does not have option for that yet
 
           transcoding = lib.mkDefault {

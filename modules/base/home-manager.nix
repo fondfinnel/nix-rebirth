@@ -49,6 +49,8 @@
 
     };
 
+    xdg.mimeApps.enable = lib.mkDefault true;
+
     home.packages = [ pkgs.nerd-fonts.symbols-only ];
 
   };

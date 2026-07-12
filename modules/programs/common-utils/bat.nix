@@ -20,7 +20,6 @@
       man = "batman";
       watch = "batwatch";
       grep = "batgrep";
-      rg = "batgrep";
       diff = "batdiff";
     };
 

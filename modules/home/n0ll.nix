@@ -65,7 +65,7 @@ in {
     ];
 
     home.sessionVariables = {
-      EDITOR = "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emac";
+      EDITOR = "${pkgs.emacs}/bin/emacsclient -c -a -nw ${pkgs.emacs}/bin/emac -nw";
     };
 
     home.shellAliases = {
@@ -88,6 +88,7 @@ in {
       secrets."ssh".path = "${config.home.homeDirectory}/.ssh/id_ed25519";
       secrets."ssh-basilisk".path = "${config.home.homeDirectory}/.ssh/id_basilisk";
       secrets."ssh-gekko".path = "${config.home.homeDirectory}/.ssh/id_gekko";
+      secrets."u2f_keys".name = "u2f_keys";
 
       secrets."lastfm".name = "lastfm";
       secrets."syncthing/gui".name = "syncthing-gui";

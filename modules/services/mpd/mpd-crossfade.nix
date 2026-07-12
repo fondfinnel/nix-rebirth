@@ -4,6 +4,8 @@ in {
 
   flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }: {
 
+    config.services.mpd.extraConfig = lib.mkIf config.programs.mpd-crossfade.enable ''mixramp_analyzer "yes"'';
+
     options.programs.mpd-crossfade.enable = lib.mkEnableOption "mpd-crossfade";
     config.programs.mpd-crossfade.enable = lib.mkDefault check;
 
@@ -18,8 +20,8 @@ in {
 
       Service.Type = "simple";
       Service.ExecStart = let
-          mpc = "${pkgs.mpc}/bin/mpc";
-        in ( pkgs.writeShellScript "mpd-crossfade-service" /*bash*/
+        mpc = "${pkgs.mpc}/bin/mpc";
+      in ( pkgs.writeShellScript "mpd-crossfade-service" /*bash*/
         ''
           if [ $(${mpc} status %state%) != "playing" ]; then
             exit
@@ -42,9 +44,9 @@ in {
             ${mpc} crossfade 0
           else
             ${mpc} mixrampdelay 1
-            ${mpc} mixrampdb -12
+            ${mpc} mixrampdb -10
+            ${mpc} crossfade 15
             echo "Enabled crossfade!"
-            ${mpc} crossfade 10
           fi
          '');
     };

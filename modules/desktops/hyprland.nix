@@ -18,6 +18,14 @@ in {
       self.homeModules.walker
     ];
 
+    services.hyprpolkitagent.enable = true;
+
+    xdg.portal.enable = true;
+    xdg.portal.extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+
     wayland.windowManager.hyprland = let
 
       mainMod = "SUPER";
@@ -212,6 +220,6 @@ in {
       };
     };
 
-    };
+  };
 
 }
