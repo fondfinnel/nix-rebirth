@@ -1,11 +1,11 @@
 # TODO cloudflared rules
+# TODO add route rules for jellyfin, lock out lan for service
 # TODO other management tools
 { self, inputs, config, ... }: {
 
   flake.nixosModules.self-host = { lib, config, self, ... }: let
     # TODO link it to zfs dataset location
-    check = config.device-type == "server";
-    mainDir = "/mnt/Apps";
+    mainDir = "/path/to/dir";
     allDirs = [
       config.containers.jellyfin-container.bindMounts.app-data.hostPath
       config.containers.jellyfin-container.bindMounts.app-config.hostPath
@@ -16,32 +16,77 @@
     # self.nixosModules.jellyfin-vue
     # ];
 
-    # system.activationScripts.pre-015.deps = [ "specialfs" ];
-    # system.activationScripts.pre-015.text = '' mkdir -p ${mainDir}/jellyfin/data ${mainDir}/config'';
+    system.activationScripts.pre-015.deps = [ "specialfs" ];
+    system.activationScripts.pre-015.text = '' mkdir -p ${mainDir}/jellyfin/data ${mainDir}/jellyfin/config'';
 
-    systemd.tmpfiles.rules = lib.map (f: "d ${f} 1664 jellyfin media") allDirs;
+    # systemd.tmpfiles.rules = lib.map (f: "d ${f} 1664 jellyfin media") allDirs;
 
-    containers.jellyfin-container = {
+    networking.nat.enable = true;
+    networking.nat.internalInterfaces = [ "ve-jellyfin" ];
+
+    containers.jellyfin = {
 
       autoStart = true;
       ephemeral = false;
 
+      hostAddress = "192.168.100.1";
+      
+      localAddress = "192.168.100.2";
+
+      privateNetwork = true;
+      forwardPorts = [{
+        containerPort = 8096;
+        hostPort = 31010;
+        protocol = "tcp";
+      }];
+
+      enableTun = true;
+
       bindMounts.app-data = {
+        isReadOnly = false;
         mountPoint = "/data";
         hostPath = "${mainDir}/jellyfin/data";
       };
 
       bindMounts.app-config = {
+        isReadOnly = false;
         mountPoint = "/config";
         hostPath = "${mainDir}/jellyfin/config";
       };
 
-      config = { containerPkgs, ... }: {
+      bindMounts.gpu = {
+        isReadOnly = false;
+        mountPoint = "/dev/dri";
+        hostPath = "/dev/dri";
+      };
+
+      bindMounts.media = {
+        isReadOnly = true;
+        mountPoint = "/media";
+        hostPath = "/home/n0ll/Videos";
+      };
+
+      tmpfs = [
+        "/var"
+        "/tmp"
+      ];
+      
+      config = { containerPkgs, pkgs, ... }: {
+
+        environment.systemPackages = [ pkgs.mesa pkgs.vulkan-loader ];
+        networking.firewall.enable = true;
+        networking.firewall.allowedTCPPorts = [ 8096 ];
+
+        networking.useHostResolvConf = false;
+        services.resolved.enable = true;
+
+        users.users.n0ll.isNormalUser = true;
 
         services.jellyfin = {
-          enable = lib.mkDefault check;
+          enable = lib.mkDefault true;
 
           hardwareAcceleration.enable = lib.mkDefault true;
+          hardwareAcceleration.device = "/dev/dri";
           hardwareAcceleration.type = "qsv";
 
           dataDir = "/data";

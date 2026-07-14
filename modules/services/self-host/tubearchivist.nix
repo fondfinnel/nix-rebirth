@@ -1,6 +1,6 @@
 { self, inputs, config, ... }: {
 
-  flake.nixosModules.tube = { lib, config, pkgs, ... }: let
+  flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
     # TODO get dir
     mainDir = "/home/n0ll/tube";
   in {
