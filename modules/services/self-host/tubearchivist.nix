@@ -1,8 +1,8 @@
 { self, inputs, config, ... }: {
 
-  flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
+  flake.nixosModules.tube = { lib, config, pkgs, ... }: let
     # TODO get dir
-    mainDir = "/path/to/dir";
+    mainDir = "/home/n0ll/tube";
   in {
 
     sops.secrets."tubearchivist".name = "tubearchivist";
@@ -16,9 +16,11 @@
       "${mainDir}/elast-data"
     ];
     
+    virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
     virtualisation.oci-containers.containers.tubearchivist = {
-
+      
       image = "bbilly1/tubearchivist"; 
+      pull = "newer";
 
       ports = [ "31000:8000" ];
       volumes = [
@@ -36,18 +38,21 @@
     };
 
     virtualisation.oci-containers.containers.archivist-redis = {
-      image = "dhi.io/redis";
+      image = "redis";
+      pull = "newer";
       volumes = [ "${mainDir}/redis-data:/data" ];
-      ports = [ "127.0.0.1:31001:6379" ];
-      dependsOn = [ "archivist-es" ];
+      # ports = [ "127.0.0.1:31001:6379" ];
+      # dependsOn = [ "archivist-es" ];
     };
     
     # may need to run on directory
     # chown 1000:0 -R /dir
     virtualisation.oci-containers.containers.archivist-es = {
       image = "bbilly1/tubearchivist-es";
+      pull = "newer";
       volumes = [ "${mainDir}/elast-data:/usr/shared/elasticsearch/data" ];
-      ports = [ "127.0.0.1:31002:9200" ];
+      environmentFiles = [ config.sops.secrets."archivist-es".path ];
+      # ports = [ "127.0.0.1:31002:9200" ];
     };
 
   };
