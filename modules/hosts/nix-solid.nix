@@ -36,9 +36,10 @@
       wayland.windowManager.hyprland.settings = {
         monitor = [
           # Monitors, requires specific placement or else placement is confused
-          "desc:Samsung Electric Company S22C650,preferred,-1920x0,1" # secondary, left
+          "desc:Samsung Electric Company S22C650,preferred,-1920x0,1" # left monitor
           "desc:ViewSonic Corporation XG2701 SERIES 0x01010101,highrr,0x0,1" # primary monitor
-          "desc:Dell Inc. DELL 1708FP KU789739AACY,preferred,1920x0,1" # seconary, right
+          "desc:Hewlett Packard HP w1907 CNN7410T6R,preferred,1920x0,1" # right monitor
+          # other monitors to right
         ];
         exec-once = let
           delay = "sleep 5; ";
@@ -56,6 +57,7 @@
           # open pip windows on secondary display
           "fullscreen 1, match:title ^(Picture-in-Picture)"
           "monitor HDMI-A-1, match:title ^(Picture-in-Picture)"
+          "monitor HDMI-A-1, fullscreen 1, match:title ^(darktable - darkroom preview)"
         ];
       };
     }];
