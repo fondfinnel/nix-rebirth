@@ -173,6 +173,13 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 - [x] fireShare
 - [x] tunarr
 - [x] tubearchivist
+- [ ] karakeep
+- [ ] neko
+- [ ] safeline
+- [ ] simpler solution to tubearchivist, metube
+- [ ] trek..?
+- [ ] flame dashboard
+- [ ] paperless-ng
 *** TODO calibre-server and calibre-web
 
 ** DONE Add nix-index with nix-index-database

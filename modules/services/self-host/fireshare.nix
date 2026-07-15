@@ -7,6 +7,13 @@
 
     sops.secrets."fireshare".name = "fireshare";
 
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 1664 fireshare media") [
+      "${mainDir}/data"
+      "${mainDir}/processed"
+      "${mainDir}/videos"
+      "${mainDir}/images"
+    ];
+
     virtualisation.oci-containers.containers.fireshare = {
       image = "shaneisrael/fireshare";
       ports = [

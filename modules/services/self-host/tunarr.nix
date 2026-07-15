@@ -1,8 +1,12 @@
 
 { self, inputs, config, ... }: {
 
-  flake.nixosModules.self-host = { lib, config, pkgs, ... }: {
+  flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
+    mainDir = "/path/to/dir";
+  in {
  
+    systemd.tmpfiles.rules = [ "d ${mainDir}/tunarr 1664 tunarr media"];
+
     virtualisation.oci-containers.containers.tunarr = {
       image = "chrisbenincasa/tunarr";
       pull = "newer";
@@ -12,7 +16,7 @@
 
       # TODO dir
       volumes = [
-        "/path/to/dir:/config/tunarr" # redirect config storage
+        "${mainDir}/tunarr:/config/tunarr" # redirect config storage
       ];
 
       environment = {

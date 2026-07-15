@@ -8,6 +8,14 @@
     sops.secrets."tubearchivist".name = "tubearchivist";
     sops.secrets."archivist-es".name = "archivist-es";
     
+    # ensure dirs are available for containers
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 1664 tubearchivist media") [
+      "${mainDir}/youtube"
+      "${mainDir}/cache"
+      "${mainDir}/redis-data"
+      "${mainDir}/elast-data"
+    ];
+    
     virtualisation.oci-containers.containers.tubearchivist = {
 
       image = "bbilly1/tubearchivist"; 

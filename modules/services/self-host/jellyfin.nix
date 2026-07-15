@@ -1,17 +1,25 @@
 # TODO cloudflared rules
 # TODO other management tools
-{ self, inputs, config, ... }: let
-  check = config.device-type == "server";
-in {
+{ self, inputs, config, ... }: {
 
   flake.nixosModules.self-host = { lib, config, self, ... }: let
     # TODO link it to zfs dataset location
+    check = config.device-type == "server";
     mainDir = "/mnt/Apps";
+    allDirs = [
+      config.containers.jellyfin-container.bindMounts.app-data.hostPath
+      config.containers.jellyfin-container.bindMounts.app-config.hostPath
+    ];
   in {
 
     # imports = lib.mkIf check [
     # self.nixosModules.jellyfin-vue
     # ];
+
+    # system.activationScripts.pre-015.deps = [ "specialfs" ];
+    # system.activationScripts.pre-015.text = '' mkdir -p ${mainDir}/jellyfin/data ${mainDir}/config'';
+
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 1664 jellyfin media") allDirs;
 
     containers.jellyfin-container = {
 
