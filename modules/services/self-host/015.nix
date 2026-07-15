@@ -3,20 +3,26 @@
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
     mainDir = "/path/to/dir";
 
-    pull = "newer";
-    # worker and app use the same vols apparently
-    volumes = [
-      "${mainDir}/uploads:/uploads"
-      "${mainDir}/config.yaml:/config.yaml"
-    ];
   in {
 
     # ensure dirs are available for containers
     system.activationScripts.pre-015.deps = [ "specialfs" ];
-    # system.activationScripts.pre-015.text = ''mkdir -p ${mainDir}/uploads ${mainDir}/config'';
-    system.activationScripts.pre-015.text = '' ${ lib.lists.map (x: "mkdir -p ${x}") volumes } '';
+    system.activationScripts.pre-015.text = '' mkdir -p ${mainDir}/uploads '';
 
-    virtualisation.oci-containers.containers = {
+    virtualisation.oci-containers.containers = let
+      pull = "newer";
+      # worker and app use the same vols apparently
+      volumes = [
+        "${mainDir}/uploads:/uploads"
+        "${mainDir}/config.yaml:/config.yaml"
+      ];
+    in {
+      pull = "newer";
+      # worker and app use the same vols apparently
+      volumes = [
+        "${mainDir}/uploads:/uploads"
+        "${mainDir}/config.yaml:/config.yaml"
+      ];
 
       "015-app" = {
 
