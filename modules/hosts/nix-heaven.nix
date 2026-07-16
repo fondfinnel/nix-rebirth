@@ -79,10 +79,45 @@
   };
 
   flake.nixosModules.nix-heaven-hw = { lib, config, pkgs, ... }: {
+
+    boot.supportedFilesystems = [ "zfs" ];
+    boot.zfs = {
+      forceImportRoot = true;
+      extraPools = [ "Primary" ];
+    };
+
     fileSystems."/" =
       { device = "/dev/by-label/temp";
         fsType = "ext4";
       };
+
+    services.zfs.autoScrub = {
+      enable = true;
+      pools = [ "Primary" ];
+      interval = "monthly";
+    };
+
+    services.sanoid = {
+      enable = true;
+      interval = "hourly";
+      datasets."Primary" = {
+        autosnap = true;
+        autoprune = true;
+        recursive = "zfs";
+        hourly = 24;
+        daily = 30;
+        weekly = 8;
+        monthly = 12;
+      };
+    };
+
+    # 96GB max, 16GB min
+    # Gibibytes to bytes
+    boot.kernelParams = [
+      "zfs.zfs_arc_max=103079215104"
+      "zfs.zfs_arc_min=17179869184"
+    ];
+
 
   };
 
