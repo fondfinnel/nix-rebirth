@@ -19,6 +19,29 @@
     high-performance = true;
     headless-check = false;
 
+    # head -c 8 /etc/machine-id
+    networking.hostId = "";
+
+    power.ups = {
+      enable = true;
+      mode = "standalone";
+      ups.main = {
+        description = "tbd";
+
+        # see wiki for list of drivers
+        driver = "tbd";
+
+        port = "auto";
+
+        directive = [
+          "offdelay = 60"
+          "ondelay = 90"
+          "lowbatt = 40"
+          # "ignorelb"
+        ];
+      };
+    };
+
   };
 
   flake.nixosModules.nix-heaven-hw = { lib, config, pkgs, ... }: {
