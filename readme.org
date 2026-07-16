@@ -166,7 +166,7 @@ The objective with this is to have a seamless method of accessing an assigned em
 *** TODO Write an internet radio service to self-host
 Would be cool. A neat little project of sorts.
 
-*** TODO Cloudflared
+*** DONE Cloudflared
 *** TODO Import custom docker images for stuff unavailable in nixpkgs
 Probably a good idea to have a dedicated area to have apps like this store shit.
 
@@ -181,7 +181,8 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 - [ ] flame dashboard
 - [ ] paperless-ng
 *** TODO calibre-server and calibre-web
-
+*** TODO ZFS
+- [ ] Sanoid or Syncoid for snapshots
 ** DONE Add nix-index with nix-index-database
 Just needs some setup, would be helpful.
 
