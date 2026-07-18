@@ -7,8 +7,6 @@
       self.nixosModules.nix-solid-conf
       self.nixosModules.nix-solid-hw
 
-      self.nixosModules."015"
-
       self.nixosModules.bluetooth 
       self.nixosModules.share-nas
     ];

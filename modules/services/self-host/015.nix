@@ -1,7 +1,7 @@
 { self, inputs, config, ... }: {
 
-  flake.nixosModules."015" = { lib, config, pkgs, ... }: let
-    mainDir = "/home/n0ll/numbersnumbers";
+  flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
+    mainDir = "/path/to/dir";
 
   in {
 
@@ -27,7 +27,7 @@
       "015-app" = {
 
         image = "fudaoyuanicu/015-app";
-        inherit pull volumes extraOptions;
+        inherit pull volumes;
         ports = [ "31100:80" ];
         dependsOn = [ "015-redis" ];
 
@@ -38,7 +38,7 @@
 
       "015-worker" = {
 
-        inherit pull extraOptions;
+        inherit pull;
         image = "fudaoyuanicu/015-worker";
         volumes = [
           "${mainDir}/uploads:/uploads"
@@ -52,7 +52,7 @@
       };
 
       "015-redis" = {
-        inherit pull extraOptions;
+        inherit pull;
         image = "redis:7";
 
       };
