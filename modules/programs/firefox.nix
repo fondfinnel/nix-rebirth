@@ -14,9 +14,9 @@ in {
         "browser.startup.homepage" =  "about:blank"; # Page that firefox sets home as
         "middlemouse.paste" = false;
         "general.autoScroll" = true;
-        # "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
+        "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
         "permissions.desktop-notification.notNow.enabled" = true;
-        # "dom.webnotifications.enabled" = false;
+        "dom.webnotifications.enabled" = false;
         # "browser.shell.checkDefaultBrowser" = false;
         "extensions.autoDisableScopes" = 0; # Automatically enable addons
         # "browser.tabs.firefox-view" = false;
