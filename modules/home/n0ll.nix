@@ -129,6 +129,8 @@ in {
       passwordFile = config.sops.secrets."lastfm".path; 
     };
 
+    programs.ghostty.enable = true;
+
     programs.jujutsu.settings.user = {
       name = "Nathaniel Fagan";
       email = "natervader13@gmail.com";

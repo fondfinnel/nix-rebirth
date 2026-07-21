@@ -6,14 +6,15 @@ in {
 
     programs.ghostty = {
       enable = lib.mkDefault false;
+      systemd.enable = lib.mkDefault config.programs.ghostty.enable;
 
       settings = lib.mkDefault {
 
-        theme = "Kanagawa Wave";
+        # theme = "Kanagawa Wave";
 
-        background-opacity = 0.9;
-        font-family = "Mononoki Nerd Font Mono";
-        font-size = 12;
+        # background-opacity = 0.9;
+        # font-family = "Mononoki Nerd Font Mono";
+        # font-size = 12;
 
         window-decoration = false;
         confirm-close-surface = false;
