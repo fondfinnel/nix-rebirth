@@ -23,7 +23,7 @@
       diff = "batdiff";
     };
 
-    home.sessionVariables.PAGER = lib.mkIf config.programs.bat.enable "${pkgs.bat}/bin/bat";
+    home.sessionVariables.PAGER = lib.mkIf config.programs.bat.enable "${pkgs.bat}/bin/bat -n";
 
   };
 

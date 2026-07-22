@@ -33,7 +33,7 @@
     services.pcscd.enable = true; # smart card module, for usb detection
     services.yubikey-agent.enable = config.security.pam.yubico.enable; # yubikey ssh support
 
-    security.pam = lib.mkDefault {
+    security.pam = {
       services = {
         # login and sudo access with yubikey
         login.u2fAuth = true;
@@ -52,6 +52,7 @@
       u2f = {
         enable = true;
         settings.cue = true;
+        settings.interactive = true;
         settings.authFile = config.home-manager.users.n0ll.sops.secrets."u2f_keys".path;
       };
     };
