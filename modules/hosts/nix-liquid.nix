@@ -31,7 +31,8 @@
         
       wayland.windowManager.hyprland.settings = {
             monitor = [
-              "eDP-1, preferred, auto, 1"
+              "desc:eDP-1, preferred, auto, 1" # primary monitor
+              "desc:, preferred, auto, 1, mirror, eDP-1" # mirror to other monitors
             ];
             bind = [ # disable or enable mousepad manually
               "SUPER SHIFT ALT CTRL, t, exec, hyprctl keyword 'device[synaptics-tm3276-022]:enabled' false & notify-send 'Touchpad disabled'"
@@ -46,6 +47,7 @@
     imports = [
       self.nixosModules.users
     ];
+
 
   };
 
