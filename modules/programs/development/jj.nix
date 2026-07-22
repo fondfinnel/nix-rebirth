@@ -1,6 +1,10 @@
 { self, inputs, config, ... }: {
 
   flake.homeModules.development = { pkgs, lib, config, ... }: let d = lib.mkDefault; in {
+
+    home.packages = lib.mkIf config.programs.jujutsu.enable [ pkgs.watchman ];
+
+    programs.delta.enableJujutsuIntegration = lib.mkDefault config.programs.jujutsu.enable;
     
     programs.jujutsu = {
       enable = d true;
@@ -16,8 +20,6 @@
         # use set PAGER, if not set use less
         # ui.pager = lib.mkDefault ["sh" "-c" "exec \$\{PAGER:-less -FRX}"];
         ui.streampager = lib.mkDefault "quit-if-one-page";
-        ui.pager = lib.mkDefault "${pkgs.delta}/bin/delta";
-        ui.diff-formater = ":git";
 
         # curved, square, ascii, ascii-large
         ui.graph.style = "curved";
@@ -37,7 +39,9 @@
         };
 
         snapshot.auto-update-stale = true;
-        fsmonitor.backend = pkgs.watchman;
+
+        # this is only accepted as the string watchman, can't declare the bin
+        fsmonitor.backend = "watchman";
         watchman.register_snapshot_trigger = true;
 
         #     colors = let
@@ -76,15 +80,15 @@
       };
     };
 
-      programs.jjui = {
-        enable = d config.programs.jujutsu.enable;
+    programs.jjui = {
+      enable = d config.programs.jujutsu.enable;
 
-        settings = d {
-          preview.show_at_start = true;
-          ui.ui.tracer.enabled = true;
-        };
+      settings = d {
+        preview.show_at_start = true;
+        ui.ui.tracer.enabled = true;
       };
-      home.shellAliases.ju = lib.mkIf config.programs.jjui.enable "jjui";
+    };
+    home.shellAliases.ju = lib.mkIf config.programs.jjui.enable "jjui";
 
   };
 
