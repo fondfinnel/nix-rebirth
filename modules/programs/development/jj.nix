@@ -12,72 +12,79 @@
         };
 
         ui.default-command = ["log"];
+        ui.color = "always";
         # use set PAGER, if not set use less
-        ui.pager = ["sh" "-c" "exec \$\{PAGER:-less -FRX}"];
-        ui.graph.style = "square";
+        # ui.pager = lib.mkDefault ["sh" "-c" "exec \$\{PAGER:-less -FRX}"];
+        ui.streampager = lib.mkDefault "quit-if-one-page";
+        ui.pager = lib.mkDefault "${pkgs.delta}/bin/delta";
+        ui.diff-formater = ":git";
+
+        # curved, square, ascii, ascii-large
+        ui.graph.style = "curved";
 
         aliases = {
           a = ["abandon"];
           d = ["desc"];
+          dd = [ "desc" "-m"];
           u = ["undo"];
           n = ["new"];
           c = ["commit"];
 
           fetch = ["git" "fetch"];
           push = ["git" "push"];
-          pull = ["git" "pull"];
+          pull = ["git" "fetch"];
           clone = ["git" "clone"];
         };
 
         snapshot.auto-update-stale = true;
-        # fsmonitor.backend = pkgs.watchman;
-        # watchman.register_snapshot_trigger = true;
+        fsmonitor.backend = pkgs.watchman;
+        watchman.register_snapshot_trigger = true;
 
-        colors = let
+        #     colors = let
 
-          # color for if remote or local
-          col.remote = "bright cyan";
-          col.local = "bright green";
-          col.curr = "bright blue";
-          col.err = "bright red";
-          col.back = "bright black";
+        #       # color for if remote or local
+        #       col.remote = "bright cyan";
+        #       col.local = "bright green";
+        #       col.curr = "bright blue";
+        #       col.err = "bright red";
+        #       col.back = "bright black";
 
-        in {
-          normal.change_id = { bold = true; fg = "magenta"; };
-          immutable."change_id" = { bold = false; fg = col.remote; };
+        #     in {
+        #       normal.change_id = { bold = true; fg = "magenta"; };
+        #       immutable."change_id" = { bold = false; fg = col.remote; };
 
-          node = {
-            bold = true;
+        #       node = {
+        #         bold = true;
 
-            elided.fg = "bright black";
-            working_copy.fg = "green";
-            conflict.fg = col.err;
-            immutable.fg = col.remote;
-            wip.fg = "yellow";
-          };
+        #         elided.fg = "bright black";
+        #         working_copy.fg = "green";
+        #         conflict.fg = col.err;
+        #         immutable.fg = col.remote;
+        #         wip.fg = "yellow";
+        #       };
 
-          timestamp.fg = col.back;
+        #       timestamp.fg = col.back;
 
-          local_bookmarks.fg = col.local;
-          remote_bookmarks.fg = col.remote;
+        #       local_bookmarks.fg = col.local;
+        #       remote_bookmarks.fg = col.remote;
 
-          text.link = { bold = true; fg = "magenta"; };
-          text.warning = { bold = true; fg = "red"; };
+        #       text.link = { bold = true; fg = "magenta"; };
+        #       text.warning = { bold = true; fg = "red"; };
+        #     };
+
+        #     templates.log = "builtin_log_oneline";
+      };
+    };
+
+      programs.jjui = {
+        enable = d config.programs.jujutsu.enable;
+
+        settings = d {
+          preview.show_at_start = true;
+          ui.ui.tracer.enabled = true;
         };
-
-        templates.log = "builtin_log_oneline";
       };
-    };
-
-    programs.jjui = {
-      enable = d config.programs.jujutsu.enable;
-
-      settings = d {
-        preview.show_at_start = true;
-        ui.ui.tracer.enabled = true;
-      };
-    };
-    home.shellAliases.ju = lib.mkIf config.programs.jjui.enable "jjui";
+      home.shellAliases.ju = lib.mkIf config.programs.jjui.enable "jjui";
 
   };
 

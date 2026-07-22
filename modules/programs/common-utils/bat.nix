@@ -23,7 +23,7 @@
       diff = "batdiff";
     };
 
-    programs.jujutsu.settings.ui.pager = lib.mkIf check ["bat"];
+    home.sessionVariables.PAGER = lib.mkIf config.programs.bat.enable "${pkgs.bat}/bin/bat";
 
   };
 
