@@ -20,10 +20,10 @@
     home.packages = with pkgs; lib.mkIf ck [
       ledger
       nil # nix
-      python312Packages.python-lsp-server # python
+      # python312Packages.python-lsp-server # python
       markdown-oxide # markdown lsp for notes
-      ruff # python
-      black # python
+      # ruff # python
+      # black # python
       fish-lsp
       clang # c++
       ffmpegthumbnailer # dirvish

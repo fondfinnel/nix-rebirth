@@ -8,16 +8,15 @@ in {
     programs.helix = {
       enable = lib.mkDefault true;
 
-      package = pkgs.evil-helix;
-      # package = pkgs.helix;
+      # package = pkgs.evil-helix;
 
       extraPackages = with pkgs; lib.mkDefault [
         # marksman # markdown
         nil # nix
-        python312Packages.python-lsp-server # python
+        # python312Packages.python-lsp-server # python
         markdown-oxide # markdown lsp for notes
-        ruff # python
-        black # python
+        # ruff # python
+        # black # python
         fish-lsp
         clang # c++
       ];

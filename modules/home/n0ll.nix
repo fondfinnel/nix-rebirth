@@ -148,7 +148,7 @@ in {
 
     programs.ledger.enable = true;
 
-    programs.rimsort.enable = osConfig.headless-check;
+    # programs.rimsort.enable = osConfig.headless-check;
 
     programs.firefox.profiles."${config.home.username}" = {
 
