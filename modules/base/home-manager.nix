@@ -1,6 +1,11 @@
 { self, inputs, config, ... }: {
 
   flake.nixosModules.base = { lib, config, pkgs, ... }: {
+
+    # required for dbus management
+    environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
+    xdg.portal.enable = false;
+
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
@@ -11,6 +16,7 @@
       extraSpecialArgs = {
         inherit (self) inputs outputs;
       };
+
 
       # every user should have these modules available
       sharedModules = [

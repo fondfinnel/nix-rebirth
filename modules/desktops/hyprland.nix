@@ -35,7 +35,6 @@ in {
 
       # systemd service always in use
       systemd.enable = hyprenable;
-      systemd.variables = [ "--all" ];
 
       configType = "hyprlang";
 
