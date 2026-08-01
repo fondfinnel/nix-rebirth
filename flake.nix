@@ -2,7 +2,8 @@
   description = "Rewrite of my NixOS repo, using flake-parts as a base.";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/067f2d5a1099e06f9afb944e96e32724d3c5452b";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
