@@ -76,6 +76,35 @@
     # broadcast share on LAN?>
     services.samba-wsdd.enable = false;
 
+    services.samba = {
+      enable = true;
+      openFirewall = true;
+      settings.global.security = "user";
+      # TODO add tailscale
+      Settings.global."hosts allow" = "192.168.50. 127.0.0.1 localhost";
+      settings.global."hosts deny" = "0.0.0.0/0";
+      settings.global."guest account" = "nobody";
+      settings.global."map to guest" = "bad user";
+      settings.global."server smb encrypt" = "desired";
+      settings.global."invalid users" = [
+        "root"
+      ];
+
+      settings.personal = {
+        path = "/mnt/Primary";
+        "read only" = "no";
+        "guest ok" = "no";
+        "valid users" = [
+          "n0ll"
+        ];
+        # TODO masks
+
+      };
+    };
+
+    # broadcast share on LAN?>
+    services.samba-wsdd.enable = false;
+
   };
 
   flake.nixosModules.nix-heaven-hw = { lib, config, pkgs, ... }: {
@@ -111,6 +140,7 @@
       };
     };
 
+    # 4x32GB on host
     # 96GB max, 16GB min
     # Gibibytes to bytes
     boot.kernelParams = [

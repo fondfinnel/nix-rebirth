@@ -18,7 +18,7 @@
       passwordFile = config.sops.secrets.restic-encryption.path;
 
     in {
-      enable = lib.mkDefault true;
+      server.enable = lib.mkDefault true;
 
       backups."photos" = {
         inherit initialize pruneOpts timerConfig passwordFile;
