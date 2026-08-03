@@ -26,8 +26,9 @@
 
         aliases = {
           a = ["abandon"];
-          d = ["desc"];
-          dd = [ "desc" "-m"];
+          d = [ "diff" ];
+          D = ["desc"];
+          DD = [ "desc" "-m"];
           u = ["undo"];
           n = ["new"];
           c = ["commit"];
