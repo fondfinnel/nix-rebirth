@@ -29,6 +29,8 @@
       ffmpegthumbnailer # dirvish
       vips # dirvish
       xclip # org-download
+      tetex
+      ispell
     ];
 
     xdg.mimeApps.defaultApplications = let x = "emacsclient.desktop"; in lib.mkIf ck {

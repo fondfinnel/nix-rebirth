@@ -1,5 +1,5 @@
 { self, inputs, ... }: {
-
+  
   # Import modules as if root of flake
   flake.nixosConfigurations.nix-liquid = inputs.nixpkgs.lib.nixosSystem {
     modules = [
@@ -25,29 +25,36 @@
     hardware.keyboard.zsa.enable = true;
     hardware.keyboard.qmk.enable = true;
 
+    services.tuned.enable = true;
+    services.tlp.enable = false;
+
     home-manager.sharedModules = [
       { services.mic-volume.enable = true; }
       {
         
-      wayland.windowManager.hyprland.settings = {
-            monitor = [
-              "desc:eDP-1, preferred, auto, 1" # primary monitor
-              "desc:, preferred, auto, 1, mirror, eDP-1" # mirror to other monitors
-            ];
-            bind = [ # disable or enable mousepad manually
-              "SUPER SHIFT ALT CTRL, t, exec, hyprctl keyword 'device[synaptics-tm3276-022]:enabled' false & notify-send 'Touchpad disabled'"
-              "SUPER SHIFT ALT, t, exec, hyprctl keyword 'device[synaptics-tm3276-022]:enabled' true & notify-send 'Touchpad enabled'"
-            ];
-          };
+        wayland.windowManager.hyprland.settings = {
+          monitor = [
+            "eDP-1, preferred, auto, 1"
+            "desc:eDP-1, preferred, auto, 1" # primary monitor
+            "desc:, preferred, auto, 1, mirror, eDP-1" # mirror to other monitors
+          ];
+          bind = [
+            # disable or enable mousepad manually
+            "SUPER SHIFT ALT CTRL, t, exec, hyprctl keyword 'device[synaptics-tm3276-022]:enabled' false & notify-send 'Touchpad disabled'"
+            "SUPER SHIFT ALT, t, exec, hyprctl keyword 'device[synaptics-tm3276-022]:enabled' true & notify-send 'Touchpad enabled'"
+          ];
+        };
+
+        stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
+
+
       }
     ];
-
-    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
 
     imports = [
       self.nixosModules.users
     ];
-
+    
 
   };
 

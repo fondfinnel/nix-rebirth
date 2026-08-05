@@ -47,7 +47,7 @@
           "[workspace 3 silent]${delay}ghostty -e rmpc"
           "[workspace 5 silent]${delay}thunderbird"
           "[workspace special:magic silent]kitty rmpc"
-          "[workspace special:discord silent]${delay}vesktop --disable-gpu --start-minimized && ${delay}vesktop"
+          "[workspace special:discord silent]${delay}vesktop --disable-gpu"
           "${delay}keepassxc"
           "${delay}steam -silent"
           "${delay}qbittorrent"
