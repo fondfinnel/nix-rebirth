@@ -21,7 +21,7 @@
     headless-check = false;
 
     # head -c 8 /etc/machine-id
-    networking.hostId = "";
+    networking.hostId = "d39654b5";
 
     power.ups = {
       enable = true;
@@ -40,13 +40,6 @@
           "lowbatt = 40"
           # "ignorelb"
         ];
-
-      };
-
-      upsmon.monitor."UPS-1".system = "UPS-1@localhost";
-
-    };
-
     services.samba = {
       enable = true;
       openFirewall = true;
@@ -75,13 +68,15 @@
 
     # broadcast share on LAN?>
     services.samba-wsdd.enable = false;
+      };
+    };
 
     services.samba = {
       enable = true;
       openFirewall = true;
       settings.global.security = "user";
       # TODO add tailscale
-      Settings.global."hosts allow" = "192.168.50. 127.0.0.1 localhost";
+      settings.global."hosts allow" = "192.168.50. 127.0.0.1 localhost";
       settings.global."hosts deny" = "0.0.0.0/0";
       settings.global."guest account" = "nobody";
       settings.global."map to guest" = "bad user";
