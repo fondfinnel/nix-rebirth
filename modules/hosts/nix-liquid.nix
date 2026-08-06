@@ -1,5 +1,4 @@
 { self, inputs, ... }: {
-  
   # Import modules as if root of flake
   flake.nixosConfigurations.nix-liquid = inputs.nixpkgs.lib.nixosSystem {
     modules = [
