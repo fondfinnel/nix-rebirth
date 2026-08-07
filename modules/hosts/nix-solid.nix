@@ -29,6 +29,8 @@
     hardware.keyboard.zsa.enable = true;
     hardware.keyboard.qmk.enable = true;
 
+    services.tuned.enable = true;
+
     home-manager.sharedModules = [{
 
       services.mic-volume.enable = true;
