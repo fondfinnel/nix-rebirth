@@ -10,8 +10,8 @@
       base16Scheme = lib.mkDefault "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
 
       cursor = lib.mkDefault {
-        name = "capitaine-cursors";
-        package = pkgs.capitaine-cursors;
+        name = "phinger-cursors-dark";
+        package = pkgs.phinger-cursors;
         size = 24;
       };
     };

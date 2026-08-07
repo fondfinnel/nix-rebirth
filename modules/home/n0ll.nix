@@ -14,7 +14,7 @@ in {
         hashedPasswordFile = config.sops.secrets."users/n0ll".path;
         openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ../../keys/n0ll;
         # uncomment when installing fresh system
-        initialPassword = "123";
+        # initialPassword = "123";
     };
 
     sops.secrets."users/n0ll" = rec {
