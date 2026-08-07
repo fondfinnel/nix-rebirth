@@ -4,7 +4,6 @@
 in{
 
   flake.nixosModules.base = { lib, pkgs, config, ... }:
-    with lib;
     {
 
       imports = [
