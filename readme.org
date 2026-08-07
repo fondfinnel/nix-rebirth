@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-07-10 Fri 09:50]
+:mtime:    [2026-08-07 Fri 09:53]
 :END:
 
 #+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
@@ -14,8 +14,8 @@ To get a specific list to attempt consistency, I am going to spit out some rules
 
 - Modules should only contain relevant derivations, leaving as much room for importing and merging attribute sets as possible.
   - Window rules being defined alongside apps when applicable, for example.
-- Aim for efficiency in compilation, as well as maintainability. 
-
+- Building a structure that is solid standing and easier to maintain compared to original repo.
+- Secondarily, aim for efficiency in compilation.
  
 ** File Structure
 
@@ -32,7 +32,19 @@ Any device being managed under this repo has it's own segment of configuration, 
 Main desktop machine. May use disko in the future for management, but as of now it's not necessary. 
 
 ***** nix-liquid
-Laptop config. Utilizing disko and preservation for an impermanence setup, as it's light on storage and nothing on it is expected to last long term.
+Lenovo Thinkpad T480 config. Utilizing disko and preservation for an impermanence setup, as it's light on storage and nothing on it is expected to last long term.
+
+#+begin_export ascii
+CPU  Intel(R) Core(TM) i5-8350U (8) @ 3.60 GHz
+GPU 1  NVIDIA GeForce MX150 [Discrete]
+GPU 2  Intel UHD Graphics 620 @ 1.10 GHz [Integrated]
+Memory  2.46 GiB / 23.35 GiB (11%)
+Disk (/)  59.86 MiB / 11.68 GiB (1%) - tmpfs
+Disk (/persist)  32.71 GiB / 237.46 GiB (14%) - btrfs
+#+end_export
+
+***** nix-shalashaska
+Lenovo Thinkpad X1 Yoga Gen 6. Very similar to /nix-liquid/ as far as config, but 
 
 ***** nix-solidus
 Currently not in use, but when a test / temporary desktop machine is needed this will be used.
@@ -125,17 +137,6 @@ Here is the main chunk of the preservation itself, where everything is merged in
 Firefox profiles are declared with the user's profile itself. They get re-used with any of it's derivitives that can be declared in the same way (LibreWolf, Floorp, etc). By default, LibreWolf is enabled instead of Firefox. 
 
 There may be better ways to declare which one is enabled for the user, such as stating the package that Firefox builds on, but for the moment it's just conditional.
-
-
-** On testing
-Easy temporary test builds from this flake can be done with this:
-
-#+begin_src sh :tangle no
-set NH_FLAKE "/home/n0ll/Projects/nix-rebirth"
-nh os test -H nix-solid -d always -n | bat --plain
-#+end_src
-
-Redirects /nh/ to use the flake, and does a test build without activating it to show the diff, paged in bat.
 
 * To-Do
 
