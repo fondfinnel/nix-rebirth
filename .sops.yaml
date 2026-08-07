@@ -4,6 +4,7 @@ keys:
   - &hosts:
     - &nix-solid age19ulmwhz5j0v9xj5ajktzu9zq380yhkpwq0sdn53asua6kg88fvkqkn9h75
     - &nix-liquid age1g03kmn3v3mqgffk6yjl8r8hk4z3hs03pyq09lhc3ffgyvw6vsagsmlpy0g
+    - &nix-shalashaska age1ndstazgzkq3lkzj8zmnhslnvfuycxg0tlaqhz267s2v8kmy3af4qn90n8g
 
 creation_rules:
   - path_regex: secrets.yaml$
@@ -12,6 +13,7 @@ creation_rules:
           - *n0ll
           - *nix-solid
           - *nix-liquid
+          - *nix-shalashaska
 
   - path_regex: n0ll-secrets.yaml$
     key_groups:
@@ -19,6 +21,7 @@ creation_rules:
           - *n0ll
           - *nix-solid
           - *nix-liquid
+          - *nix-shalashaska
 
   - path_regex: host-secrets.yaml$
     key_groups:
