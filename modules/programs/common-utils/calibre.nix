@@ -4,7 +4,7 @@
     check = osConfig.headless-check && osConfig.high-performance;
   in {
 
-    config.programs.calibre.enable = check;
+    config.programs.calibre.enable = lib.mkDefault check;
     config.home.packages = lib.mkIf config.programs.calibre.enable [ pkgs.calibre ];
 
     config.home.preserve.directories = lib.mkIf config.programs.calibre.enable [ ".config/calibre" ];

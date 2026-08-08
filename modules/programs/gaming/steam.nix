@@ -2,16 +2,17 @@
 
   flake.nixosModules.gaming = { lib, config, pkgs, ... }: let
     check = config.headless-check && config.high-performance;
+    check2 = config.programs.steam.enable;
   in {
     
     programs.steam = {
       enable = lib.mkDefault check;
-      remotePlay.openFirewall = lib.mkDefault check;
-      dedicatedServer.openFirewall = lib.mkDefault check;
+      remotePlay.openFirewall = lib.mkDefault check2;
+      dedicatedServer.openFirewall = lib.mkDefault check2;
     };
-    hardware.steam-hardware.enable = lib.mkDefault check;
+    hardware.steam-hardware.enable = lib.mkDefault check2;
 
-    programs.gamemode.enable = lib.mkDefault check;
+    programs.gamemode.enable = lib.mkDefault check2;
 
   };
 

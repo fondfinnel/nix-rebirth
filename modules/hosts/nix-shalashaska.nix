@@ -21,6 +21,7 @@
     nixpkgs.hostPlatform = "x86_64-linux";
 
     device-type = "secondary";
+    programs.steam.enable = true;
 
     home-manager.sharedModules = [
       { services.mic-volume.enable = true; }
@@ -48,9 +49,16 @@
 
 
         };
+
+        programs.makemkv.enable = false;
+        programs.obs-studio.enable = false;
+        programs.ps3-disc-dumper.enable = false;
+        programs.qbittorrent.enable = false;
+        programs.calibre.enable = false;
       }
     ];
 
+    high-performance = true;
     stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark.yaml";
 
     imports = [
