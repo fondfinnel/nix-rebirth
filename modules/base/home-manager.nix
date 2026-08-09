@@ -57,7 +57,10 @@
 
     xdg.mimeApps.enable = lib.mkDefault true;
 
-    home.packages = [ pkgs.nerd-fonts.symbols-only ];
+    home.packages = [
+      pkgs.nerd-fonts.symbols-only
+      pkgs.trash-cli
+    ];
 
   };
 

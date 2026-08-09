@@ -5,8 +5,8 @@
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: {
 
     sops.secrets = {
-      "restic.encryption" = {};
-      "restic.photos" = {};
+      "restic/encryption" = {};
+      "restic/photos" = {};
     };
 
     services.restic = let
@@ -20,7 +20,7 @@
       ];
       timerConfig.OnCalendar = "sunday 3:00";
       timerConfig.Persistent = true;
-      passwordFile = config.sops.secrets."restic.encryption".path;
+      passwordFile = config.sops.secrets."restic/encryption".path;
 
       # todo 
       # - services.restic.backups.photos: exactly one of repository, repositoryFile or environmentFile should be set
@@ -33,7 +33,7 @@
       backups."photos" = {
         inherit initialize pruneOpts timerConfig passwordFile;
 
-        repositoryFile = config.sops.secrets."restic.photos".path;
+        repositoryFile = config.sops.secrets."restic/photos".path;
 
         paths = [
           "/mnt/NAS/Media/Photos"
