@@ -186,8 +186,10 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 - [ ] Sanoid or Syncoid for snapshots
 *** Caddy for reverse proxy?
 If cloudflared doesn't cut it, or if it's easier to manage through nixos itself
-  
-  
+*** TODO disko declared with zfs boot drive
+*** TODO a once and for all declarative solution for ensuring directories are around for services
+*** TODO Add ai upscaler to Jellyfin
+https://github.com/Kuschel-code/JellyfinUpscalerPlugin
 ** DONE Add nix-index with nix-index-database
 Just needs some setup, would be helpful.
 
