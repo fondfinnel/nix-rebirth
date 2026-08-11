@@ -24,6 +24,7 @@ in {
       vencord = lib.mkIf config.programs.vesktop.enable {
 
         # Use theme
+        # colors also managed by stylix
         settings.themeLinks = [
           # dark matter https://betterdiscord.app/theme/Dark%20Matter
           # "https://discordstyles.github.io/DarkMatter/DarkMatter.theme.css"

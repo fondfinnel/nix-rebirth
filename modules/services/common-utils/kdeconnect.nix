@@ -15,6 +15,10 @@ in {
       indicator = config.services.kdeconnect.enable;
     };
 
+    home.preserve.directories = [
+      ".config/kdeconnect"
+    ];
+
   };
 
 

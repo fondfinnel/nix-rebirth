@@ -2,7 +2,7 @@
   check = config.headless-check;
 in {
 
-  flake.homeModules.common-utils = { lib, ... }: {
+  flake.homeModules.common-utils = { lib, config, ... }: {
 
     programs.tealdeer = {
       enable = lib.mkDefault true;
@@ -12,6 +12,8 @@ in {
         updates.auto_update = true;
       };
     };
+
+    home.preserve.directories = lib.mkIf config.programs.tealdeer.enable [ ".cache/tealdeer" ];
 
   };
 
