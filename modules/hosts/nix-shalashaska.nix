@@ -89,6 +89,10 @@
     hardware.cpu.intel.updateMicrocode = true;
     
     disko.devices.disk.main.device = "/dev/nvme0n1";
+    swapDevices = [{
+      device = "/persist/var/lib/swapfile";
+      size = 32 * 1024;
+    }];
 
   };  
 
