@@ -4,6 +4,8 @@ in {
 
   flake.nixosModules.common-utils = { lib, config, pkgs, ... }: {
 
+    sops.secrets.tailscale-client = {};
+
     services.tailscale = {
 
       enable = lib.mkDefault true;
@@ -22,7 +24,7 @@ in {
         else "client";
 
       # TODO dynamic authentication
-      # authKeyFile = config.sops.secrets."tailscale-auth".path;
+      authKeyFile = lib.mkDefault config.sops.secrets."tailscale-client".path;
     };
 
     environment.preserve.directories = [
