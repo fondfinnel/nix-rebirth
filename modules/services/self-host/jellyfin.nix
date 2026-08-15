@@ -3,7 +3,7 @@
 # TODO other management tools
 { self, inputs, config, ... }: {
 
-  flake.nixosModules.self-host = { lib, config, self, ... }: let
+  flake.nixosModules.jellyfin = { lib, config, self, ... }: let
     # TODO link it to zfs dataset location
     mainDir = "/path/to/dir";
     allDirs = [
@@ -16,10 +16,12 @@
     # self.nixosModules.jellyfin-vue
     # ];
 
-    system.activationScripts.pre-015.deps = [ "specialfs" ];
-    system.activationScripts.pre-015.text = '' mkdir -p ${mainDir}/jellyfin/data ${mainDir}/jellyfin/config'';
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
+      "${mainDir}"
+      "${mainDir}/data"
+      "${mainDir}/config"
+    ];
 
-    # systemd.tmpfiles.rules = lib.map (f: "d ${f} 1664 jellyfin media") allDirs;
 
     networking.nat.enable = true;
     networking.nat.internalInterfaces = [ "ve-jellyfin" ];
@@ -45,13 +47,13 @@
       bindMounts.app-data = {
         isReadOnly = false;
         mountPoint = "/data";
-        hostPath = "${mainDir}/jellyfin/data";
+        hostPath = "${mainDir}/data";
       };
 
       bindMounts.app-config = {
         isReadOnly = false;
         mountPoint = "/config";
-        hostPath = "${mainDir}/jellyfin/config";
+        hostPath = "${mainDir}/config";
       };
 
       bindMounts.gpu = {
