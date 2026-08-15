@@ -2,10 +2,14 @@
 { self, inputs, config, ... }: {
 
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
-    mainDir = "/path/to/dir";
+    mainDir = "/service";
   in {
  
-    systemd.tmpfiles.rules = [ "d ${mainDir}/tunarr 1664 tunarr media"];
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
+      "${mainDir}"
+      "${mainDir}/tunarr"
+    ];
+
 
     virtualisation.oci-containers.containers.tunarr = {
       image = "chrisbenincasa/tunarr";
