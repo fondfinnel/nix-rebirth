@@ -7,7 +7,7 @@
       self.nixosModules.nix-solid-conf
       self.nixosModules.nix-solid-hw
       self.nixosModules.ups
-      # self.nixosModules.paper
+      self.nixosModules.fireshare
 
       self.nixosModules.bluetooth 
       self.nixosModules.share-nas

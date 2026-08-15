@@ -1,13 +1,15 @@
 { self, inputs, config, ... }: {
 
-  flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
+  flake.nixosModules.fireshare = { lib, config, pkgs, ... }: let
     # TODO dir
-    mainDir = "/path/to/dir";
+    mainDir = "/services/fireshare";
   in {
 
-    sops.secrets."fireshare".name = "fireshare";
+    sops.secrets."fireshare" = {};
 
-    systemd.tmpfiles.rules = lib.map (f: "d ${f} 1664 fireshare media") [
+    # fireshare configured for other uid gid
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 1000 100") [
+      # j"${mainDir}"
       "${mainDir}/data"
       "${mainDir}/processed"
       "${mainDir}/videos"
@@ -20,6 +22,8 @@
         # untested
         "127.0.0.1:1337:80"
       ];
+
+      user = "root";
 
       volumes = [
         # TODO get dirs
