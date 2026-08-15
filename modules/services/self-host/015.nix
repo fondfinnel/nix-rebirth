@@ -20,7 +20,7 @@
       # worker and app use the same vols apparently
       volumes = [
         "${mainDir}/uploads:/uploads"
-        "${./config.yaml}:/app/config.yaml"
+        "${./015-config.yaml}:/app/015-config.yaml"
       ];
     in {
 
@@ -42,7 +42,7 @@
         image = "fudaoyuanicu/015-worker";
         volumes = [
           "${mainDir}/uploads:/uploads"
-          "${./config.yaml}:/config.yaml"
+          "${./015-config.yaml}:/015-config.yaml"
         ];
         dependsOn = [
           "015-app"

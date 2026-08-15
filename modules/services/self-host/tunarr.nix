@@ -2,12 +2,12 @@
 { self, inputs, config, ... }: {
 
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
-    mainDir = "/service";
+    mainDir = "/service/tunarr";
   in {
  
     systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
       "${mainDir}"
-      "${mainDir}/tunarr"
+      "${mainDir}/config"
     ];
 
 
@@ -20,7 +20,7 @@
 
       # TODO dir
       volumes = [
-        "${mainDir}/tunarr:/config/tunarr" # redirect config storage
+        "${mainDir}/config:/config/tunarr" # redirect config storage
       ];
 
       environment = {
