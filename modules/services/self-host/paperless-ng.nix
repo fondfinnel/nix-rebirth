@@ -7,8 +7,14 @@
     mainDir = "/path/to/dir";
   in {
 
-    system.activationScripts.pre-015.deps = [ "specialfs" ];
-    system.activationScripts.pre-015.text = ''mkdir -p ${mainDir}/data ${mainDir}/media ${mainDir}/export ${mainDir}/consume ${mainDir}/redis'';
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
+      "${mainDir}"
+      "${mainDir}/data"
+      "${mainDir}/media"
+      "${mainDir}/redis"
+    ];
+
+    sops.secrets."paperless-ngx" = {};
 
     virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
     virtualisation.oci-containers.containers = {
@@ -32,6 +38,7 @@
         environment = {
           PAPERLESS_REDIS = "redis://paperless-redis:6379";
         };
+        environmentFiles = [ config.sops.secrets."paperless-ngx".path ];
       };
 
       paperless-redis = {
