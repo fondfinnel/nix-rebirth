@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-08-07 Fri 09:53]
+:mtime:    [2026-08-18 Tue 14:23]
 :END:
 
 #+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
@@ -44,7 +44,15 @@ Disk (/persist)  32.71 GiB / 237.46 GiB (14%) - btrfs
 #+end_export
 
 ***** nix-shalashaska
-Lenovo Thinkpad X1 Yoga Gen 6. Very similar to /nix-liquid/ as far as config, but 
+Lenovo Thinkpad X1 Yoga Gen 6. Very similar to /nix-liquid/ as far as config, but has more performance, other tools for 2n1.
+
+#+begin_src 
+CPU  11th Gen Intel(R) Core(TM) i5-1145G7 (8) @ 4.40 GHz
+GPU  Intel Iris Xe Graphics @ 1.30 GHz [Integrated]
+Memory  3.00 GiB / 31.06 GiB (10%)
+Disk (/)  138.38 MiB / 15.53 GiB (1%) - tmpfs
+Disk (/nix)  109.31 GiB / 237.46 GiB (46%) - btrfs
+#+end_src
 
 ***** nix-solidus
 Currently not in use, but when a test / temporary desktop machine is needed this will be used.
@@ -130,7 +138,6 @@ Here is the main chunk of the preservation itself, where everything is merged in
       }) config.home-manager.users;
 #+end_src
 
-
 ** Shared options
 
 *** Firefox
@@ -159,7 +166,7 @@ Currently doesn't appear to be tested at all.
 
 
 ** Server things
-*** TODO Create a function to add email option to each user account
+*** CANCEL Create a function to add email option to each user account
 There's gotta be a way to do it that isn't "make sure to write it for every user".  
 
 The objective with this is to have a seamless method of accessing an assigned email for each user. This is particularly useful when in the context of the NAS machine. 
@@ -186,7 +193,7 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 - [ ] Sanoid or Syncoid for snapshots
 *** Caddy for reverse proxy?
 If cloudflared doesn't cut it, or if it's easier to manage through nixos itself
-*** TODO disko declared with zfs boot drive
+*** DONE disko declared with zfs boot drive
 *** TODO a once and for all declarative solution for ensuring directories are around for services
 *** TODO Add ai upscaler to Jellyfin
 https://github.com/Kuschel-code/JellyfinUpscalerPlugin
