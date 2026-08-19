@@ -8,7 +8,7 @@ in {
     programs.helix = {
       enable = lib.mkDefault true;
 
-      # package = pkgs.evil-helix;
+      package = pkgs.evil-helix;
 
       extraPackages = with pkgs; lib.mkDefault [
         # marksman # markdown
