@@ -26,7 +26,17 @@ in {
       plugins = [
         { name = "pure"; src = pkgs.fishPlugins.pure.src; } 
         { name = "humantime-fish"; src = pkgs.fishPlugins.humantime-fish.src; }
+        # { name = "hydro"; src = pkgs.fishPlugins.hydro.src; }
+        # { name = "you-should-use"; src = pkgs.fishPlugins.fish-you-should-use.src; }
+        { name = "fish-bd"; src = pkgs.fishPlugins.fish-bd.src; }
       ];
+
+      shellInit = ''
+        set --universal pure_enable_nixdevshell true
+        set --universal pure_enable_single_line_prompt true 
+        set --universal pure_check_for_new_release false
+        set --universal pure_begin_prompt_with_current_directory false
+      '';
 
     };
 
