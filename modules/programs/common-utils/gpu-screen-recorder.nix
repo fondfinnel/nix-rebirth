@@ -17,7 +17,7 @@
     options.programs.gpu-screen-recorder.enable = lib.mkEnableOption "gpu-screen-recorder-check";
     config.programs.gpu-screen-recorder.enable = lib.mkDefault check;
 
-    config.home.packages = lib.mkIf check [ pkgs.gpu-screen-recorder ];
+    config.home.packages = lib.mkIf check [ pkgs.gpu-screen-recorder pkgs.killall ];
     config.home.shellAliases.cap = lib.mkIf check2 "killall -SIGUSR1 gpu-screen-recorder ; kitten notify 'Clip saved'";
 
     config.systemd.user.services.gpu-screen-recorder = lib.mkIf check2 {

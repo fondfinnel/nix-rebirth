@@ -200,40 +200,6 @@ https://github.com/Kuschel-code/JellyfinUpscalerPlugin
 ** DONE Add nix-index with nix-index-database
 Just needs some setup, would be helpful.
 
-** DONE Various fixes
-
-#+begin_src sh
-evaluation warning: n0ll profile: The option `programs.ssh.controlPersist' defined in `/nix/store/a6kkx6xwlalp20c6wpg3x2g91nvi8s9c-source/modules/programs/common-utils/ssh.nix, via option flake.homeModules.common-utils' has been renamed to `programs.ssh.settings.*.ControlPersist'.
-evaluation warning: n0ll profile: The option `programs.git.extraConfig' defined in `/nix/store/a6kkx6xwlalp20c6wpg3x2g91nvi8s9c-source/modules/programs/development/git.nix, via option flake.homeModules.development' has been renamed to `programs.git.settings'.
-evaluation warning: n0ll profile: `programs.ssh.matchBlocks` defined in `/nix/store/a6kkx6xwlalp20c6wpg3x2g91nvi8s9c-source/modules/home/n0ll.nix, via option flake.homeModules.n0ll-conf' is deprecated. Use `programs.ssh.settings`.
-evaluation warning: n0ll profile: `programs.ssh` default values will be removed in the future.
-                    Consider setting `programs.ssh.enableDefaultConfig` to false,
-                    and manually set the default values you want to keep at
-                    `programs.ssh.settings."*"`.
-evaluation warning: The user 'n0ll' has multiple of the options
-                    `initialHashedPassword`, `hashedPassword`, `initialPassword`, `password`
-                    & `hashedPasswordFile` set to a non-null value.
-
-                    If multiple of these password options are set at the same time then a
-                    specific order of precedence is followed, which can lead to surprising
-                    results. The order of precedence differs depending on whether the
-                    {option}`users.mutableUsers` option is set.
-
-                    If the option {option}`users.mutableUsers` is
-                    `true`, then the order of precedence is as shown
-                    below, where values on the left are overridden by values on the right:
-                    {option}`initialHashedPassword` -> {option}`initialPassword` -> {option}`hashedPassword` -> {option}`password` -> {option}`hashedPasswordFile`
-
-                    The values of these options are:
-                    ,* users.users."n0ll".hashedPassword: null
-                    ,* users.users."n0ll".hashedPasswordFile: "/run/secrets-for-users/users/n0ll"
-                    ,* users.users."n0ll".password: null
-                    ,* users.users."n0ll".initialHashedPassword: null
-                    ,* users.users."n0ll".initialPassword: "123"
-#+end_src
-
 ** DONE Add hardware flake for better laptop experience
 
 ** DONE Bring in the rest
-  
-  

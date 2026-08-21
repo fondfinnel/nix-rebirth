@@ -7,8 +7,6 @@
 
     config.home.packages = lib.mkIf (config.programs.wifitui.enable) [ pkgs.wifitui ];
 
-    config.home.shellAliases.nmtui = lib.mkIf config.programs.wifitui.enable "wifitui";
-
   };
 
 
