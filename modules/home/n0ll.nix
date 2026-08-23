@@ -28,9 +28,6 @@ in {
     users.groups.libvirtd.members = [ "n0ll" ];
     programs.weylus.users = ["n0ll"];
 
-    # only necessary for importing home-manager as nixos-module
-    environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
-
     # likely removing once things are finalized, for testing purposes
     home-manager.users.n0ll.imports = [
       self.homeModules.n0ll-conf

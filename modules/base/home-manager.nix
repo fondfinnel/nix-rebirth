@@ -56,6 +56,8 @@
     };
 
     xdg.mimeApps.enable = lib.mkDefault true;
+    xdg.portal.enable = lib.mkDefault true;
+    xdg.portal.xdgOpenUsePortal = lib.mkDefault true;
 
     home.packages = [
       pkgs.nerd-fonts.symbols-only
