@@ -61,8 +61,8 @@ in {
         };
 
         decoration = {
-          rounding = 15;
-          rounding_power = 2;
+          # rounding = 15;
+          # rounding_power = 2;
           shadow = { 
             enabled = highperf;
             range = 4;

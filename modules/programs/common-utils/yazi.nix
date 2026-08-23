@@ -4,7 +4,7 @@ in {
 
   flake.homeModules.common-utils = { pkgs, lib, config, ... }: {
 
-    home.packages = lib.mkIf config.programs.yazi.enable [ pkgs.ripdrag ];
+    home.packages = lib.mkIf config.programs.yazi.enable [ pkgs.ripdrag pkgs.wl-clipboard ];
 
     programs.yazi = {
       enable = lib.mkDefault true;
@@ -68,11 +68,11 @@ in {
 
 
       plugins = with pkgs.yaziPlugins; lib.mkDefault {
-        clipboard = clipboard;
+        wl-clipboard = wl-clipboard;
         drag = drag;  # may need to install ripdrag externally
 
         full-border.package = full-border;
-        # full-border.setup = true;
+        full-border.setup = true;
 
         jjui = jjui;
         recycle-bin = recycle-bin;
@@ -93,36 +93,53 @@ in {
         yatline.package = yatline;
         yatline.setup = true;
 
+        omni-trash = omni-trash;
+
+        tv = pkgs.fetchFromGitHub
+          {
+            owner = "cap153";
+            repo = "tv.yazi";
+            rev = "main";
+            hash = "sha256-VIs8BYbXbXVSrlKpmYAhuahIiWR4PWzjKZvOm+J6TBk=";
+          };
+
       };
 
       keymap.mgr.prepend_keymap = lib.mkDefault [
 
-        { on = "T"; run = "plugin toggle-pane max-preview"; desc = "Toggle preview maximize"; }
+        { on = "T"           ; run = "plugin toggle-pane max-preview"; desc = "Toggle preview maximize"; }
 
-        { on = [ "z" "h" ]; run = "plugin time-travel prev"; desc = "Go to previous snapshot"; }
-        { on = [ "z" "l" ]; run = "plugin time-travel next"; desc = "Go to next snapshot"; }
-        { on = [ "z" "h" ]; run = "plugin time-travel exit"; desc = "Exit viewing snapshot"; }
+        { on = [ "z" "h" ]   ; run = "plugin time-travel prev"; desc = "Go to previous snapshot"; }
+        { on = [ "z" "l" ]   ; run = "plugin time-travel next"; desc = "Go to next snapshot"; }
+        { on = [ "z" "h" ]   ; run = "plugin time-travel exit"; desc = "Exit viewing snapshot"; }
 
-        { on = "y"; run = [ "yank" "plugin clipboard -- --action=copy" ]; desc = "Copy to system clipboard"; }
-        { on = "<C-p>"; run = "plugin clipboard -- --action=paste"; desc = "Paste from system clipboard"; }
+        { on = "<C-y>"       ; run = [ "plugin wl-clipboard" ]; desc = "Copy to system clipboard"; }
+        { on = "<C-p>"       ; run = "plugin clipboard -- --action=paste"; desc = "Paste from system clipboard"; }
 
-        { on = "<C-m>"; run = "plugin drag"; desc = "Drag and drop"; }
-        { on = [ "g" "j"]; run = "plugin jjui"; desc = "Run jjui"; } 
+        { on = "<C-m>"       ; run = "plugin drag"; desc = "Drag and drop"; }
+        { on = [ "g" "j"]    ; run = "plugin jjui"; desc = "Run jjui"; } 
 
-        { on = [ "g" "o" ]; run = "plugin recycle-bin"; desc = "Open recycle-bin"; } 
+        { on = [ "g" "o" ]   ; run = "plugin recycle-bin"; desc = "Open recycle-bin"; } 
 
-        { on = [ "C" "p" ]; run = "plugin convert -- --extension='png'"; desc = "Convert to png"; } 
-        { on = [ "C" "j" ]; run = "plugin convert -- --extension='jpg'"; desc = "Convert to jpg"; } 
-        { on = [ "C" "w" ]; run = "plugin convert -- --extension='webp'"; desc = "Convert to webp"; } 
+        { on = [ "C" "p" ]   ; run = "plugin convert -- --extension='png'"; desc = "Convert to png"; } 
+        { on = [ "C" "j" ]   ; run = "plugin convert -- --extension='jpg'"; desc = "Convert to jpg"; } 
+        { on = [ "C" "w" ]   ; run = "plugin convert -- --extension='webp'"; desc = "Convert to webp"; } 
 
-        { on = [ "c" "a" ]; run = "plugin compress"; desc = "Compress"; } 
-        { on = [ "c" "p" ]; run = "plugin compress -p"; desc = "Compress with password"; } 
+        { on = [ "c" "a" ]   ; run = "plugin compress"; desc = "Compress"; } 
+        { on = [ "c" "p" ]   ; run = "plugin compress -p"; desc = "Compress with password"; } 
 
-        { on = "M"; run = "plugin mount"; desc = "View mounts"; }
+        { on = "M"           ; run = "plugin mount"; desc = "View mounts"; }
 
-        { on = "<C-s>"; run = "plugin kdeconnect-send"; desc = "Send file(s) via KDE Connect"; }
+        { on = "<C-s>"       ; run = "plugin kdeconnect-send"; desc = "Send file(s) via KDE Connect"; }
 
-        { on = "Z"; run = "plugin yafg"; desc = "Search via fzf"; }
+        { on = "Z"           ; run = "plugin yafg"; desc = "Search via fzf"; }
+
+        { on = "R"           ; run = "plugin omni-trash"; desc = "Open omni-trash"; }
+
+        { on = ["<C-t>" "t"] ; run = "plugin tv"; desc = "Find file via tv"; }
+        { on = ["<C-t>" "d"] ; run = "plugin tv dirs"; desc = "Find directory via tv"; }
+        { on = ["<C-t>" "f"] ; run = "plugin tv text"; desc = "Find text via tv"; }
+        { on = ["<C-t>" "z"] ; run = "plugin tv zoxide"; desc = "Jump to directory via tv"; }
         
       ];
 

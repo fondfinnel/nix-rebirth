@@ -8,6 +8,7 @@ in {
       enable = lib.mkDefault true;
 
       # Pull aliases from bash, concat with specific fish aliases
+      preferAbbrs = true;
       shellAbbrs = config.home.shellAliases // {
         cm = "command";
         unfree = "export NIXPKGS_ALLOW_UNFREE=1";

@@ -1,6 +1,6 @@
 { self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { lib, ... }: {
+  flake.homeModules.common-utils = { lib, pkgs, ... }: {
 
     programs.television.enable = lib.mkDefault true;
 
@@ -19,15 +19,17 @@
                 "noogle"
               ];
 
-            render_docs_indexes =
+            experimental.render_docs_indexes =
               {
-                "preservation" = "https://nix-community.github.io/preservation/configuration-options.html";
+                # "preservation" = "https://nix-community.github.io/preservation/configuration-options.xhtml";
               };
             
           };
       };
     
     home.preserve.directories = [ ".cache/nix-search-tv" ]; 
+
+    home.shellAliases.nst = lib.mkDefault "${pkgs.television}/bin/tv nix-search-tv";
 
   };
 

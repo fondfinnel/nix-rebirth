@@ -42,7 +42,7 @@
       "text/org" = [ x ];
     };
 
-    home.shellAliases.em = lib.mkIf ck "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emacs -nw";
+    home.shellAliases.em = lib.mkIf ck "${pkgs.emacs}/bin/emacsclient -c -a hx";
 
     home.preserve.directories = lib.mkIf ck [ ".config/emacs" "org" ];
 

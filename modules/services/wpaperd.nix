@@ -3,8 +3,8 @@
   flake.homeModules.wpaperd = { pkgs, lib, config, osConfig, ... }: let
     backuppape = pkgs.nixos-artwork.wallpapers.binary-black;
     papedirectory =
-      "/mnt/NAS/Media/Photos/DSLR/wallpaper";
-    # "/mnt/NAS/Media/Photos/Wallpapers/anime-manga";
+      # "/mnt/NAS/Media/Photos/DSLR/wallpaper";
+      "/mnt/NAS/Media/Photos/Wallpapers/anime-manga";
     # "/mnt/NAS/Media/Photos/Wallpapers";
     check2 = osConfig.headless-check;
   in {
