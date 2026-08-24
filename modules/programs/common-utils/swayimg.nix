@@ -6,7 +6,17 @@ in {
 
     programs.swayimg = {
       enable = lib.mkDefault check;
-      # TODO settings    
+
+      # tried getting q to quit, no luck
+      # might be updated api in the future though
+      # on window resize, resets image to fit window
+      initLua = /* lua */
+        ''
+            swayimg.viewer.set_default_scale("fit")
+            swayimg.on_redrawn(
+                swayimg.viewer.reset()
+            )
+        '';
     };
 
     xdg.mimeApps.defaultApplications = let x = "swayimg.desktop"; in lib.mkIf config.programs.swayimg.enable {
