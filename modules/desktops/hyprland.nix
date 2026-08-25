@@ -12,10 +12,11 @@ in {
 
     imports = [
       self.homeModules.hypridle
-      self.homeModules.noctalia-shell
       self.homeModules.gammastep
       self.homeModules.wpaperd
       self.homeModules.walker
+      self.homeModules.ironbar
+      self.homeModules.mako
     ];
 
     services.hyprpolkitagent.enable = true;
