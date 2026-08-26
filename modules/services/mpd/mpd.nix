@@ -33,27 +33,27 @@
       playlistDirectory = "${musicDirectory}/playlists";
       dbFile = "${musicDirectory}/.database/mpd/database";
       extraConfig = ''
-      sticker_file "${musicDirectory}/.database/mpd/${config.home.username}_sticker.sql"
-      log_file "${musicDirectory}/.database/mpd/${config.home.username}_log"
+        sticker_file "${musicDirectory}/.database/mpd/${config.home.username}_sticker.sql"
+        log_file "${musicDirectory}/.database/mpd/${config.home.username}_log"
 
-      audio_output { # foo output for visualizers, such as cava
-        type "fifo"
-        name "my_fifo"
-        path "/tmp/mpd.fifo"
-        format "44100:16:2"
-      }
+        audio_output { # foo output for visualizers, such as cava
+            type "fifo"
+            name "my_fifo"
+            path "/tmp/mpd.fifo"
+            format "44100:16:2"
+        }
 
-      ${if config.services.pipewire.enable then ''
-      audio_output { # pipewire output
-        type "pipewire"
-        name "PipeWire"
-        format "384000:f:2"
-      }
-      '' else ''''}
+        ${if config.services.pipewire.enable then ''
+        audio_output { # pipewire output
+            type "pipewire"
+            name "PipeWire"
+            format "384000:f:2"
+        }
+         '' else ''''}
 
-      replaygain "auto"
-      max_output_buffer_size "16384"
-    '';
+        replaygain "auto"
+        max_output_buffer_size "16384"
+      '';
 
       extraArgs = [ "--verbose" ];
 

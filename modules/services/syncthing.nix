@@ -113,7 +113,7 @@
 
 		  };
 
-      tray.enable = lib.mkDefault config.services.syncthing.enable;
+      tray.enable = lib.mkDefault false;
 	  };
 
     

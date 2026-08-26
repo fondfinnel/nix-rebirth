@@ -13,10 +13,7 @@
     
     # default to emacs client if enabled, if service unavailable then standalone emacs 
     # managing it via the env var makes it easier to integrate elsewhere (i.e. kitty module)
-    home.sessionVariables.EDITOR =
-      if config.services.emacs.enable
-      then lib.mkDefault "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emacs"
-      else lib.mkDefault null;
+    home.sessionVariables.EDITOR = lib.mkDefault (lib.mkIf config.services.emacs.enable  "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emacs");
 
     home.packages = with pkgs; lib.mkIf ck [
       ledger
