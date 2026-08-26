@@ -38,8 +38,11 @@ in {
         set --universal pure_check_for_new_release false
         set --universal pure_begin_prompt_with_current_directory false
       '';
+      
 
     };
+
+    home.preserve.directories = [ ".cache/fish" ];
 
   };
 
