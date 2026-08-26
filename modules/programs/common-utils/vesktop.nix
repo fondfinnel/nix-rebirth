@@ -36,7 +36,7 @@ in {
           # "https://refact0r.github.io/midnight-discord/build/midnight.css"
 
           # minimalcord
-          "https://raw.githubusercontent.com/DiscordStyles/MinimalCord/deploy/MinimalCord.theme.css"
+          # "https://raw.githubusercontent.com/DiscordStyles/MinimalCord/deploy/MinimalCord.theme.css"
         ];
 
         settings.plugins = lib.mkDefault {

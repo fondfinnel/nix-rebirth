@@ -10,6 +10,7 @@
       enable = true;
       client.enable = config.services.emacs.enable;
     };
+    programs.emacs.enable = lib.mkDefault true;
     
     # default to emacs client if enabled, if service unavailable then standalone emacs 
     # managing it via the env var makes it easier to integrate elsewhere (i.e. kitty module)

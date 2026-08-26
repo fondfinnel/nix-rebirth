@@ -100,8 +100,9 @@ in {
 
     stylix = {
       opacity = {
-        terminal = 0.9;
-        popups = 0.9;
+        applications = 0.90;
+        terminal = 0.90;
+        popups = 0.90;
       };
 
       fonts = rec {

@@ -16,6 +16,8 @@
       };
 
       icons.enable = true;
+      icons.package = pkgs.papirus-icon-theme;
+      icons.dark = "Papirus Dark";
       polarity = "dark";
     };
   };
