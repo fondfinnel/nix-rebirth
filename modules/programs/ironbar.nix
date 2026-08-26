@@ -14,13 +14,19 @@
         # package = inputs.ironbar;
 
         config = lib.mkDefault
-          {
+          rec {
             anchor_to_edges = true;
             position = "top";
             height = 16;
 
             # left modules
             start = [
+              {
+                type = "focused";
+                show_icon = true;
+                show_title = false;
+                icon_size = height;
+              }
               { type = "workspaces"; }
             ];
 
@@ -47,6 +53,7 @@
                 type = "battery";
                 show_if = "ls /sys/class/power_supply/ | grep --quiet '^BAT'";
               }
+              { type = "volume"; }
               {
                 type = "sys_info";
                 format = [

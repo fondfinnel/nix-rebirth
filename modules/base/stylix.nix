@@ -14,6 +14,9 @@
         package = pkgs.phinger-cursors;
         size = 24;
       };
+
+      icons.enable = true;
+      polarity = "dark";
     };
   };
 
