@@ -14,7 +14,7 @@
     
     # default to emacs client if enabled, if service unavailable then standalone emacs 
     # managing it via the env var makes it easier to integrate elsewhere (i.e. kitty module)
-    home.sessionVariables.EDITOR = lib.mkDefault (lib.mkIf config.services.emacs.enable  "${pkgs.emacs}/bin/emacsclient -c -a ${pkgs.emacs}/bin/emacs");
+    home.sessionVariables.EDITOR = lib.mkDefault (lib.mkIf config.services.emacs.enable  "${pkgs.emacs}/bin/emacsclient -nw -c -a ${pkgs.evil-helix}/bin/hx");
 
     home.packages = with pkgs; lib.mkIf ck [
       ledger
@@ -40,7 +40,7 @@
       "text/org" = [ x ];
     };
 
-    home.shellAliases.em = lib.mkIf ck "${pkgs.emacs}/bin/emacsclient -c -a hx";
+    home.shellAliases.em = lib.mkIf ck config.home.sessionVariables.EDITOR;
 
     home.preserve.directories = lib.mkIf ck [ ".config/emacs" "org" ];
 
