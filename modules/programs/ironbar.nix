@@ -17,7 +17,7 @@
           rec {
             anchor_to_edges = true;
             position = "top";
-            height = 14;
+            height = 12;
 
             # left modules
             start = [
@@ -33,7 +33,7 @@
                 type = "focused";
                 show_icon = true;
                 show_title = false;
-                icon_size = height;
+                icon_size = height + 4;
               }
             ];
 
@@ -71,8 +71,14 @@
                 ];
                 interval.cpu = 1;
               }
-              # { type = "keyboard"; }
               { type = "clock"; }
+              {
+                type = "notifications";
+                icons = {
+                  closed_none = "󰻞";
+                  closed_some = "󰭻";
+                };
+              }
             ];
 
           };
@@ -85,8 +91,8 @@
                 --color-active: ${config.lib.stylix.colors.withHashtag.base0D};
                 --color-urgent: ${config.lib.stylix.colors.withHashtag.base08};
 
-                --margin-lg: 1em;
-                --margin-sm: 0.5em;
+                --margin-lg: 0.5em;
+                --margin-sm: 0.25em;
             }
 
             * {
@@ -162,11 +168,11 @@
             }
 
             .workspaces .item.visible {
-                box-shadow: inset 0 -1px var(--color-white);
+                box-shadow: inset 0 -1px var(--color-active);
             }
 
             .workspaces .item.focused {
-                box-shadow: inset 0 -1px var(--color-active);
+                box-shadow: inset 0 -1px var(--color-white);
                 background-color: var(--color-dark-secondary);
             }
 
@@ -177,6 +183,5 @@
       };
 
   };
-
 
 }
