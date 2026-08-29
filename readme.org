@@ -3,6 +3,7 @@
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
 :mtime:    [2026-08-18 Tue 14:23]
 :END:
+#+options: toc:nil
 
 #+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
 [[file:.assets/2026-05-22_14-39-19_screenshot.png]]
