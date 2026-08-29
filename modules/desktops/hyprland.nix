@@ -16,7 +16,7 @@ in {
       self.homeModules.wpaperd
       self.homeModules.walker
       self.homeModules.ironbar
-      self.homeModules.mako
+      self.homeModules.swaync
     ];
 
     services.hyprpolkitagent.enable = true;
@@ -44,8 +44,8 @@ in {
         general = {
           gaps_in = 2;
           gaps_out = 6;
-          border_size = 1;
-          layout = "master";
+          border_size = 2;
+          layout = "scrolling";
           allow_tearing = false;
         };
 
@@ -102,9 +102,9 @@ in {
         };
         
         scrolling = {
-          focus_fit_method = 0;
-          follow_min_visible = 0.4;
-          column_width = 0.6;
+          focus_fit_method = 1;
+          follow_min_visible = 0.6;
+          column_width = 0.5;
         };
 
         master = {
