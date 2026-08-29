@@ -31,6 +31,17 @@ Any device being managed under this repo has it's own segment of configuration, 
 ***** nix-solid
 Main desktop machine. May use disko in the future for management, but as of now it's not necessary. 
 
+#+begin_src sh
+OS  NixOS 26.11 (Zokor) x86_64
+Kernel  Linux 7.1.5
+WM  Hyprland 0.56.1 (Wayland)
+CPU  AMD Ryzen 9 3900X (24) @ 4.67 GHz
+GPU  AMD Radeon RX 9070 XT [Discrete]
+Memory  9.97 GiB / 62.71 GiB (16%)
+Disk (/)  178.17 GiB / 255.17 GiB (70%) - ext4
+Disk (/home)  811.62 GiB / 1.79 TiB (44%) - ext4
+#+end_src
+
 ***** nix-liquid
 Lenovo Thinkpad T480 config. Utilizing disko and preservation for an impermanence setup, as it's light on storage and nothing on it is expected to last long term.
 
@@ -145,37 +156,13 @@ Firefox profiles are declared with the user's profile itself. They get re-used w
 
 There may be better ways to declare which one is enabled for the user, such as stating the package that Firefox builds on, but for the moment it's just conditional.
 
+
 * To-Do
 
-** DONE Figure out how to handle home-manager
-I'll be using home-manager in a similar system. Especially with the custom preservation options, it'd be the wiser move. 
-
-** DONE Create a more consistent set of reproducable code, rather than copy pasting everything
-Marking done as it's going to be something that needs to be done throughout.
-
-** DONE Bring in the essentials of the original repo
-
-** DONE Create a mechanism that tracks directories being used but /not managed by Nix/ to pass along to preservation
-Marking done, as there's now a code snippet for preservation that does a similar function. 
-
-** DONE Create proper color definitions to be used repo-wide
-Stylix more or less does this.
-
-** DONE Figure out implementing home-manager in a clean way
-Currently doesn't appear to be tested at all. 
-
-
-** Server things
-*** CANCEL Create a function to add email option to each user account
-There's gotta be a way to do it that isn't "make sure to write it for every user".  
-
-The objective with this is to have a seamless method of accessing an assigned email for each user. This is particularly useful when in the context of the NAS machine. 
-
-*** TODO Write an internet radio service to self-host
+** TODO Write an internet radio service to self-host
 Would be cool. A neat little project of sorts.
 
-*** DONE Cloudflared
-*** TODO Import custom docker images for stuff unavailable in nixpkgs
+** TODO Import custom docker images for stuff unavailable in nixpkgs
 Probably a good idea to have a dedicated area to have apps like this store shit.
 
 - [x] fireShare
@@ -188,18 +175,9 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 - [ ] trek..?
 - [ ] flame dashboard
 - [x] paperless-ng
-*** TODO calibre-server and calibre-web
-*** TODO ZFS
+** TODO calibre-server and calibre-web
+** TODO ZFS
 - [ ] Sanoid or Syncoid for snapshots
-*** Caddy for reverse proxy?
+** Caddy for reverse proxy?
 If cloudflared doesn't cut it, or if it's easier to manage through nixos itself
-*** DONE disko declared with zfs boot drive
-*** TODO a once and for all declarative solution for ensuring directories are around for services
-*** TODO Add ai upscaler to Jellyfin
-https://github.com/Kuschel-code/JellyfinUpscalerPlugin
-** DONE Add nix-index with nix-index-database
-Just needs some setup, would be helpful.
-
-** DONE Add hardware flake for better laptop experience
-
-** DONE Bring in the rest
+** TODO a once and for all declarative solution for ensuring directories are around for services
