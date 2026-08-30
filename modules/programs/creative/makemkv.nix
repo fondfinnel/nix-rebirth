@@ -5,7 +5,7 @@
   in {
 
     options.programs.makemkv.enable = lib.mkEnableOption "makemkv";
-    config.programs.makemkv.enable = lib.mkDefault check;
+    config.programs.makemkv.enable = lib.mkDefault false;
 
     config.home.packages =  with pkgs; lib.mkIf config.programs.makemkv.enable [
       makemkv

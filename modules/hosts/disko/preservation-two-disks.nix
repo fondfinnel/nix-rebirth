@@ -58,16 +58,16 @@
         };
 
         # define the root partition under luks encrypt
-        partitions.luks = {
+        partitions.luks-boot = {
           
           size = "100%";
-          label = "luks";
+          label = "luks-boot";
 
           # luks part contains what?
           # located in /dev/mapper
           content = {
             type = "luks";
-            name = "cryptroot";
+            name = "cryptboot";
 
             extraOpenArgs = [
               "--allow-discards"
@@ -116,16 +116,16 @@
         type = "gpt";
 
         # define the root partition under luks encrypt
-        partitions.luks = {
+        partitions.luks-home = {
           
           size = "100%";
-          label = "luks";
+          label = "luks-home";
 
           # luks part contains what?
           # located in /dev/mapper
           content = {
             type = "luks";
-            name = "cryptroot";
+            name = "crypthome";
 
             extraOpenArgs = [
               "--allow-discards"

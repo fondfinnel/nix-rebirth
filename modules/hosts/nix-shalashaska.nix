@@ -50,7 +50,10 @@
 
         };
 
+        services.mpd.enable = true;
+
         services.wpaperd.settings.default.path = ./assets/night-store.jpg;
+        # services.wpaperd.settings.default.transition = null;
 
         programs.makemkv.enable = false;
         programs.obs-studio.enable = false;

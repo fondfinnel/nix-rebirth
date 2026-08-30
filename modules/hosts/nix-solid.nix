@@ -6,7 +6,6 @@
       base
       nix-solid-conf
       nix-solid-hw
-      disko-preservation-two-disks
       ups
 
       bluetooth 
@@ -78,6 +77,8 @@
   # Changes from hardware-configuration.nix
   flake.nixosModules.nix-solid-hw = { pkgs, lib, config,... }: {
 
+    imports = [ self.nixosModules.disko-preservation-two-disks ];
+
     boot.initrd.availableKernelModules = [ "nvme" "ahci" "firewire_ohci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
     boot.initrd.kernelModules = [ "dm-snapshot" ];
     boot.kernelModules = [ "kvm-amd" ];
@@ -86,6 +87,15 @@
     boot.initrd.systemd.fido2.enable = true;
 
     preservation.enable = true;
+
+    disko.devices.disk.main.device = "/dev/nvme1n1";
+    disko.devices.disk.home.device = "/dev/nvme0n1";
+    swapDevices = [{
+      device = "/persist/var/lib/swapfile";
+      # needs set for machine specific
+      # error out otherwise, diff hw for diff needs
+      size = 64 * 1024;
+    }];
 
     # boot.initrd.luks.devices.enc-bt = {
     #   device = "/dev/disk/by-uuid/91471cb2-e390-47ff-a8cd-8995a75a67b4";
