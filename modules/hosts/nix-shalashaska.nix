@@ -50,6 +50,8 @@
 
         };
 
+        services.wpaperd.settings.default.path = ./assets/night-store.jpg;
+
         programs.makemkv.enable = false;
         programs.obs-studio.enable = false;
         programs.ps3-disc-dumper.enable = false;
@@ -59,7 +61,7 @@
     ];
 
     high-performance = true;
-    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/neovim-dark.yaml";
+    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
 
     imports = [
       self.nixosModules.users

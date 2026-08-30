@@ -13,7 +13,7 @@
       enable = lib.mkDefault check2;
 
       settings.default = {
-        path = if osConfig.device-type == "primary" then papedirectory else backuppape;
+        path = lib.mkDefault (if osConfig.device-type == "primary" then papedirectory else backuppape);
         duration = if osConfig.device-type == "primary" then "5m" else "1h";
         mode = "center"; # use fit-border-color when it gets the next version
         sorting = "random";
