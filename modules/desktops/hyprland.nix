@@ -26,6 +26,7 @@ in {
       pkgs.xdg-desktop-portal-gtk
       pkgs.xdg-desktop-portal-hyprland
     ];
+    xdg.portal.config.hyprland.default = [ "hyprland" "gtk" ];
 
     wayland.windowManager.hyprland = let
 
@@ -38,6 +39,7 @@ in {
       systemd.enable = hyprenable;
 
       configType = "hyprlang";
+      portalPackage = pkgs.xdg-desktop-portal-hyprland;
 
       settings = {
 
@@ -45,7 +47,7 @@ in {
           gaps_in = 2;
           gaps_out = 6;
           border_size = 2;
-          layout = "scrolling";
+          layout = "dwindle";
           allow_tearing = false;
         };
 
@@ -102,13 +104,13 @@ in {
         };
         
         scrolling = {
-          focus_fit_method = 1;
-          follow_min_visible = 0.6;
+          focus_fit_method = 2;
+          follow_min_visible = 0.8;
           column_width = 0.5;
         };
 
         master = {
-          mfact = 0.7;
+          mfact = 0.5;
         };
 
         # TODO add these window rules to their own modules / sets
