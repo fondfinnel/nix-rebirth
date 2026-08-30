@@ -59,6 +59,7 @@ in {
       sync-drive
       qbittorrent
       syncthing
+      distrobox
     ];
 
     home.sessionVariables = {
