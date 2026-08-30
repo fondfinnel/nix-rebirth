@@ -21,6 +21,7 @@
       ".local/share/Steam"
       ".steam"
       ".cache/steam"
+      ".config/unity3d"
     ];
   };
 

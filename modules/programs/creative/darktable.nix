@@ -13,6 +13,10 @@ in {
 
       (lib.mkIf osConfig.hardware.amdgpu.opencl.enable pkgs.rocmPackages.migraphx)
     ];
+
+    config.home.preserve.directories = [
+      ".config/darktable"
+    ];
   };
 
 

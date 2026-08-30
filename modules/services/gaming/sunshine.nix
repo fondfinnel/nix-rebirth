@@ -21,6 +21,12 @@
       group = config.users.users.root.group;
     }; 
 
+    home-manager.sharedModules = [{
+      home.preserve.directories = [
+        ".config/sunshine"
+      ];
+    }];
+
   };
 
 

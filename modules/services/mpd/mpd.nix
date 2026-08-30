@@ -28,6 +28,7 @@
       musicDirectory = config.services.mpd.musicDirectory;
     in {
 	    enable = lib.mkDefault check;
+
       # TODO reassign values if server is acting as host, connecting as client
       musicDirectory = "/mnt/NAS/Media/Music";
       playlistDirectory = "${musicDirectory}/playlists";
@@ -71,11 +72,11 @@
     };
 
     # presrve music directory if it is located outside of /mnt
-    home.preserve.directories = lib.mkIf
-      (!lib.strings.hasPrefix "/mnt" config.services.mpd.musicDirectory)
-      [
-        config.services.mpd.musicDirectory      
-      ];
+    home.preserve.directories = [
+      ".local/share/mpd"
+    ]
+    ++ lib.optionals (!lib.strings.hasPrefix "/mnt" config.services.mpd.musicDirectory)
+      [ config.services.mpd.musicDirectory ];
 
 
   };

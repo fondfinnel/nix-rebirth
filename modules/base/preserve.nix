@@ -69,6 +69,8 @@
         "Projects"
         "Videos"
         "Templates"
+        ".local/share/Trash"
+        ".local/share/applications"
         
       ];
       

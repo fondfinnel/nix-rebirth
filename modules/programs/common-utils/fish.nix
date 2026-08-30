@@ -42,7 +42,10 @@ in {
 
     };
 
-    home.preserve.directories = [ ".cache/fish" ];
+    home.preserve.directories = [
+      ".cache/fish"
+      ".local/share/fish"
+    ];
 
   };
 

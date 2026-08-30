@@ -13,6 +13,7 @@
 
     home.preserve.directories = [
       ".config/syncthing"
+      ".local/state/syncthing"
     ] ++ filteredDirs;
 
 
