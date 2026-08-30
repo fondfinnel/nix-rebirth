@@ -1,11 +1,9 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check && config.high-performance;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.gaming = { lib, config, ... }: {
+  flake.homeModules.gaming = { lib, config, osConfig, ... }: {
 
     programs.mangohud = let s = config.programs.mangohud.settings; in {  
-      enable = lib.mkDefault check;
+      enable = lib.mkDefault (osConfig.headless-check && osConfig.high-performance);
 
       settings = {
         background_color = lib.mkDefault 020202;
