@@ -10,17 +10,15 @@
         color.when = "auto";
         layout = "tree";
         size = "short";
+        recursion.enabled = true;
+        recursion.depth = 1;
         sorting.dir-grouping = "first";
         total-size = true;
         hyperlink = "auto";
       };
     };
 
-    home.shellAliases = lib.mkDefault {
-      ls = "lsd";
-      l = "lsd --header -l";
-      tree = "lsd --tree --depth 2";
-    };
+    home.shellAliases.l = "${pkgs.lsd}/bin/lsd";
 
   };
 

@@ -6,7 +6,6 @@ in {
 
     programs.zsh = {
       enable = lib.mkDefault true;
-      shellAliases = config.home.shellAliases;
       # initExtra = "${config.myAliases.fetch}\n"; # running command on shell start
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
@@ -28,6 +27,7 @@ in {
       };
 
     };
+    
 
   };
 

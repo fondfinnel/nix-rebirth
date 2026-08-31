@@ -47,7 +47,7 @@
         exec-once = let
           delay = "sleep 5; ";
         in [
-          "[workspace 3 silent]${delay}ghostty -e rmpc"
+          "[workspace 3 silent]${delay}kitty rmpc"
           "[workspace 5 silent]${delay}thunderbird"
           "[workspace special:magic silent]kitty rmpc"
           "[workspace special:discord silent]${delay}vesktop --disable-gpu"

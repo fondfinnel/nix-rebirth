@@ -70,6 +70,7 @@ in {
       nshp = "nix-shell -p"; # installing programs temporarily
       ":q" = "exit";
       blkid = "sudo blkid";
+      df = "df -h";
     };
 
     sops = {
