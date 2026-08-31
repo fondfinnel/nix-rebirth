@@ -56,9 +56,16 @@
     # Tune firewall for CIFS
     networking.firewall.extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
 
-    home-manager.users.n0ll = { pkgs, ... }: {
-      home.shellAliases.savememe = "cd '/home/n0ll/NAS/Media/Photos/Other Junk/3 stupid/2026' && yt-dlp";
-    };
+    home-manager.sharedModules = [self.homeModules.share-nas];
+
+  };
+
+  flake.homeModules.share-nas = { config, lib, ... }: {
+
+    home.activation.symNAS = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+       ln -sfn "/mnt/NAS" "${config.home.homeDirectory}/NAS"
+       ln -sfn "/mnt/Torrent" "${config.home.homeDirectory}/Torrent"
+    ''; 
 
   };
 
