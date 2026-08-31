@@ -21,6 +21,7 @@ in {
       Service.Type = "simple";
       Service.ExecStart = let
         mpc = "${pkgs.mpc}/bin/mpc";
+        restartTime = builtins.toString config.systemd.user.services.mpd-crossfade.Service.RestartSec;
       in ( pkgs.writeShellScript "mpd-crossfade-service" /*bash*/
         ''
           if [ $(${mpc} status %state%) != "playing" ]; then
@@ -39,13 +40,13 @@ in {
           let y=x-1
 
           if [ "$a1" == "$a2" ] && [ $t1 -eq $y ]; then
-            ${mpc} mixrampdelay 0
+            # ${mpc} mixrampdelay 0
             echo "Disabled crossfade!"
             ${mpc} crossfade 0
           else
-            ${mpc} mixrampdelay 1
-            ${mpc} mixrampdb -10
-            ${mpc} crossfade 15
+            # ${mpc} mixrampdelay 1
+            # ${mpc} mixrampdb -10
+            ${mpc} crossfade ${restartTime}
             echo "Enabled crossfade!"
           fi
          '');
