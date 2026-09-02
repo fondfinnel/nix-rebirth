@@ -9,6 +9,7 @@
       packages = lib.mkIf config.programs.qbittorrent.enable [ pkgs.qbittorrent ];
       preserve.directories = [
         ".config/qBittorrent"
+        ".cache/qBittorrent"
       ];
 
     };

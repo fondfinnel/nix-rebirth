@@ -8,8 +8,9 @@ in {
 
     config.home.packages = lib.mkIf config.programs.thunderbird.enable [ pkgs.thunderbird ];
 
-    config.home.preserve.directories = [
+    config.home.preserve.directories = lib.mkIf config.programs.thunderbird.enable [
       ".thunderbird"
+      ".cache/thunderbird"
     ];
 
   };

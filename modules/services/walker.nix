@@ -2,15 +2,16 @@
 
   flake.homeModules.walker = { config, lib, ... }: {
 
+    home.preserve.directories = [
+      ".cache/elephant"
+    ];
+
     services.walker = {
+
       enable = lib.mkDefault true;
       systemd.enable = config.services.walker.enable;
       enableElephantIntegration = config.services.elephant.enable;
 
-      # settings = lib.mkDefault {
-      # force_keyboard_focus = true;
-      # theme = "stylix";
-      # };
     };
 
     services.elephant.enable = lib.mkDefault config.services.walker.enable;

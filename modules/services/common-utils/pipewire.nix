@@ -25,6 +25,10 @@ in{
   flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }: {
 
     services.pipewire.enable = lib.mkDefault osConfig.services.pipewire.enable;
+
+    home.preserve.directories = lib.mkIf osConfig.services.pipewire.wireplumber.enable [
+      ".local/state/wireplumber"
+    ];
     
   };
 

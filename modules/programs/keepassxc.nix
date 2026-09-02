@@ -46,8 +46,11 @@ in {
 
     };
 
-  };
+    # keep previous selected file when rebooting
+    home.preserve.directories = [
+      ".cache/keepassxc"
+    ];
 
-  # TODO syncthing
+  };
 
 }
