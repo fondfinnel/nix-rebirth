@@ -10,7 +10,7 @@ in {
     services.udiskie.tray = "never";
 
     home.activation.symUdiskie = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-     ln -sfn /run/media/${config.home.username} "${config.home.homeDirectory}/media"
+     run ln -sfn /run/media/${config.home.username} "${config.home.homeDirectory}/media"
     '';
 
     

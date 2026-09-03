@@ -59,7 +59,11 @@
 
       systemctl restart --user emacs
 
-           '')];
+    '')];
+
+    # required for default unison dir
+    # otherwise, unison complains about it being a fresh install
+    home.preserve.directories = [ ".unison" ];
 
   };
 }

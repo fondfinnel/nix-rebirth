@@ -63,8 +63,8 @@
   flake.homeModules.share-nas = { config, lib, ... }: {
 
     home.activation.symNAS = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-       ln -sfn "/mnt/NAS" "${config.home.homeDirectory}/NAS"
-       ln -sfn "/mnt/Torrent" "${config.home.homeDirectory}/Torrent"
+       run ln -sfn "/mnt/NAS" "${config.home.homeDirectory}/NAS"
+       run ln -sfn "/mnt/Torrent" "${config.home.homeDirectory}/Torrent"
     ''; 
 
   };
