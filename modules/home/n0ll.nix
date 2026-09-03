@@ -62,6 +62,7 @@
       sync-drive
       syncthing
       distrobox
+      wlr-which-key
     ];
 
     home.sessionVariables = {
@@ -187,15 +188,47 @@
         youtube-high-definition
         # simple-translate
         old-reddit-redirect
+        tubearchivist-companion
       ];
 
-      extensions.settings = {
-        # "adnauseam@rednoise.org" = {
-        #   selectedFilterLists = [
-        
-        #   ];
-        # };
-      };
+      # extensions.settings = {
+      #   "uBlock@raymondhill.net".force = true;
+        #   "uBlock@raymondhill.net".settings = {
+        #     userSettings.uiTheme = "dark";
+        #     selectedFilterLists = [
+        #       "user-filters"
+        #       "ublock-filters"
+        #       "ublock-badware"
+        #       "ublock-privacy"
+        #       "ublock-quick-fixes"
+        #       "ublock-unbreak"
+        #       "easylist"
+        #       "easyprivacy"
+        #       "LegitimateURLShortener"
+        #       "adguard-spyware-url"
+        #       "urlhaus-1"
+        #       "curben-phishing"
+        #       "plowe-0"
+        #       "fanboy-cookiemonster"
+        #       "ublock-cookies-easylist"
+        #       "adguard-cookies"
+        #       "ublock-cookies-adguard"
+        #       "fanboy-social"
+        #       "adguard-social"
+        #       "fanboy-thirdparty_social"
+        #       "fanboy-ai-suggestions"
+        #       "easylist-chat"
+        #       "easylist-newsletters"
+        #       "easylist-notifications"
+        #       "easylist-annoyances"
+        #       "adguard-mobile-app-banners"
+        #       "adguard-other-annoyances"
+        #       "adguard-popup-overlays"
+        #       "adguard-widgets"
+        #       "ublock-annoyances" 
+        #     ];
+        #   };
+      # };
 
       userChrome = let
         repo =  pkgs.fetchFromGitHub {

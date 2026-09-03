@@ -10,6 +10,7 @@
       configPath = lib.mkDefault "${config.xdg.configHome}/librewolf";
 
       # import the firefox config
+      # merging options from here
       profiles."${config.home.username}" = config.programs.firefox.profiles."${config.home.username}" // {
 
         # errors if not defined here as well
@@ -29,6 +30,7 @@
           # Librewolf tweaks
           "privacy.clearOnShutdown.history" = false;
           "privacy.clearOnShutdown.cookies" = false;
+          "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
           "privacy.clearOnShutdown.downloads" = false;
           "privacy.clearOnShutdown.cache" = false;
         };
