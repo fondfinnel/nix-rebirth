@@ -16,7 +16,7 @@
     virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
 
     virtualisation.oci-containers.containers.jellyfin = {
-      image = "docker.io/jellyfin/jellyfin";
+      image = "docker.io/jellyfin/jellyfin:latest";
       pull = "newer";
       ports = [
         "127.0.0.1:31010:8096" 

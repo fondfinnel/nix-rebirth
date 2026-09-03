@@ -20,12 +20,12 @@
 
     xdg.configFile."walker/themes/default/style.css" = {
       enable = true;
-      text = ''
-        @define-color window_bg_color ${config.lib.stylix.colors.withHashtag.base00};
-        @define-color accent_bg_color ${config.lib.stylix.colors.withHashtag.base02};
-        @define-color theme_fg_color ${config.lib.stylix.colors.withHashtag.base05};
-        @define-color error_bg_color ${config.lib.stylix.colors.withHashtag.base08};
-        @define-color error_fg_color ${config.lib.stylix.colors.withHashtag.base05};
+      text = with config.lib.stylix.colors.withHashtag; ''
+        @define-color window_bg_color ${base00};
+        @define-color accent_bg_color ${base02};
+        @define-color theme_fg_color ${base05};
+        @define-color error_bg_color ${base08};
+        @define-color error_fg_color ${base05};
 
         * {
         all: unset;

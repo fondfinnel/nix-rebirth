@@ -43,7 +43,7 @@
           gaps_in = 2;
           gaps_out = 6;
           border_size = 2;
-          layout = "dwindle";
+          layout = "master";
           allow_tearing = false;
         };
 
@@ -190,6 +190,7 @@
           # Application shortcuts
           "${mainMod}, return, exec, ${pkgs.ghostty}/bin/ghostty" # open terminal
 
+          "${mainMod}, E, exec, ${pkgs.wlr-which-key}/bin/wlr-which-key"
           "${mainMod}, R, exec, ${pkgs.walker}/bin/walker"
           "${mainMod}, T, exec, ${pkgs.walker}/bin/walker -m windows"
           ## media playback
