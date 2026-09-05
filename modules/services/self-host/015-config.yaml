@@ -8,7 +8,7 @@ upload:
     maximum: 100GiB
 
 # redis:
-#     url: redis://015-redis:6379
+     url: redis://015-redis:6379
 
 features:
     file-share:
