@@ -13,7 +13,7 @@
 
     virtualisation.oci-containers.containers.neko =  {
 
-      image = "m1k1o/neko";
+      image = "docker.io/m1k1o/neko";
       pull = "newer";
       ports = [
         "8080:8080" 

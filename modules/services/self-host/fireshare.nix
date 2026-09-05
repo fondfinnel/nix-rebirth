@@ -17,7 +17,7 @@
     ];
 
     virtualisation.oci-containers.containers.fireshare = {
-      image = "shaneisrael/fireshare";
+      image = "docker.io/shaneisrael/fireshare";
       ports = [
         # untested
         "127.0.0.1:1337:80"

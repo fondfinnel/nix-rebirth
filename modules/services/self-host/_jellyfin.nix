@@ -126,7 +126,7 @@
     # alt webgui in development
     # probably will not use
     virtualisation.oci-containers.containers.jellyfin-vue = {
-      image = "jellyfin/jellyfin-vue";
+      image = "docker.io/jellyfin/jellyfin-vue";
 
       ports = [
         "30014:80"

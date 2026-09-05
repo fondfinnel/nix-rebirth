@@ -19,7 +19,7 @@
     virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
     virtualisation.oci-containers.containers.tubearchivist = {
       
-      image = "bbilly1/tubearchivist"; 
+      image = "docker.io/bbilly1/tubearchivist"; 
       pull = "newer";
 
       ports = [ "31000:8000" ];
@@ -38,7 +38,7 @@
     };
 
     virtualisation.oci-containers.containers.archivist-redis = {
-      image = "redis";
+      image = "docker.io/redis";
       pull = "newer";
       volumes = [ "${mainDir}/redis-data:/data" ];
       # ports = [ "127.0.0.1:31001:6379" ];
@@ -48,7 +48,7 @@
     # may need to run on directory
     # chown 1000:0 -R /dir
     virtualisation.oci-containers.containers.archivist-es = {
-      image = "bbilly1/tubearchivist-es";
+      image = "docker.io/bbilly1/tubearchivist-es";
       pull = "newer";
       volumes = [ "${mainDir}/elast-data:/usr/shared/elasticsearch/data" ];
       environmentFiles = [ config.sops.secrets."archivist-es".path ];

@@ -12,7 +12,7 @@
 
 
     virtualisation.oci-containers.containers.tunarr = {
-      image = "chrisbenincasa/tunarr";
+      image = "docker.io/chrisbenincasa/tunarr";
       pull = "newer";
       ports = [
         "127.0.0.1:31111:8000" # redirect webui to port 31111, lan only

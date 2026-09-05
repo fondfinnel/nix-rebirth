@@ -24,7 +24,7 @@
 
       "015-app" = {
 
-        image = "fudaoyuanicu/015-app";
+        image = "docker.io/fudaoyuanicu/015-app";
         inherit pull volumes;
         ports = [ "31100:80" ];
         dependsOn = [ "015-redis" ];
@@ -37,7 +37,7 @@
       "015-worker" = {
 
         inherit pull;
-        image = "fudaoyuanicu/015-worker";
+        image = "docker.io/fudaoyuanicu/015-worker";
         volumes = [
           "${mainDir}/uploads:/uploads"
           "${./015-config.yaml}:/015-config.yaml"
@@ -51,7 +51,7 @@
 
       "015-redis" = {
         inherit pull;
-        image = "redis:7";
+        image = "docker.io/redis:7";
 
       };
 

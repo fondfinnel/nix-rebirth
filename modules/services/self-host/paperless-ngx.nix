@@ -21,7 +21,7 @@
 
       paperless-ngx = {
         
-        image = "paperlessngx/paperless-ngx";
+        image = "docker.io/paperlessngx/paperless-ngx";
         pull = "newer";
         ports = [
           "127.0.0.1:20000:8000" 
@@ -42,7 +42,7 @@
       };
 
       paperless-redis = {
-        image = "redis:8";
+        image = "docker.io/redis:8";
         dependsOn = [ "paperless-ngx" ];
         volumes = [ "${mainDir}/redis:/data" ];
       };
