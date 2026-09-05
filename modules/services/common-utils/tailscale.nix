@@ -2,7 +2,9 @@
   check = !config.headless-check;
 in {
 
-  flake.nixosModules.common-utils = { lib, config, pkgs, ... }: {
+  flake.nixosModules.common-utils = { lib, config, pkgs, ... }: let
+    ck = config.device-type == "primary";
+    in {
 
     sops.secrets.tailscale-client = {};
 
@@ -24,7 +26,7 @@ in {
         else "client";
 
       # TODO dynamic authentication
-      authKeyFile = lib.mkDefault config.sops.secrets."tailscale-client".path;
+      authKeyFile = lib.mkIf ck config.sops.secrets."tailscale-client".path;
     };
 
     environment.preserve.directories = [
