@@ -11,10 +11,10 @@ in {
       extraGroups = [ "uinput" "networkmanager" "wheel" "cdrom" "libvirtd" "kvm" "dialout" "tty" ];
         shell = pkgs.fish;
         home = "/home/n0ll";
-        hashedPasswordFile = config.sops.secrets."users/n0ll".path;
         openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ../../keys/n0ll;
-        # uncomment when installing fresh system
         initialPassword = "123";
+        # comment when installing fresh system
+        hashedPasswordFile = config.sops.secrets."users/n0ll".path;
     };
 
     sops.secrets."users/n0ll" = rec {
