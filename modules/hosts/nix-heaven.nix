@@ -25,49 +25,49 @@
     # required for clean zfs exports
     networking.hostId = "d39654b5";
 
-    power.ups = {
-      enable = true;
-      mode = "netserver";
-      ups.main = {
-        description = "Cyber Power System, Inc. PR1500LCDRT2U UPS";
+    # power.ups = {
+    #   enable = true;
+    #   mode = "netserver";
+    #   ups.main = {
+    #     description = "Cyber Power System, Inc. PR1500LCDRT2U UPS";
 
-        # see docs for list of drivers
-        # https://networkupstools.org/stable-hcl.html
-        driver = "usbhid-ups";
+    #         # see docs for list of drivers
+    #     # https://networkupstools.org/stable-hcl.html
+    #     driver = "usbhid-ups";
 
-        port = "auto";
-        directives = [
-          "offdelay = 60"
-          "ondelay = 90"
-          "lowbatt = 40"
-          # "ignorelb"
-        ];
+    #         port = "auto";
+    #     directives = [
+    #       "offdelay = 60"
+    #       "ondelay = 90"
+    #       "lowbatt = 40"
+    #       # "ignorelb"
+    #     ];
+    #       };
+    # };
 
-      };
-    };
-    services.samba = {
-      enable = true;
-      openFirewall = true;
-      settings.global.security = "user";
-      # TODO add tailscale
-      settings.global."hosts allow" = "192.168.50. 127.0.0.1 localhost";
-      settings.global."hosts deny" = "0.0.0.0/0";
-      settings.global."guest account" = "nobody";
-      settings.global."map to guest" = "bad user";
-      settings.global."server smb encrypt" = "desired";
-      settings.global."invalid users" = [
-        "root"
-      ];
-      settings.personal = {
-        path = "/mnt/Primary";
-        "read only" = "no";
-        "guest ok" = "no";
-        "valid users" = [
-          "n0ll"
-        ];
-        # TODO masks
-      };
-    };
+    # services.samba = {
+    #   enable = true;
+    #   openFirewall = true;
+    #   settings.global.security = "user";
+    #   # TODO add tailscale
+    #   settings.global."hosts allow" = "192.168.50. 127.0.0.1 localhost";
+    #   settings.global."hosts deny" = "0.0.0.0/0";
+    #   settings.global."guest account" = "nobody";
+    #   settings.global."map to guest" = "bad user";
+    #   settings.global."server smb encrypt" = "desired";
+    #   settings.global."invalid users" = [
+    #     "root"
+    #   ];
+    #   settings.personal = {
+    #     path = "/mnt/Primary";
+    #     "read only" = "no";
+    #     "guest ok" = "no";
+    #     "valid users" = [
+    #       "n0ll"
+    #     ];
+    #     # TODO masks
+    #   };
+    # };
 
 
   };
@@ -81,11 +81,6 @@
       };
 
       disko.devices.disk.main.device = "/dev/sda";
-
-      # fileSystems."/" =
-      #   { device = "/dev/by-label/temp";
-      #     fsType = "ext4";
-      #   };
 
       # services.zfs.autoScrub = {
       #   enable = true;

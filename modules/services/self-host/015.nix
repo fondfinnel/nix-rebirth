@@ -1,16 +1,13 @@
 { self, inputs, config, ... }: {
 
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
-    mainDir = "/path/to/dir";
-
+    mainDir = "/services/015";
   in {
 
-    # systemd.tmpfiles.rules = lib.map (f: "d ${f} 1664 n0ll users") [
-    #     "${mainDir}/uploads"
-    # ];
-
-    system.activationScripts.pre-015.deps = [ "specialfs" ];
-    system.activationScripts.pre-015.text = '' mkdir -p ${mainDir}/uploads'';
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
+      "${mainDir}"
+      "${mainDir}/upload"
+    ];
 
 
     virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
@@ -20,6 +17,7 @@
       # worker and app use the same vols apparently
       volumes = [
         "${mainDir}/uploads:/uploads"
+        # TODO lib.generators.toYAML
         "${./015-config.yaml}:/app/015-config.yaml"
       ];
     in {

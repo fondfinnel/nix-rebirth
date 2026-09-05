@@ -1,6 +1,6 @@
 { self, inputs, config, ... }: {
 
-  flake.nixosModules.disko-zfs-root2 = { lib, config, pkgs, ... }: {
+  flake.nixosModules.disko-zfs-root = { lib, config, pkgs, ... }: {
 
     imports = [
       inputs.disko.nixosModules.disko

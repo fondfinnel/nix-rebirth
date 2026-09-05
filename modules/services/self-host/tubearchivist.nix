@@ -2,7 +2,7 @@
 
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
     # TODO get dir
-    mainDir = "/home/n0ll/tube";
+    mainDir = "/services/tubearchivist";
   in {
 
     sops.secrets."tubearchivist".name = "tubearchivist";

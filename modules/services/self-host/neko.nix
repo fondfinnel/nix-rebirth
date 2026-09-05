@@ -1,13 +1,17 @@
 { self, inputs, config, ... }: {
 
-  flake.nixosModules.self-host = { lib, config, pkgs, ... }: {
+  flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
+    mainDir = "/services/neko";
+  in {
+
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
+      "${mainDir}"
+    ];
+
 
     sops.secrets."neko".name = "neko";
 
-    virtualisation.oci-containers.containers.neko = let
-      # TODO dir
-      mainDir = "/path/to/dir";
-    in {
+    virtualisation.oci-containers.containers.neko =  {
 
       image = "m1k1o/neko";
       pull = "newer";

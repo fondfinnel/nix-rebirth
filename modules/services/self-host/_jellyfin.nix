@@ -5,7 +5,7 @@
 
   flake.nixosModules.jellyfin-container = { lib, config, self, ... }: let
     # TODO link it to zfs dataset location
-    mainDir = "/path/to/dir";
+    mainDir = "/services/jellyfin";
     allDirs = [
       config.containers.jellyfin-container.bindMounts.app-data.hostPath
       config.containers.jellyfin-container.bindMounts.app-config.hostPath

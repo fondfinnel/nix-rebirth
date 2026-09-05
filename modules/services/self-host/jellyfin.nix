@@ -13,10 +13,6 @@
     ];
 
 
-    # systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
-    #   "/services/jellyfin-ai/models"
-    # ];
-
     virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
 
     virtualisation.oci-containers.containers.jellyfin = {

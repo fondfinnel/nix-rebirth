@@ -2,7 +2,7 @@
 { self, inputs, config, ... }: {
 
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
-    mainDir = "/service/tunarr";
+    mainDir = "/services/tunarr";
   in {
  
     systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
