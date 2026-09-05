@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-08-18 Tue 14:23]
+:mtime:    [2026-09-05 Sat 12:57]
 :END:
 #+options: toc:nil
 
@@ -30,18 +30,23 @@ Contains basic settings for all devices. Think timezone and all that stuff.
 Any device being managed under this repo has it's own segment of configuration, which takes in the modules it needs using flake-parts. Most settings are not defined here, simply brought together for one use. 
 
 ***** nix-solid
-Main desktop machine. May use disko in the future for management, but as of now it's not necessary. 
+Main desktop machine. Uses preservation between two disks, where =/nix= is in the boot Optane drive and =/persist= is located in the NVME disk, primarily for user files. This is to promote the speed of Optane for boots and other system utilities, where anything that isn't important isn't declared and not managed by Nix directly. 
 
-#+begin_src sh
+
+#+begin_src sh :results raw
+fastfetch -s os:kernel:de:wm:cpu:gpu:memory:disk --logo none
+#+end_src
+
+#+RESULTS:
 OS  NixOS 26.11 (Zokor) x86_64
 Kernel  Linux 7.1.5
-WM  Hyprland 0.56.1 (Wayland)
+WM  Hyprland :D (X11)
 CPU  AMD Ryzen 9 3900X (24) @ 4.67 GHz
 GPU  AMD Radeon RX 9070 XT [Discrete]
-Memory  9.97 GiB / 62.71 GiB (16%)
-Disk (/)  178.17 GiB / 255.17 GiB (70%) - ext4
-Disk (/home)  811.62 GiB / 1.79 TiB (44%) - ext4
-#+end_src
+Memory  10.85 GiB / 62.71 GiB (17%)
+Disk (/)  746.08 MiB / 31.36 GiB (2%) - tmpfs
+Disk (/nix)  45.79 GiB / 259.81 GiB (18%) - btrfs
+Disk (/persist)  355.25 GiB / 1.82 TiB (19%) - btrfs
 
 ***** nix-liquid
 Lenovo Thinkpad T480 config. Utilizing disko and preservation for an impermanence setup, as it's light on storage and nothing on it is expected to last long term.
@@ -58,13 +63,20 @@ Disk (/persist)  32.71 GiB / 237.46 GiB (14%) - btrfs
 ***** nix-shalashaska
 Lenovo Thinkpad X1 Yoga Gen 6. Very similar to /nix-liquid/ as far as config, but has more performance, other tools for 2n1.
 
-#+begin_src 
+#+begin_src sh :results raw
+fastfetch -s os:kernel:de:wm:cpu:gpu:memory:disk --logo none
+#+end_src
+
+#+RESULTS:
+OS  NixOS 26.11 (Zokor) x86_64
+Kernel  Linux 6.18.40
+WM  Hyprland :D (X11)
 CPU  11th Gen Intel(R) Core(TM) i5-1145G7 (8) @ 4.40 GHz
 GPU  Intel Iris Xe Graphics @ 1.30 GHz [Integrated]
-Memory  3.00 GiB / 31.06 GiB (10%)
-Disk (/)  138.38 MiB / 15.53 GiB (1%) - tmpfs
-Disk (/nix)  109.31 GiB / 237.46 GiB (46%) - btrfs
-#+end_src
+Memory  2.54 GiB / 31.06 GiB (8%)
+Disk (/)  54.79 MiB / 15.53 GiB (0%) - tmpfs
+Disk (/nix)  110.77 GiB / 237.46 GiB (47%) - btrfs
+
 
 ***** nix-solidus
 Currently not in use, but when a test / temporary desktop machine is needed this will be used.
@@ -163,6 +175,8 @@ There may be better ways to declare which one is enabled for the user, such as s
 ** TODO Write an internet radio service to self-host
 Would be cool. A neat little project of sorts.
 
+Might make it a separate flake and go from there.
+
 ** TODO Import custom docker images for stuff unavailable in nixpkgs
 Probably a good idea to have a dedicated area to have apps like this store shit.
 
@@ -181,4 +195,3 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 - [ ] Sanoid or Syncoid for snapshots
 ** Caddy for reverse proxy?
 If cloudflared doesn't cut it, or if it's easier to manage through nixos itself
-** TODO a once and for all declarative solution for ensuring directories are around for services
