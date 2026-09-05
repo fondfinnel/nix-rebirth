@@ -3,7 +3,7 @@
   flake.nixosConfigurations.nix-heaven = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       self.nixosModules.base
-      self.nixosModules.disko-preservation
+      self.nixosModules.disko-zfs-root
       self.nixosModules.nix-heaven-conf
       self.nixosModules.nix-heaven-hw
       self.nixosModules.ups
@@ -22,6 +22,7 @@
     headless-check = false;
 
     # head -c 8 /etc/machine-id
+    # required for clean zfs exports
     networking.hostId = "d39654b5";
 
     power.ups = {
@@ -73,11 +74,11 @@
 
     flake.nixosModules.nix-heaven-hw = { lib, config, pkgs, ... }: {
 
-      # boot.supportedFilesystems = [ "zfs" ];
-      # boot.zfs = {
-      #   forceImportRoot = true;
-      #   extraPools = [ "Primary" ];
-      # };
+      boot.supportedFilesystems = [ "zfs" ];
+      boot.zfs = {
+        forceImportRoot = true;
+        # extraPools = [ "Primary" ];
+      };
 
       disko.devices.disk.main.device = "/dev/sda";
 
