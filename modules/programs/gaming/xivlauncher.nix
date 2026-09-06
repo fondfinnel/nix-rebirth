@@ -5,10 +5,11 @@
   in {
 
     options.programs.xivlauncher.enable = lib.mkEnableOption "xivlauncher";
-    config.programs.xivlauncher.enable = lib.mkDefault check;
+    config.programs.xivlauncher.enable = lib.mkDefault false;
 
     config.home.packages = lib.mkIf config.programs.xivlauncher.enable [ pkgs.xivlauncher ];
 
+    # need all dirs confirmed
     config.home.preserve.directories = lib.mkIf config.programs.xivlauncher.enable [ ".xlcore" ];
 
   };
