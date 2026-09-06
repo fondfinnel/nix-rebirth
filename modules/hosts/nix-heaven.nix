@@ -84,11 +84,11 @@
 
       disko.devices.disk.main.device = "/dev/sda";
 
-      # services.zfs.autoScrub = {
-      #   enable = true;
-      #   pools = [ "Primary" ];
-      #   interval = "monthly";
-      # };
+      services.zfs.autoScrub = {
+        enable = true;
+        pools = [ "Primary" ];
+        interval = "monthly";
+      };
 
       # services.sanoid = {
       #   enable = true;
