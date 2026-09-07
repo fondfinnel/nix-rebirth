@@ -26,6 +26,8 @@
         { name = "oh15-config"; text =
           (lib.generators.toYAML { } {
               # password_salt and download_secret in envfile
+              share.password_salt = "thisapassword";
+              share.download_secret = "thisasecret";
               share.download_window = 12;
               redis.url = "redis://015-redis:6379";
               features = {
@@ -38,6 +40,7 @@
               # site url defined in envfile
               site = {
                 title.en = "Niche File Share!";
+                url = "192.168.50.222:31100";
                 desc.en = "Temporary file sharing, powered by 015";
                 # todo files
                 # icon = "";
@@ -61,13 +64,14 @@
         image = "docker.io/fudaoyuanicu/015-app";
         volumes = [
           "${mainDir}/uploads:/uploads"
-          # TODO lib.generators.toYAML
           "${oh15-config}:/app/config.yaml"
         ];
         ports = [ "31100:80" ];
         dependsOn = [ "015-redis" ];
 
         environment.REDIS_URL = "redis://015-redis:6379";
+        environment.UID = "1000";
+        environment.GID = "1000";
         # TODO sops secrets
 
       };

@@ -32,15 +32,14 @@
       volumes = [
         "${mainDir}/config:/config" # redirect config storage
         "${mainDir}/cache:/cache" # redirect cache storage
-        "/home/n0ll/Videos:/media:ro" # read only for media
+        # TODO change media dir
+        "/path/to/dir:/media:ro" # read only for media
       ];
 
       environment = {
         LOG_LEVEL = "INFO";
         TZ = config.time.timeZone;
         NVIDIA_VISIBLE_DEVICES = lib.mkIf config.hardware.nvidia.modesetting.enable "all";
-        PUID = "1000";
-        GUID = "1000";
       };
 
     };
