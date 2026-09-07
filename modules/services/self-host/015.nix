@@ -10,7 +10,7 @@
       "${mainDir}/uploads"
     ];
 
-    # app needs config.yaml to work
+    # app requires config.yaml to work at all
     # env vars take priority over those values
     # see https://github.com/keven1024/015/issues/49#issuecomment-5549292841
 
@@ -19,35 +19,41 @@
     virtualisation.oci-containers.containers = let
       pull = "newer";
 
-      oh15-config = lib.generators.toYAML { } {
-        # password_salt and download_secret in envfile
-        share.download_window = 12;
-        redis.url = "redis://015-redis:6379";
-        features = {
-          file-share.enabled = true;
-          text-share.enabled = true;
-          file-image-compress.enabled = true;
-          file-image-convert.enabled = true;
-        };
+      # write text file for config into nix store, read as vol in container
+      # toYAML -> writeTextFile -> path as vol mount 
+      # TODO write secrets
+      oh15-config = pkgs.writeTextFile
+        { name = "oh15-config"; text =
+          (lib.generators.toYAML { } {
+              # password_salt and download_secret in envfile
+              share.download_window = 12;
+              redis.url = "redis://015-redis:6379";
+              features = {
+                file-share.enabled = true;
+                text-share.enabled = true;
+                file-image-compress.enabled = true;
+                file-image-convert.enabled = true;
+              };
 
-        # site url defined in envfile
-        site = {
-          title.en = "Niche File Share!";
-          desc.en = "Temporary file sharing, powered by 015";
-          # todo files
-          # icon = "";
-          # bg_url = "";
-          enable_bg = true;
-        };
+              # site url defined in envfile
+              site = {
+                title.en = "Niche File Share!";
+                desc.en = "Temporary file sharing, powered by 015";
+                # todo files
+                # icon = "";
+                # bg_url = "";
+                enable_bg = true;
+              };
 
-        about = {
-          bg_url = "";
-          email = "";
-          name = "";
-          avatar = "";
+              about = {
+                bg_url = "";
+                email = "";
+                name = "";
+                avatar = "";
+              }; 
+            }
+          );
         };
-        
-      };
     in {
 
       "015-app" = {
