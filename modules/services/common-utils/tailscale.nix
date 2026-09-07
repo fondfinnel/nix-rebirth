@@ -1,8 +1,7 @@
-{ self, inputs, config, ... }: let
-  check = !config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
   flake.nixosModules.common-utils = { lib, config, pkgs, ... }: let
+    check = !config.headless-check;
     ck = config.device-type == "primary";
     in {
 

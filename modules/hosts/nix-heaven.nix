@@ -79,7 +79,7 @@
       boot.supportedFilesystems = [ "zfs" ];
       boot.zfs = {
         forceImportRoot = true;
-        # extraPools = [ "Primary" ];
+        extraPools = [ "Primary" "Apps" ];
       };
 
       disko.devices.disk.main.device = "/dev/sda";
