@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }:  {
 
-  flake.homeModules.common-utils = { lib, pkgs, config, ... }: {
+  flake.homeModules.common-utils = { lib, pkgs, config, osConfig, ... }: let
+    check = osConfig.headless-check;
+  in{
 
     options.programs.bottles.enable = lib.mkOption {
       type = lib.types.bool;

@@ -25,6 +25,8 @@
     # required for clean zfs exports
     networking.hostId = "d39654b5";
 
+    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/windows-nt.yaml";
+
     # power.ups = {
     #   enable = true;
     #   mode = "netserver";
