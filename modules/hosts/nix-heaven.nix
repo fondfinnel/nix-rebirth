@@ -25,7 +25,7 @@
     # required for clean zfs exports
     networking.hostId = "d39654b5";
 
-    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/windows-nt.yaml";
+    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
 
     # power.ups = {
     #   enable = true;
@@ -46,30 +46,52 @@
     #     ];
     #       };
     # };
+    #
+    services.nfs.server = {
+      enable = true;      
+      lockdPort = 4001;
+      mountdPort = 4002;
+      statdPort = 4000;
 
-    # services.samba = {
-    #   enable = true;
-    #   openFirewall = true;
-    #   settings.global.security = "user";
-    #   # TODO add tailscale
-    #   settings.global."hosts allow" = "192.168.50. 127.0.0.1 localhost";
-    #   settings.global."hosts deny" = "0.0.0.0/0";
-    #   settings.global."guest account" = "nobody";
-    #   settings.global."map to guest" = "bad user";
-    #   settings.global."server smb encrypt" = "desired";
-    #   settings.global."invalid users" = [
-    #     "root"
-    #   ];
-    #   settings.personal = {
-    #     path = "/mnt/Primary";
-    #     "read only" = "no";
-    #     "guest ok" = "no";
-    #     "valid users" = [
-    #       "n0ll"
-    #     ];
-    #     # TODO masks
-    #   };
-    # };
+      exports."/Primary/Personal"."192.168.50.101" = [
+        "rw"
+        "sync"
+        "no_subtree_check"
+      ];
+
+    };
+    networking.firewall = {
+      enable = true;
+      allowedTCPPorts = [ 4000 4001 4002 ];
+      allowedUDPPorts = [ 4000 4001 4002 ];
+    };
+
+    services.samba = {
+      enable = true;
+      openFirewall = true;
+      settings.global.security = "user";
+      # TODO add tailscale
+      settings.global."usershare path" = "/var/lib/samba/usershares";
+      # settings.global."hosts allow" = "192.168.50. 127.0.0.1 localhost";
+      # settings.global."hosts deny" = "0.0.0.0/0";
+      settings.global."guest account" = "nobody";
+      settings.global."map to guest" = "bad user";
+      settings.global."server smb encrypt" = "desired";
+      settings.global."invalid users" = [
+        "root"
+      ];
+      settings.personal = {
+        path = "/Primary";
+        "read only" = "no";
+        "guest ok" = "no";
+        "valid users" = [
+          "n0ll"
+        ];
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        # TODO masks
+      };
+    };
 
 
   };
@@ -82,7 +104,7 @@
         extraPools = [ "Primary" "Apps" ];
       };
 
-      disko.devices.disk.main.device = "/dev/sda";
+      disko.devices.disk.main.device = "/dev/nvme0n1";
 
       services.zfs.autoScrub = {
         enable = true;
@@ -107,10 +129,12 @@
       # 4x32GB on host
       # 96GB max, 16GB min
       # Gibibytes to bytes
-      # boot.kernelParams = [
-      #   "zfs.zfs_arc_max=103079215104"
-      #   "zfs.zfs_arc_min=17179869184"
-      # ];
+      # 1024^3 per GB
+      # convert num to string
+      boot.kernelParams = [
+        "zfs.zfs_arc_max=${builtins.toString (96 * (1024 * 1024 * 1024))}"
+        "zfs.zfs_arc_min=${builtins.toString (16 * (1024 * 1024 * 1024))}"
+      ];
 
 
     };

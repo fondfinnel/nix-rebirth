@@ -32,7 +32,7 @@
         "${mainDir}/config:/config" # redirect config storage
         "${mainDir}/cache:/cache" # redirect cache storage
         # TODO change media dir
-        "/path/to/dir:/Media:ro" # read only for media
+        "/Primary/Personal/Media:/Media:ro" # read only for media
       ];
 
       environment = {
