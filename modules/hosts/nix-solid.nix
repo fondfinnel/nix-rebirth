@@ -29,7 +29,7 @@
     hardware.keyboard.zsa.enable = true;
     hardware.keyboard.qmk.enable = true;
 
-    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/spaceduck.yaml";
+    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
 
     home-manager.sharedModules = [{
 

@@ -64,7 +64,7 @@
     ];
 
     high-performance = true;
-    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
+    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/saga.yaml";
 
     imports = [
       self.nixosModules.users
