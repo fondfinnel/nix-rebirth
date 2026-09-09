@@ -53,7 +53,6 @@
           "[workspace special:discord silent]${delay}vesktop --disable-gpu"
           "${delay}keepassxc"
           "${delay}steam -silent"
-          "${delay}qbittorrent"
         ];
 
         windowrule = [

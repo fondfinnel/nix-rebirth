@@ -58,7 +58,7 @@
         programs.makemkv.enable = false;
         programs.obs-studio.enable = false;
         programs.ps3-disc-dumper.enable = false;
-        programs.qbittorrent.enable = false;
+        # programs.qbittorrent.enable = false;
         programs.calibre.enable = false;
       }
     ];

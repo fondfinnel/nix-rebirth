@@ -59,7 +59,6 @@
       mpd
       firefox
       sync-drive
-      qbittorrent
       syncthing
       distrobox
     ];
@@ -74,6 +73,8 @@
       blkid = "sudo blkid";
       df = "df -h";
     };
+
+    programs.foot.enable = true;
 
     sops = {
       defaultSopsFile = ./n0ll-secrets.yaml;
@@ -177,11 +178,11 @@
         # ublock-origin
         # tridactyl
         darkreader
-        indie-wiki-buddy
+        # indie-wiki-buddy
         augmented-steam
         keepassxc-browser
         youtube-high-definition
-        simple-translate
+        # simple-translate
         old-reddit-redirect
       ];
 

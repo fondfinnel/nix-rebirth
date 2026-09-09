@@ -19,7 +19,7 @@
       "_netdev"
       "credentials=${config.sops.secrets."smb/cred".path}"
     ];
-    nas_ip = "nate-truenas"; # TODO sops
+    nas_ip = "192.168.50.100"; # TODO sops
   in {
     
     environment.systemPackages = [ pkgs.cifs-utils ];

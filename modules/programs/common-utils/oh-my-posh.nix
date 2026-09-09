@@ -3,9 +3,7 @@
   flake.homeModules.common-utils = { pkgs, config, osConfig, lib, ... }: {
 
     
-    programs.oh-my-posh = let
-      check = config.home.sessionVariables.SHELL == pkgs.fish;
-    in {
+    programs.oh-my-posh = {
       # default when using fish
       enable = lib.mkDefault false;
       useTheme = lib.mkDefault "tiwahu";

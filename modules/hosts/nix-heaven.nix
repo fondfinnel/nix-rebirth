@@ -9,7 +9,6 @@
       self.nixosModules.ups
       self.nixosModules.users
       self.nixosModules.self-host
-      self.nixosModules.mpd-server
     ];
   };
 

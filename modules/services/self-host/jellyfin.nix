@@ -29,7 +29,6 @@
       volumes = [
         "${mainDir}/config:/config" # redirect config storage
         "${mainDir}/cache:/cache" # redirect cache storage
-        # TODO change media dir
         "/Primary/Personal/Media:/Media:ro" # read only for media
       ];
 
