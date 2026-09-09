@@ -28,26 +28,26 @@
     stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
     services.greetd.enable = false;
 
-    # power.ups = {
-    #   enable = true;
-    #   mode = "netserver";
-    #   ups.main = {
-    #     description = "Cyber Power System, Inc. PR1500LCDRT2U UPS";
+    power.ups = {
+      enable = true;
+      mode = "netserver";
+      ups.main = {
+        description = "Cyber Power System, Inc. PR1500LCDRT2U UPS";
 
-    #         # see docs for list of drivers
-    #     # https://networkupstools.org/stable-hcl.html
-    #     driver = "usbhid-ups";
+        # see docs for list of drivers
+        # https://networkupstools.org/stable-hcl.html
+        driver = "usbhid-ups";
 
-    #         port = "auto";
-    #     directives = [
-    #       "offdelay = 60"
-    #       "ondelay = 90"
-    #       "lowbatt = 40"
-    #       # "ignorelb"
-    #     ];
-    #       };
-    # };
-    #
+        port = "auto";
+        directives = [
+          "offdelay = 60"
+          "ondelay = 90"
+          "lowbatt = 40"
+          # "ignorelb"
+        ];
+      };
+    };
+    
     services.nfs.server = {
       enable = true;      
       lockdPort = 4001;
@@ -61,6 +61,7 @@
       ];
 
     };
+
     networking.firewall = {
       enable = true;
       allowedTCPPorts = [ 4000 4001 4002 ];
@@ -106,48 +107,50 @@
       };
     };
 
+    services.sanoid = {
+      enable = true;
+      interval = "hourly";
+      datasets."Primary" = {
+        autosnap = true;
+        autoprune = true;
+        recursive = "zfs";
+        hourly = 24;
+        daily = 30;
+        weekly = 8;
+        monthly = 12;
+      };
+    };
+
 
   };
 
-    flake.nixosModules.nix-heaven-hw = { lib, config, pkgs, ... }: {
+  flake.nixosModules.nix-heaven-hw = { lib, config, pkgs, ... }: {
 
-      boot.supportedFilesystems = [ "zfs" ];
-      boot.zfs = {
-        forceImportRoot = true;
-        extraPools = [ "Primary" "Apps" ];
-      };
+    boot.supportedFilesystems = [ "zfs" ];
+    boot.zfs = {
+      forceImportRoot = true;
+      extraPools = [ "Primary" "Apps" ];
+    };
 
-      disko.devices.disk.main.device = "/dev/nvme0n1";
+    disko.devices.disk.main.device = "/dev/nvme0n1";
 
-      services.zfs.autoScrub = {
-        enable = true;
-        pools = [ "Primary" ];
-        interval = "monthly";
-      };
+    services.zfs.autoScrub = {
+      enable = true;
+      pools = [ "Primary" ];
+      interval = "monthly";
+    };
 
-      # services.sanoid = {
-      #   enable = true;
-      #   interval = "hourly";
-      #   datasets."Primary" = {
-      #     autosnap = true;
-      #     autoprune = true;
-      #     recursive = "zfs";
-      #     hourly = 24;
-      #     daily = 30;
-      #     weekly = 8;
-      #     monthly = 12;
-      #   };
-      # };
 
-      # 4x32GB on host
-      # 96GB max, 16GB min
-      # Gibibytes to bytes
-      # 1024^3 per GB
-      # convert num to string
-      boot.kernelParams = [
-        "zfs.zfs_arc_max=${builtins.toString (96 * (1024 * 1024 * 1024))}"
-        "zfs.zfs_arc_min=${builtins.toString (16 * (1024 * 1024 * 1024))}"
-      ];
+    # 4x32GB on host
+    # 96GB max, 16GB min
+    # Gibibytes to bytes
+    # 1024^3 per GB
+    # convert num to string
+    # why no builtins.toPower? 
+    boot.kernelParams = [
+      "zfs.zfs_arc_max=${builtins.toString (96 * (1024 * 1024 * 1024))}"
+      "zfs.zfs_arc_min=${builtins.toString (16 * (1024 * 1024 * 1024))}"
+    ];
 
 
     };
