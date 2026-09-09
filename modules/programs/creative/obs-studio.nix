@@ -5,7 +5,7 @@
   in {
 
     programs.obs-studio = {
-      enable = lib.mkDefault check;
+      enable = lib.mkDefault false;
       plugins = with pkgs.obs-studio-plugins; [
 
     	  wlrobs # wlroots
@@ -17,7 +17,7 @@
     	  obs-text-pthread # rich text support
     	  obs-source-clone # clone any source
     	  obs-shaderfilter # various filters
-    	  obs-replay-source # replay video from memory
+    	  # obs-replay-source # replay video from memory
     	  obs-source-record # record individual sources / scenes via a filter
     	  obs-scale-to-sound # scale audio based on another source
     	  obs-gradient-source # gradients
