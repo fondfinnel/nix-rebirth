@@ -43,6 +43,7 @@
     virtualisation.oci-containers.containers.tubearchivist-redis = {
       image = "docker.io/redis";
       pull = "newer";
+      user = "root";
       volumes = [ "${mainDir}/redis-data:/data" ];
       dependsOn = [ "tubearchivist-es" ];
     };

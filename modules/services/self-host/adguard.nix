@@ -18,7 +18,7 @@
           upstream_dns = [
             "1.1.1.1"
           ];
-          bind_hosts = [ "0.0.0.0" ];
+          # bind_hosts = [ "0.0.0.0" ];
           # ratelimit = 0;
           cache_enabled = true;
         };

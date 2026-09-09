@@ -5,13 +5,15 @@
 
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
     mainDir = "/services/paperless-ngx";
+    storeDir = "/Primary/Personal/Documents";
   in {
 
     systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
       "${mainDir}"
       "${mainDir}/data"
-      "${mainDir}/media"
       "${mainDir}/redis"
+      "${storeDir}"
+      "${storeDir}/paperless"
     ];
 
     sops.secrets."paperless-ngx" = {};
@@ -24,13 +26,13 @@
         image = "docker.io/paperlessngx/paperless-ngx";
         pull = "newer";
         ports = [
-          "127.0.0.1:20000:8000" 
+          "20000:8000" 
         ];
 
         # TODO dir
         volumes = [
           "${mainDir}/data:/usr/src/paperless/data"
-          "${mainDir}/media:/usr/src/paperless/media"
+          "${storeDir}/paperless:/usr/src/paperless/media"
           #   "./export:/usr/src/paperless/export"
           #   "./consume:/usr/src/paperless/consume"
         ];
