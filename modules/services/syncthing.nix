@@ -51,9 +51,9 @@
             id = "24ATCGC-6TBQK4E-GIPJQTQ-JLNE6YS-ZPUOHUN-SHLSITF-S4MRLZL-T7O5ZQ3";
           };
 
-          "solidus" = {
+          "nix-heaven" = {
             inherit autoAcceptFolders introducer;
-            id = "G3S2NHM-RR2ZKKV-WARQLM6-EQ2A3U7-IMSDVKM-C7NM6ZU-KCTOGSF-U5HEVAQ";
+            id = "MF6NA23-4SGNP2G-R3OOCCW-AQV6PJS-K6SQ4W2-OYEUYOU-J2W7LJG-VZUVKAU";
           };
 
           "phone" = {
@@ -71,7 +71,7 @@
         folders = let
 
           devices = [
-            "phone" "nix-solid" "nix-liquid" "boox"
+            "phone" "nix-solid" "boox" "nix-heaven"
           ];
           versioning = {
             type="simple";
