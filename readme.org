@@ -88,6 +88,20 @@ Currently not in use, but when a test / temporary desktop machine is needed this
 ***** nix-heaven
 NAS machine. Most, if not all, self-hosted services.
 
+#+begin_src sh :results code
+fastfetch -s os:kernel:de:wm:cpu:gpu:memory:disk --logo none
+#+end_src
+
+#+RESULTS:
+#+begin_src sh
+OS  NixOS 26.11 (Zokor) x86_64
+Kernel  Linux 6.18.40
+CPU  AMD Ryzen 7 5700G (16) @ 4.67 GHz
+GPU  Intel Arc A310 @ 2.45 GHz [Discrete]
+Memory  33.23 GiB / 125.69 GiB (26%)
+Disk (/)  52.22 GiB / 210.18 GiB (25%) - zfs
+#+end_src
+
 ** Custom options
 These can be messy after a while, so I want to write some of it down.
 
