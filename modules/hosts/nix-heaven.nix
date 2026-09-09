@@ -122,6 +122,20 @@
     };
 
 
+    programs.rust-motd = {
+      enable = true;
+      settings = {
+        weather.style = "oneline";
+        service-status = {
+          sanoid.unit = "sanoid";
+        };
+        uptime.prefix = "uptime";
+        filesystems."Primary".mount-point = "/Primary";
+        memory.swap-pos = "beside";
+        last-login.num-logins = 3;
+      };
+    };
+
   };
 
   flake.nixosModules.nix-heaven-hw = { lib, config, pkgs, ... }: {
