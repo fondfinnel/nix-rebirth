@@ -41,14 +41,14 @@
     
     # Mount the share on boot
     fileSystems."/mnt/NAS" = {
-      device = "//${nas_ip}/Primary";
+      device = "//${nas_ip}/personal";
       fsType = "cifs";
       options = automount_opts;
     };
 
     # no longer around... keeping just in case
     fileSystems."/mnt/Torrent" = {
-      device = "//${nas_ip}/Torrent";
+      device = "//${nas_ip}/torrent";
       fsType = "cifs";
       options = automount_opts;
     };
