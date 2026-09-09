@@ -40,7 +40,7 @@
               # site url defined in envfile
               site = {
                 title.en = "Niche File Share!";
-                url = "192.168.50.222:31100";
+                url = "ohfifteen.nniche.uk";
                 desc.en = "Temporary file sharing, powered by 015";
                 # todo files
                 # icon = "";

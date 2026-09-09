@@ -19,7 +19,7 @@
       image = "docker.io/jellyfin/jellyfin";
       pull = "newer";
       ports = [
-        "31010:8096" 
+        "127.0.0.1:31010:8096" 
         "127.0.0.1:7359:7359" 
       ];
 
@@ -47,9 +47,11 @@
       # change branch depending on hw
       image = "docker.io/kuscheltier/jellyfin-ai-upscaler:docker7-cpu";
       pull = "newer";
-      ports = [
-        "31011:5000" 
-      ];
+
+      # with aardvark (podman), no need to open port
+      # ports = [
+      #   "31011:5000" 
+      # ];
 
       # devices = [ "/dev/dri" ];
 

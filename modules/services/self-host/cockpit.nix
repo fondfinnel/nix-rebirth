@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.device-type == "server";
-in {
+{ self, inputs, config, ... }:  {
 
-  flake.nixosModules.self-host = { lib, config, pkgs, ... }: {
+  flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
+    check = config.device-type == "server";
+  in{
 
     services.cockpit = {
       enable = lib.mkDefault check;
@@ -12,7 +12,7 @@ in {
       # TODO push zfs plugin to zfs module instead
       plugins = with pkgs; [
         cockpit-machines
-        cockpit-zfs
+        # cockpit-zfs
         cockpit-podman
       ];
 

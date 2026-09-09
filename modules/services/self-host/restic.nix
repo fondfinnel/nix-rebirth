@@ -2,7 +2,7 @@
 # TODO test
 { self, inputs, config, ... }: {
 
-  flake.nixosModules.self-host = { lib, config, pkgs, ... }: {
+  flake.nixosModules.self-host-wait = { lib, config, pkgs, ... }: {
 
     sops.secrets = {
       "restic/encryption" = {};

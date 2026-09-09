@@ -15,12 +15,17 @@
       image = "docker.io/chrisbenincasa/tunarr";
       pull = "newer";
       ports = [
-        "127.0.0.1:31111:8000" # redirect webui to port 31111, lan only
+        "31111:8000" # redirect webui to port 31111, lan only
+      ];
+
+      devices = [
+        "/dev/dri:/dev/dri"
       ];
 
       # TODO dir
       volumes = [
         "${mainDir}/config:/config/tunarr" # redirect config storage
+        "/Primary/Personal/Media:/Media:ro" # read only for media
       ];
 
       environment = {
