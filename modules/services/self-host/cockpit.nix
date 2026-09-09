@@ -4,8 +4,9 @@
     check = config.device-type == "server";
   in{
 
-    services.cockpit = {
-      enable = lib.mkDefault check;
+    # so far, not working
+    services.cockpit = rec {
+      enable = lib.mkDefault false;
       port = 33333;
       openFirewall = true;
 
@@ -18,7 +19,7 @@
 
       settings = lib.mkDefault {
         WebService.AllowUnencrypted = true;
-        WebService.Origins = "http://localhost:33333 https://localhost:33333";
+        WebService.Origins = "http://192.168.50.100:${port}";
       }; 
 
     };
