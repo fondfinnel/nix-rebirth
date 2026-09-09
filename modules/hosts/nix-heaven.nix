@@ -26,6 +26,7 @@
     networking.hostId = "d39654b5";
 
     stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+    services.greetd.enable = false;
 
     # power.ups = {
     #   enable = true;
@@ -81,7 +82,19 @@
         "root"
       ];
       settings.personal = {
-        path = "/Primary";
+        path = "/Primary/Personal";
+        "read only" = "no";
+        "guest ok" = "no";
+        "valid users" = [
+          "n0ll"
+        ];
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        # TODO masks
+      };
+
+      settings.torrent = {
+        path = "/Primary/Torrent";
         "read only" = "no";
         "guest ok" = "no";
         "valid users" = [

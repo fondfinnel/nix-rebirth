@@ -6,14 +6,18 @@
     sops.secrets."cloudflared/cred".name = "cloudflared-cred";
     sops.secrets."cloudflared/cert".name = "cloudflared-cert";
 
+    # requires setting up dns cname rules manually atm
+    # might automate with script
+
     services.cloudflared = {
       enable = true;
+      certificateFile = config.sops.secrets."cloudflared/cert".path;
       tunnels = {
-        "0c747775-3132-4cc5-9a2c-a1b6d5066997" = {
+        "20717350-c41e-4cbc-9ece-bd9a47c3865b" = {
           default = "http_status:404";
           credentialsFile = config.sops.secrets."cloudflared/cred".path;
           ingress = {
-            "jellyfin2.nniche.uk" = "http://localhost:8096";
+            "jellyfin.nniche.uk" = "http://localhost:31010";
             "fireshare.nniche.uk" = "http://localhost:1337";
           };
         };
