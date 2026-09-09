@@ -3,16 +3,16 @@
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
     # TODO get dir
     mainDir = "/services/tubearchivist";
-    storDir = "/Apps/tubearchivist";
+    storDir = "/Primary/Personal/Media/Internet";
   in {
 
     sops.secrets."tubearchivist" = {};
     sops.secrets."tubearchivist-es" = {};
     
     # ensure dirs are available for containers
-    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 1000 1000") [
       "${mainDir}"
-      "${storDir}/youtube"
+      "${storDir}"
       "${mainDir}/cache"
       "${mainDir}/redis-data"
       "${mainDir}/elast-data"
@@ -26,7 +26,7 @@
 
       ports = [ "127.0.0.1:31000:8000" ];
       volumes = [
-        "${storDir}/youtube:/youtube"
+        "${storDir}:/youtube"
         "${mainDir}/cache:/cache"
       ];
 

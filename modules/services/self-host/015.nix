@@ -7,9 +7,9 @@
     exURL = "ohfifteen.nniche.uk";
   in {
 
-    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 1000 1000") [
       "${mainDir}"
-      "${storeDir}/uploads"
+      "${storeDir}/upload"
       "${mainDir}/redis-data"
     ];
 
@@ -41,6 +41,11 @@
                 file-image-convert.enabled = true;
               };
 
+              upload = {
+                path = "/upload";
+                maximum = "100GiB";
+              };
+
               site = {
                 title.en = "Niche File Share!";
                 url = exURL;
@@ -67,11 +72,11 @@
         inherit pull environmentFiles environment;
         image = "docker.io/fudaoyuanicu/015-app";
         volumes = [
-          "${storeDir}/uploads:/uploads"
+          "${storeDir}/upload:/upload"
           "${oh15-config}:/app/config.yaml"
         ];
         ports = [ "127.0.0.1:${exPort}:80" ];
-        dependsOn = [ "015-redis" ];
+        dependsOn = [ "015-redis" "015-app" ];
 
       };
 
@@ -80,7 +85,7 @@
         inherit pull environmentFiles environment;
         image = "docker.io/fudaoyuanicu/015-worker";
         volumes = [
-          "${mainDir}/uploads:/uploads"
+          "${storeDir}/upload:/upload"
           "${oh15-config}:/config.yaml"
         ];
         dependsOn = [
@@ -93,7 +98,7 @@
       "015-redis" = {
         inherit pull environment;
         image = "docker.io/redis:7";
-        volumes = [ "${mainDir}/redis-data:/data" ];
+        # volumes = [ "${mainDir}/redis-data:/data" ];
 
       };
 

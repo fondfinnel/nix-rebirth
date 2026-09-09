@@ -9,6 +9,7 @@
       "${mainDir}/config"
       "${mainDir}/cache"
       "${mainDir}/upscale-models"
+      "${mainDir}/wizarr"
     ];
 
 
@@ -78,7 +79,7 @@
         "127.0.0.1:31012:5690"
       ];
       volumes = [
-        "${mainDir}/wizarr"
+        "${mainDir}/wizarr:/data"
       ];
       environment = {
         TZ = config.time.timeZone;

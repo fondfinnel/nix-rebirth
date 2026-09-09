@@ -74,7 +74,7 @@
       df = "df -h";
     };
 
-    programs.foot.enable = true;
+    programs.foot.enable = osConfig.headless-check;
 
     sops = {
       defaultSopsFile = ./n0ll-secrets.yaml;

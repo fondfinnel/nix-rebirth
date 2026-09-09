@@ -28,6 +28,8 @@
     stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
     services.greetd.enable = false;
 
+    services.tuned.ppdSettings.main.default = "powersave network-throughput";
+
     power.ups = {
       enable = true;
       mode = "netserver";
