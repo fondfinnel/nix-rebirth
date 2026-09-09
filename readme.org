@@ -5,8 +5,8 @@
 :END:
 #+options: toc:nil
 
-#+DOWNLOADED: screenshot @ 2026-05-22 14:39:19
-[[file:.assets/2026-05-22_14-39-19_screenshot.png]]
+#+DOWNLOADED: screenshot @ 2026-09-19 14:33:36
+[[file:.assets/2026-09-19_14-33-36_screenshot.png]]
 
 This is a rewrite of my personal NixOS configuration, implementing the dendritic formatting and cleaning up a lot of the spaghetti code in the process. Eventually, this will extend to other devices I'm looking to bring under the Nix umbrella.
 
@@ -210,6 +210,7 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 - [ ] trek..?
 - [ ] flame dashboard
 - [x] paperless-ng
+
 ** TODO calibre-server and calibre-web
 ** TODO ZFS
 - [ ] Sanoid or Syncoid for snapshots
