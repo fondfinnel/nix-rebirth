@@ -35,9 +35,6 @@
   flake.homeModules.base = { osConfig, config, lib, pkgs, ... }: {
     home.stateVersion = lib.mkDefault osConfig.system.stateVersion;
 
-    # inherit user's assigned shell
-    home.sessionVariables.SHELL = lib.mkDefault "${osConfig.users.users."${config.home.username}".shell}";
-
     home.file.".face".source = lib.mkDefault ./tempface.svg;
 
     programs.nix-index.enable = true;

@@ -6,6 +6,8 @@ in {
 
     programs.zellij = {
       enable = lib.mkDefault true;
+      # enableFishIntegration = config.home.shell.enableFishIntegration;
+      # enableBashIntegration = config.home.shell.enableBashIntegration;
       settings = lib.mkDefault {
         show_startup_tips = false;
       };
