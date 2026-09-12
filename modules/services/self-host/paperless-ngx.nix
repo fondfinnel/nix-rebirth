@@ -23,7 +23,7 @@
 
       paperless-ngx = {
         
-        image = "docker.io/paperlessngx/paperless-ngx";
+        image = "docker.io/paperlessngx/paperless-ngx:latest";
         pull = "newer";
         ports = [
           "20000:8000" 
@@ -47,6 +47,16 @@
         image = "docker.io/redis:8";
         dependsOn = [ "paperless-ngx" ];
         volumes = [ "${mainDir}/redis:/data" ];
+      };
+      paperless-ai = {
+        image = "docker.io/clusterzx:latest";
+        # exposes :3000 internally
+        dependsOn = [ "paperless-ngx" ];
+        # environmentFiles = [config.sops.secrets."paperless-ai".path];
+        environment = {
+          TZ = config.time.timeZone;
+        };
+
       };
 
     };
