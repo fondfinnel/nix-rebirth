@@ -12,8 +12,8 @@ in {
         shell = pkgs.fish;
         home = "/home/n0ll";
         openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ../../keys/n0ll;
-        initialPassword = "123";
-        # comment when installing fresh system
+        # uncomment when installing fresh system
+        # initialPassword = "123";
         hashedPasswordFile = config.sops.secrets."users/n0ll".path;
     };
 
