@@ -23,6 +23,7 @@
 
     services.ollama = {
       enable = true;
+      host = "10.88.0.1";
       package = pkgs.ollama-vulkan;
       loadModels = [
         textModel
@@ -51,6 +52,21 @@
         environment = {
           PAPERLESS_REDIS = "redis://paperless-redis:6379";
           TZ = tz;
+
+          PAPERLESS_AI_ENABLED = "true";
+          PAPERLESS_AI_LLM_BACKEND = "ollama";
+          PAPERLESS_AI_LLM_ENDPOINT = "http://host.containers.internal:${builtins.toString config.services.ollama.port}";
+          PAPERLESS_AI_LLM_MODEL = textModel;
+
+          SCAN_INTERVAL = "*/30 * * * *";
+          PROCESS_PREDEFINED_DOCUMENTS = "no";
+          PROCESS_ONLY_NEW_DOCUMENTS = "no";
+          ADD_AI_PROCESSED_TAG = "yes";
+
+          ACTIVATE_TAGGING = "yes";
+          ACTIVATE_CORRESPONDENTS = "yes";
+          ACTIVATE_TITLE = "yes";
+          ACTIVATE_DOCUMENT_TYPE = "yes";
         };
         environmentFiles = [ config.sops.secrets."paperless/ngx".path ];
       };
@@ -62,29 +78,26 @@
         environment.TZ = tz;
       };
 
-      paperless-ai = {
-        image = "docker.io/clusterzx/paperless-ai:latest";
-        # exposes :3000 internally
-        dependsOn = [ "paperless-ngx" ];
-        environmentFiles = [config.sops.secrets."paperless/ai".path];
-        environment = rec {
-          TZ = tz;
-          PAPERLESS_URL = "http://paperless-ngx:8000";
-          PAPERLESS_API_URL = "${PAPERLESS_URL}/api";
+      # paperless-ai = {
+      #   image = "docker.io/clusterzx/paperless-ai:latest";
+      #   # exposes :3000 internally
+      #   dependsOn = [ "paperless-ngx" ];
+      #   environmentFiles = [ config.sops.secrets."paperless/ai".path ];
+      #   environment = rec {
+      #     TZ = tz;
+      #     # inherits the same val
+      #     PAPERLESS_URL = "http://paperless-ngx:8000";
+      #     PAPERLESS_NGX_URL = PAPERLESS_URL;
+      #     PAPERLESS_HOST = PAPERLESS_URL;
+      #     PAPERLESS_API_URL = "${PAPERLESS_URL}/api";
 
-          AI_PROVIDER = "ollama";
-          # read vals directly
-          OLLAMA_API_URL = "http://${config.services.ollama.host}:${builtins.toString config.services.ollama.port}";
-          OLLAMA_MODEL = textModel;
+#           # read vals directly
 
-          SCAN_INTERVAL = "*/30 * * * *";
-        };
-
-      };
+      #             
+      #   };
 
     };
 
   };
-
 
 }
