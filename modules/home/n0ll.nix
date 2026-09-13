@@ -1,9 +1,9 @@
-{ self, inputs, config, ... }: let
-  system = config.nixpkgs.hostPlatform;
-  check = config.device-type == "primary";
-in {
+{ self, inputs, config, ... }: {
 
-  flake.nixosModules.users = { pkgs, lib, config, ... }: {
+  flake.nixosModules.users = { pkgs, lib, config, ... }: let
+    system = config.nixpkgs.hostPlatform;
+    check = config.device-type == "primary";
+  in {
     
     users.users.n0ll = {
       isNormalUser = true;
@@ -37,14 +37,16 @@ in {
 
   flake.homeConfigurations.n0ll = inputs.home-manager.lib.homeManagerConfiguration {
     # use architecture from system
-    pkgs = import inputs.nixpkgs { system = system; };
+    pkgs = import inputs.nixpkgs { system = config.nixpkgs.hostPlatform; };
 
     modules = with self.homeModules; [
       n0ll-conf
     ];
   };
 
-  flake.homeModules.n0ll-conf = { pkgs, osConfig, config, lib, ... }: {
+  flake.homeModules.n0ll-conf = { pkgs, osConfig, config, lib, ... }: let
+    check = osConfig.device-type == "primary";
+  in {
 
     imports = with self.homeModules; [
       hyprland

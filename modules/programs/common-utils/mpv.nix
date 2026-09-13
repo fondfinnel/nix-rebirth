@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;  
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { pkgs, ... }: {
+  flake.homeModules.common-utils = { pkgs, osConfig, ... }: let
+    check = osConfig.headless-check;  
+  in {
 
     programs.mpv = {
       enable = check;

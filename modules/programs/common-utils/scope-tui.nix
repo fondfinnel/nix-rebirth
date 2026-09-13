@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { pkgs, lib, config, ... }: {
+  flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }: let
+    check = (osConfig.headless-check && osConfig.services.pipewire.enable);
+  in {
 
     options.programs.scope-tui.enable = lib.mkEnableOption "scope-tui";
     config.programs.scope-tui.enable = lib.mkDefault check;

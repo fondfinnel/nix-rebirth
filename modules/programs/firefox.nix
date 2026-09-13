@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.firefox = { pkgs, config, lib, ... }: {
+  flake.homeModules.firefox = { pkgs, config, osConfig, lib, ... }: let
+    check = osConfig.headless-check;
+  in {
     imports = [ self.homeModules.librewolf ];
 
     programs.firefox = {

@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.creative = { pkgs, lib, config, osConfig, ... }: {
+  flake.homeModules.creative = { pkgs, lib, config, osConfig, ... }: let
+    check = osConfig.headless-check;
+  in {
 
     options.programs.darktable.enable = lib.mkEnableOption "darktable";
     config.programs.darktable.enable = lib.mkDefault check;

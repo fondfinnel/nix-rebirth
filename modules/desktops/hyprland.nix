@@ -1,8 +1,4 @@
-{ self, inputs, config, pkgs, ... }: let
-
-  # TODO write a function that passes along a series of titles to the floating window rule
-
-in {
+{ self, inputs, config, pkgs, ... }: {
 
   flake.homeModules.hyprland = { lib, self', pkgs, osConfig, config, ... }: let
     hyprenable = osConfig.headless-check;

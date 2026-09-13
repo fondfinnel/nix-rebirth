@@ -1,10 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  # TODO Better theming options
-
-  flake.homeModules.kitty = { lib, config, osConfig, pkgs, ... }: {
+  flake.homeModules.kitty = { lib, config, osConfig, pkgs, ... }: let
+    check = osConfig.headless-check;
+  in {
 
     programs.kitty = let
       def = lib.mkDefault;

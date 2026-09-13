@@ -1,10 +1,9 @@
-{ self, inputs, config, ... }: let
-  enabled = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
 
-  flake.homeModules.noctalia-shell = { pkgs, lib, ... }: {
-
+  flake.homeModules.noctalia-shell = { osConfig, pkgs, lib, ... }:  let
+    enabled = osConfig.headless-check;
+  in {
     
     config.systemd.user.services.noctalia-shell = lib.mkIf enabled {
       Unit.Description = "Noctalia shell.";

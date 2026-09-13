@@ -1,10 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { lib, ... }: {
+  flake.homeModules.common-utils = { lib, osConfig, ... }: {
     programs.cava = {
-      enable = lib.mkDefault check;
+      enable = lib.mkDefault osConfig.services.pipewire.enable;
 
       settings = lib.mkDefault {
 

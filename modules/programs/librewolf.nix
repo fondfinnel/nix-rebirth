@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.librewolf = { pkgs, config, lib, ... }: {
+  flake.homeModules.librewolf = { pkgs, config, osConfig, lib, ... }: let
+    check = osConfig.headless-check;
+  in {
 
     programs.librewolf = {
       enable = lib.mkDefault false;

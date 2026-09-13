@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.nixosModules.gnome = { lib, config, pkgs, ... }: {
+  flake.nixosModules.gnome = { lib, config, pkgs, ... }: let
+    check = config.headless-check;
+  in {
 
     services.desktopManager.gnome.enable = true;
 

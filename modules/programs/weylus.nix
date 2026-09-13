@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.nixosModules.weylus = { lib, config, pkgs, ... }: {
+  flake.nixosModules.weylus = { lib, config, pkgs, ... }: let
+    check = config.headless-check;
+  in {
     
     programs.weylus = {
   	  enable = lib.mkDefault check;

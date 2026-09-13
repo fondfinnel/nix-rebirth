@@ -104,7 +104,7 @@
       gtk.enable = true;
       # Set cursor
       home.pointerCursor = {
-        gtk.enable = true;
+        enable = true;
         package = myCursor.package;
         # size = myCursor.size;
         name = myCursor.name;

@@ -1,11 +1,12 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.nixosModules.common-utils = { lib, ... }: { services.udisks2.enable = lib.mkDefault check; };
+  flake.nixosModules.common-utils = { lib, config, ... }: let
+    check = config.headless-check;
+  in { services.udisks2.enable = lib.mkDefault check; };
 
   flake.homeModules.common-utils = { pkgs, lib, osConfig, config, ... }: {
 
+    # udiskie needs udisks2, which is only system scope
     services.udiskie.enable = osConfig.services.udisks2.enable;
     services.udiskie.tray = "never";
 

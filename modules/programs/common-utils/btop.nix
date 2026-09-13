@@ -1,6 +1,4 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
   flake.homeModules.common-utils = { lib, ... }: {
 

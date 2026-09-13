@@ -1,10 +1,8 @@
-{ self, inputs, config, ... }: let
-  headless-check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  # Home-manager module for notification daemon swaync.
-  # Seems like a really cool tool but as it stands it doesn't play as seamlessly for me on hyprland. Opted for mako.
-  flake.homeModules.swaync = { lib, ... }: {
+  flake.homeModules.swaync = { lib, osConfig, ... }: let
+    headless-check = osConfig.headless-check;
+  in {
 
     services.swaync = {
       enable = headless-check;

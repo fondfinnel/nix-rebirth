@@ -1,8 +1,8 @@
-{ self, inputs, config, pkgs, ... }: let
-  hyprenable = config.headless-check;
-in {
+{ self, inputs, config, pkgs, ... }: {
 
-  flake.homeModules.hyprlock = { ... }: {
+  flake.homeModules.hyprlock = { osConfig, ... }: let
+    hyprenable = osConfig.headless-check;
+  in {
 
     programs.hyprlock = { # mostly copied from example online
       enable = hyprenable;

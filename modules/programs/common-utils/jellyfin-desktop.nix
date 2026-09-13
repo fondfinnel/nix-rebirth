@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { pkgs, lib, config, ... }: {
+  flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }:  let
+    check = osConfig.headless-check;
+  in{
 
     options.programs.jellyfin-desktop.enable = lib.mkEnableOption "jellyfin-desktop";
     config.programs.jellyfin-desktop.enable = lib.mkDefault check;

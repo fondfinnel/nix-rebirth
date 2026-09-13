@@ -1,9 +1,9 @@
-{ self, inputs, config, ... }: let
-  hyprenable = config.headless-check;
-  highperf = config.high-performance;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.hypridle = { ... }: {
+  flake.homeModules.hypridle = { osConfig, ... }: let
+    hyprenable = osConfig.headless-check;
+    highperf = osConfig.high-performance;
+  in {
 
     services.hypridle = {
 
