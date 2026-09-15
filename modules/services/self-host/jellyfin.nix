@@ -74,9 +74,9 @@
     };
 
     virtualisation.oci-containers.containers.jellyfin-wizarr = {
-      image = "fhcr.io/wizarrr/wizarr:latest";
+      image = "ghcr.io/wizarrrr/wizarr:latest";
       ports = [
-        "31012:5690"
+        "127.0.0.1:31012:5690"
       ];
       volumes = [
         "${mainDir}/wizarr"
@@ -89,6 +89,11 @@
         PUID = "1000";
         GUID = "1000";
       };
+    };
+
+    services.cloudflared.tunnels."20717350-c41e-4cbc-9ece-bd9a47c3865b".ingress = {
+      "jellyfin.nniche.uk" = "http://localhost:31010";
+      "jellyinv.nniche.uk" = "http://localhost:31012";
     };
 
   };

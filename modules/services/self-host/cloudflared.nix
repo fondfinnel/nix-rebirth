@@ -17,7 +17,6 @@
           default = "http_status:404";
           credentialsFile = config.sops.secrets."cloudflared/cred".path;
           ingress = {
-            "jellyfin.nniche.uk" = "http://localhost:31010";
             "fireshare.nniche.uk" = "http://localhost:1337";
           };
         };
