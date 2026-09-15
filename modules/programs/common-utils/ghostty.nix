@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { pkgs, lib, config, ... }: {
+  flake.homeModules.common-utils = { pkgs, lib, osConfig, config, ... }: let
+    check = osConfig.headless-check;
+  in {
 
     programs.ghostty = {
       enable = lib.mkDefault false;

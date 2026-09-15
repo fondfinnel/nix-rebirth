@@ -1,6 +1,8 @@
 { self, inputs, config, ... }: {
 
-  flake.homeModules.ironbar = { osConfig, inputs, lib, config, ... }: {
+  flake.homeModules.ironbar = { osConfig, inputs, lib, config, ... }: let
+    check = osConfig.headless-check;
+  in {
 
     # not in nixpkgs, needs added from flake inputs
     imports = [
@@ -9,8 +11,8 @@
 
     programs.ironbar =
       {
-        enable = lib.mkDefault true;
-        systemd = lib.mkDefault true;
+        enable = lib.mkDefault check;
+        systemd = lib.mkDefault check;
         # package = inputs.ironbar;
 
         config = lib.mkDefault

@@ -1,6 +1,6 @@
 { self, inputs, config, ... }: {
 
-  flake.homeModules.walker = { config, lib, ... }: {
+  flake.homeModules.walker = { config, osConfig, lib, ... }: {
 
     home.preserve.directories = [
       ".cache/elephant"
@@ -8,7 +8,7 @@
 
     services.walker = {
 
-      enable = lib.mkDefault true;
+      enable = lib.mkDefault osConfig.headless-check;
       systemd.enable = config.services.walker.enable;
       enableElephantIntegration = config.services.elephant.enable;
 

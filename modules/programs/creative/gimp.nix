@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.creative = { pkgs, lib, config, ... }: {
+  flake.homeModules.creative = { pkgs, lib, config, osConfig, ... }:  let
+    check = osConfig.headless-check;
+  in {
 
     options.programs.gimp.enable = lib.mkEnableOption "gimp";
     config.programs.gimp.enable = lib.mkDefault check;

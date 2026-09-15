@@ -131,7 +131,7 @@
       passwordFile = config.sops.secrets."lastfm".path; 
     };
 
-    programs.ghostty.enable = true;
+    programs.ghostty.enable = osConfig.headless-check;
 
     programs.jujutsu.settings.user = {
       name = "Nathaniel Fagan";
