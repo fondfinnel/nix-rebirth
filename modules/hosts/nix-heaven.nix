@@ -136,6 +136,15 @@
       };
     };
 
+    home-manager.sharedModules = [
+      {
+        programs.zellij = {          
+          enableFishIntegration = lib.mkDefault true;
+          enableBashIntegration = lib.mkDefault true;
+        };
+      }
+    ];
+
   };
 
   flake.nixosModules.nix-heaven-hw = { lib, config, pkgs, ... }: {
