@@ -1,4 +1,3 @@
-
 { self, inputs, config, ... }: {
 
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
@@ -20,7 +19,6 @@
       pull = "newer";
       ports = [
         "127.0.0.1:31010:8096" 
-        "127.0.0.1:7359:7359" 
       ];
 
 
@@ -73,6 +71,24 @@
       };
 
 
+    };
+
+    virtualisation.oci-containers.containers.jellyfin-wizarr = {
+      image = "fhcr.io/wizarrr/wizarr:latest";
+      ports = [
+        "31012:5690"
+      ];
+      volumes = [
+        "${mainDir}/wizarr"
+      ];
+      environment = {
+        TZ = config.time.timeZone;
+
+        # enable when using external auth (authelia, tinyauth, etc)
+        DISABLE_BUILTIN_AUTH = "false";
+        PUID = "1000";
+        GUID = "1000";
+      };
     };
 
   };
