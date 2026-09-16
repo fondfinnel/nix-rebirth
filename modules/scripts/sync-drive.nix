@@ -19,20 +19,10 @@
       echo -e '\nsyncing pass!\n'      
       ${unison} -auto -fat -batch -fastcheck=false "$computer/Keepass/" "$flashdrive/Keepass/" &&
 
-      # echo -e '\nsyncing notes!\n'
-      # ${unison} -auto -fat -batch -fastcheck=false "$computer/logseq/" "$flashdrive/logseq/" \
-      #   -ignore 'Name .smart-env' \
-      #   -ignore 'Name .smart-connections' \
-      #   -ignore 'Name .stfolder' \
-      #   -ignore 'Name .stversions' \
-      #   -ignore 'Name .trash' \
-      #   -ignore 'Name .obsidian/workspace.json' \
-      #   -ignore 'Name .obsidian/plugins/various-complements/histories.json' \
-      #   -ignore 'Name .obsidian/plugins/text-extractor/cache/*' &&
-
       echo -e '\nsyncing emacs!\n'
       ${unison} -auto -fat -batch -fastcheck=false "$computer/.config/emacs/" "$flashdrive/.config/emacs/" \
         -ignore 'Name .cache' \
+        -ignore 'Name .Trash-1000' \
         -ignore 'Name eln-cache' \
         -ignore 'Name recentf-save.el' \
         -ignore 'Name var/org/persist' \
@@ -43,12 +33,14 @@
         -ignore 'Name savehist.el' \
         -ignore 'Name project-list.el' \
         -ignore 'Name ac-comphist.el' \
-        -ignore 'Name elpa/archives' \
+        -ignore 'Name elpa' \
+        -ignore 'Name elpaca' \
         -ignore 'Name org-roam.db'&&
 
         
       echo -e '\nsyncing org!\n'
       ${unison} -auto -fat -batch -fastcheck=false "$computer/org/" "$flashdrive/org/" \
+        -ignore 'Name .Trash-1000' \
         -ignore 'Name .stfolder' \
         -ignore 'Name .stversions' \
         -ignore 'Name .org\~' \
