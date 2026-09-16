@@ -157,15 +157,15 @@
       name = config.home.username;
       isDefault = true;
 
-      search.default = if check then "SearXNG" else "DuckDuckGo";
+      search.default = "ddg";
       search.engines = {
         # engine terms can be found here https://searchfox.org/mozilla-central/rev/669329e284f8e8e2bb28090617192ca9b4ef3380/toolkit/components/search/SearchEngine.jsm#1138-1177
-        "SearXNG" = {
-          urls = [{
-            template = "http://local.nate.server:30053/?q={searchTerms}";
-          }];
-          definedAliases = [ "@s" ];
-        };
+        #   "SearXNG" = {
+        #     urls = [{
+        #       template = "http://local.nate.server:30053/?q={searchTerms}";
+        #     }];
+        #     definedAliases = [ "@s" ];
+        #   };
       };
 
       extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [ 
