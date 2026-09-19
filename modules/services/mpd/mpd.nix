@@ -22,9 +22,8 @@
     ];
 
 	  services.mpd = let
-      check = if osConfig.device-type == "primary" then true else
-        if osConfig.device-type == "server" then true
-        else false;
+      check = if osConfig.device-type == "primary" then true
+              else false;
       musicDirectory = config.services.mpd.musicDirectory;
     in {
 	    enable = lib.mkDefault check;
@@ -80,5 +79,35 @@
 
 
   };
+
+  flake.nixosModules.mpd-server = { lib, config, pkgs, ... }: let
+    musicDirectory = config.services.mpd.settings.music_directory;
+  in {
+
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
+      "${musicDirectory}"
+      "${musicDirectory}/.database/playlists"
+    ];
+
+
+    services.mpd = {
+      enable = true;
+      openFirewall = true;
+      settings = {
+        bind_to_address = "any";
+        music_directory = "/Primary/Personal/Media/Music";
+        playlist_directory = "${musicDirectory}/.database/mpd/playlists";
+        db_file = "${musicDirectory}/.database/mpd/database";
+      };
+    };
+
+    home-manager.sharedModules = let f = lib.mkForce; in [{
+      services.mpd-sima.enable = f false;
+      services.mpdscribble.enable = f false;
+      programs.mpd-crossfade.enable = f false;
+    }];
+
+  };
+
 
 }

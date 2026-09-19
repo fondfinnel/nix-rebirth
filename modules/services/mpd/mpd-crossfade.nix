@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }: {
+  flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }: let
+    check = osConfig.headless-check;
+  in {
 
     config.services.mpd.extraConfig = lib.mkIf config.programs.mpd-crossfade.enable ''mixramp_analyzer "yes"'';
 

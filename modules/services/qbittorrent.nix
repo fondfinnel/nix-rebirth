@@ -1,7 +1,7 @@
 { self, inputs, config, ... }: {
 
 
-  flake.nixosModules.qbittorrent-container = { lib, config, pkgs, ... }: let
+  flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
     mainDir = "/services/qbittorrent";
     torrentMount = "/Primary/Torrent";
   in {
