@@ -9,6 +9,7 @@
       self.nixosModules.ups
       self.nixosModules.users
       self.nixosModules.self-host
+      self.nixosModules.qbittorrent-container
     ];
   };
 
