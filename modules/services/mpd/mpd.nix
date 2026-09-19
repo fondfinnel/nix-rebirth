@@ -78,9 +78,10 @@
     # presrve music directory if it is located outside of /mnt
     home.preserve.directories = [
       ".local/share/mpd"
-    ];
+    ] ++ lib.optionals (!lib.strings.hasPrefix "/mnt" config.services.mpd.musicDirectory)
+      [ config.services.mpd.musicDirectory ];
 
 
   };
-
+ 
 }

@@ -9,7 +9,7 @@
     textModel = "ministral-3:3b";
   in {
 
-    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
+    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 1000 1000") [
       "${mainDir}"
       "${mainDir}/data"
       "${mainDir}/redis"
@@ -40,6 +40,7 @@
         ports = [
           "20000:8000" 
         ];
+        dependsOn = [ "paperless-redis" ];
 
         # TODO dir
         volumes = [
@@ -73,7 +74,6 @@
 
       paperless-redis = {
         image = "docker.io/redis:8";
-        dependsOn = [ "paperless-ngx" ];
         volumes = [ "${mainDir}/redis:/data" ];
         environment.TZ = tz;
       };
