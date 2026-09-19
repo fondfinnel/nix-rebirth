@@ -28,11 +28,18 @@
 
       # TODO reassign values if server is acting as host, connecting as client
       musicDirectory = "/mnt/NAS/Media/Music";
-      playlistDirectory = "${musicDirectory}/playlists";
-      dbFile = "${musicDirectory}/.database/mpd/database";
+      # musicDirectory = "smb://192.168.50.100/personal/Media";
+      # playlistDirectory = "${musicDirectory}/playlists";
+      # dbFile = "${musicDirectory}/.database/mpd/database";
+      dbFile = null;
       extraConfig = ''
-        sticker_file "${musicDirectory}/.database/mpd/${config.home.username}_sticker.sql"
-        log_file "${musicDirectory}/.database/mpd/${config.home.username}_log"
+        # sticker_file "${musicDirectory}/.database/mpd/${config.home.username}_sticker.sql"
+        # log_file "${musicDirectory}/.database/mpd/${config.home.username}_log"
+
+        database {
+          plugin "proxy"
+          host "192.168.50.100"
+        }
 
         audio_output { # foo output for visualizers, such as cava
             type "fifo"
@@ -71,9 +78,7 @@
     # presrve music directory if it is located outside of /mnt
     home.preserve.directories = [
       ".local/share/mpd"
-    ]
-    ++ lib.optionals (!lib.strings.hasPrefix "/mnt" config.services.mpd.musicDirectory)
-      [ config.services.mpd.musicDirectory ];
+    ];
 
 
   };
