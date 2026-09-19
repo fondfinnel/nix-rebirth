@@ -69,7 +69,17 @@
       allowedUDPPorts = [ 4000 4001 4002 ];
     };
 
-    services.samba = {
+    services.samba = let
+
+      "read only" = "no";
+      "guest ok" = "no";
+      "valid users" = [
+        "n0ll"
+      ];
+      "create mask" = "0644";
+      "directory mask" = "0755";
+
+    in {
       enable = true;
       openFirewall = true;
       settings.global.security = "user";
@@ -84,27 +94,13 @@
         "root"
       ];
       settings.personal = {
+        inherit "read only" "guest ok" "valid users" "create mask" "directory mask";
         path = "/Primary/Personal";
-        "read only" = "no";
-        "guest ok" = "no";
-        "valid users" = [
-          "n0ll"
-        ];
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        # TODO masks
       };
 
       settings.torrent = {
+        inherit "read only" "guest ok" "valid users" "create mask" "directory mask";
         path = "/Primary/Torrent";
-        "read only" = "no";
-        "guest ok" = "no";
-        "valid users" = [
-          "n0ll"
-        ];
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        # TODO masks
       };
     };
 
