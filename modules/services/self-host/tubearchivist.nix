@@ -44,7 +44,7 @@
       image = "docker.io/redis";
       pull = "newer";
       user = "root";
-      volumes = [ "${mainDir}/redis-data:/data" ];
+      # volumes = [ "${mainDir}/redis-data:/data" ];
       dependsOn = [ "tubearchivist-es" ];
     };
     

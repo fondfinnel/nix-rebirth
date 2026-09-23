@@ -43,7 +43,7 @@
 
     virtualisation.oci-containers.containers.jellyfin-ai-upscaler = {
       # change branch depending on hw
-      image = "docker.io/kuscheltier/jellyfin-ai-upscaler:docker7-cpu";
+      image = "docker.io/kuscheltier/jellyfin-ai-upscaler:docker7-intel";
       pull = "newer";
 
       # with aardvark (podman), no need to open port
@@ -51,16 +51,16 @@
       #   "31011:5000" 
       # ];
 
-      # devices = [ "/dev/dri" ];
+      devices = [ "/dev/dri" ];
 
       volumes = [
         "${mainDir}/upscale-models:/models" 
       ];
 
       # required for vulkan, intel arc
-      # extraOptions = [
-      #   "--group-add=render"
-      # ];
+      extraOptions = [
+        "--group-add=render"
+      ];
 
       environment = {
         LOG_LEVEL = "INFO";

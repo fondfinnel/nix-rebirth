@@ -74,7 +74,7 @@
 
       paperless-redis = {
         image = "docker.io/redis:8";
-        volumes = [ "${mainDir}/redis:/data" ];
+        # volumes = [ "${mainDir}/redis:/data" ];
         environment.TZ = tz;
       };
 
