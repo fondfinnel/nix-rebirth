@@ -84,38 +84,11 @@
         services.qbittorrent = {
           enable = true;
           openFirewall = true;
+
           extraArgs = [ "--confirm-legal-notice" ];
           webuiPort = 8080;
           profileDir = "/var/lib/qBittorrent";
 
-          #   serverConfig.Preferences = {
-          #     "WebUI/HostHeaderValidation" = false;
-          #     "WebUI/CSRFProtection" = false;            
-          #     "WebUI/AuthSubnetWhitelistEnabled" = true;
-          #     "WebUI/AuthSubnetWhitelist" = "192.168.50.0/24";
-          #     "Advanced/RecheckOnCompletion" = true;
-          #   };
-
-          #           serverConfig.BitTorrent = {
-          #     "Session\AlternativeGlobalDLSpeedLimit" = 500;
-          #     "Session\AlternativeGlobalUPSpeedLimit" = 1;
-          #     "Session\AnonymousModeEnabled" = false;
-          #     "Session\BandwidthSchedulerEnabled" = false;
-          #     "Session\DisableAutoTMMByDefault" = false;
-          #     "Session\GlobalDLSpeedLimit" = 2000;
-          #     "Session\GlobalMaxInactiveSeedingMinutes" = 0;
-          #     "Session\GlobalMaxRatio" = 0;
-          #     "Session\GlobalMaxSeedingMinutes" = 0;
-          #     "Session\GlobalUPSpeedLimit" = 1;
-          #     # "Session\Interface" = "enp39s0";
-          #     # "Session\InterfaceName" = "enp39s0";
-          #     "Session\Port" = 7650;
-          #     "Session\QueueingSystemEnabled" = false;
-          #     "Session\SSL\Port" = 20093;
-          #     "Session\StartPaused" = false;
-          #     "Session\TempPathEnabled" = false;
-          #     "Session\TorrentContentLayout" = "Subfolder";
-          #   };
         };
 
         services.tailscale = {

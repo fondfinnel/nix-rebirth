@@ -136,10 +136,10 @@
 
     home-manager.sharedModules = [
       {
-        programs.zellij = {          
-          enableFishIntegration = lib.mkDefault true;
-          enableBashIntegration = lib.mkDefault true;
-        };
+        # programs.zellij = {          
+        #   enableFishIntegration = lib.mkDefault true;
+        #   enableBashIntegration = lib.mkDefault true;
+        # };
       }
     ];
 
