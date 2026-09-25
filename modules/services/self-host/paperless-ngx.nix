@@ -21,14 +21,6 @@
     sops.secrets."paperless/ai" = {};
     # sops.secrets."paperless/gpt" = {};
 
-    services.ollama = {
-      enable = true;
-      host = "10.88.0.1";
-      package = pkgs.ollama-vulkan;
-      loadModels = [
-        textModel
-      ];
-    };
 
     virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
     virtualisation.oci-containers.containers = {
@@ -56,7 +48,7 @@
 
           PAPERLESS_AI_ENABLED = "true";
           PAPERLESS_AI_LLM_BACKEND = "ollama";
-          PAPERLESS_AI_LLM_ENDPOINT = "http://host.containers.internal:${builtins.toString config.services.ollama.port}";
+          PAPERLESS_AI_LLM_ENDPOINT = "ollama:11434";
           PAPERLESS_AI_LLM_MODEL = textModel;
 
           SCAN_INTERVAL = "*/30 * * * *";
