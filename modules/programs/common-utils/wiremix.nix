@@ -4,7 +4,7 @@
     check = osConfig.services.pipewire.enable;
   in{
 
-    options.programs.wiremix.enable = lib.mkEnableOption "wiremix";
+    # options.programs.wiremix.enable = lib.mkEnableOption "wiremix";
     config.programs.wiremix.enable = lib.mkDefault check;
 
     config.home.packages = lib.mkIf config.programs.wiremix.enable [ pkgs.wiremix ];
