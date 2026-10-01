@@ -199,16 +199,12 @@ Might make it a separate flake and go from there.
 ** TODO Import custom docker images for stuff unavailable in nixpkgs
 Probably a good idea to have a dedicated area to have apps like this store shit.
 
-- [x] fireShare
-- [x] tunarr
-- [x] tubearchivist
 - [ ] karakeep
-- [x] neko
 - [ ] safeline
-- [ ] simpler solution to tubearchivist, metube
-- [ ] trek..?
 - [ ] flame dashboard
 - [x] paperless-ng
+- [ ] glances (or homepage)
+- [ ] fluxer instance
 
 ** TODO calibre-server and calibre-web
 ** TODO ZFS
