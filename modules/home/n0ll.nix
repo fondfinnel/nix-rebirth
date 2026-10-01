@@ -116,8 +116,8 @@
         emoji = monospace;
 
         monospace = {
-          package = pkgs.nerd-fonts.sauce-code-pro;
-          name = "SauceCodePro Nerd Font Mono";
+          package = pkgs.nerd-fonts.victor-mono;
+          name = "Victor-Mono Nerd Font Mono";
         };
 
         sizes = {

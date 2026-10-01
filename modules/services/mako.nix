@@ -14,7 +14,7 @@ in {
         height = "150";
         group-by = "category";
         layer = "overlay";
-        font = "${pkgs.nerd-fonts.mononoki} 10";
+        font = "${config.stylix.fonts.monospace.name} 10";
         border-radius = "5";
         margin = "5";
       };

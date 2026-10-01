@@ -31,16 +31,16 @@ in {
 
                 # Adobe Photoshop is image/adobe.photoshop; already handled above
                 # Adobe Illustrator
-                { mime = "application/postscript"; run = "mediainfo"; }
-                { mime = "application/illustrator"; run = "mediainfo"; }
-                { mime = "application/dvb.ait"; run = "mediainfo"; }
-                { mime = "application/vnd.adobe.illustrator"; run = "mediainfo"; }
-                { mime = "image/x-eps"; run = "mediainfo"; }
-                { mime = "application/eps"; run = "mediainfo"; }
+                # { mime = "application/postscript"; run = "mediainfo"; }
+                # { mime = "application/illustrator"; run = "mediainfo"; }
+                # { mime = "application/dvb.ait"; run = "mediainfo"; }
+                # { mime = "application/vnd.adobe.illustrator"; run = "mediainfo"; }
+                # { mime = "image/x-eps"; run = "mediainfo"; }
+                # { mime = "application/eps"; run = "mediainfo"; }
 
                 # Sometimes AI file is recognized as "application/pdf". Lmao.
                 # In this case use file extension instead:
-                { url = "*.{ai;eps;ait}"; run = "mediainfo"; }
+                # { url = "*.{ai;eps;ait}"; run = "mediainfo"; }
 
                 # NOTE: Use both --no-metadata and --no-preview will display nothing. :)
                 # Make sure both of your previewers and preloaders has the same arguments (--no-metadata and --no-preview)

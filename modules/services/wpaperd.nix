@@ -4,8 +4,8 @@
     backuppape = pkgs.nixos-artwork.wallpapers.binary-black;
     papedirectory =
       # "/mnt/NAS/Media/Photos/DSLR/wallpaper";
-      "/mnt/NAS/Media/Photos/Wallpapers/anime-manga/specific/Neon Genesis Evangelion";
-    # "/mnt/NAS/Media/Photos/Wallpapers";
+      # "/mnt/NAS/Media/Photos/Wallpapers/anime-manga/specific/Neon Genesis Evangelion";
+    "/mnt/NAS/Media/Photos/Wallpapers";
     check2 = osConfig.headless-check;
   in {
     

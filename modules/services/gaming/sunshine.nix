@@ -10,15 +10,15 @@
       settings = {
         sunshine_name = config.networking.hostName;
         port = 47989;
-        credentials_file = config.sops.secrets."sunshine".path;
+        # credentials_file = config.sops.secrets."sunshine".path;
       };
       capSysAdmin = lib.mkDefault enable; # required for DRM/KMS screen capture
       openFirewall = lib.mkDefault enable;
     };
 
     sops.secrets."sunshine" = {      
-      owner = config.users.users.root.name;
-      group = config.users.users.root.group;
+      owner = config.users.users.n0ll.name;
+      group = config.users.users.n0ll.group;
     }; 
 
     home-manager.sharedModules = [{

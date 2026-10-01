@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-09-05 Sat 12:57]
+:mtime:    [2026-09-30 Wed 21:09]
 :END:
 #+options: toc:nil
 
@@ -188,7 +188,6 @@ Here is the main chunk of the preservation itself, where everything is merged in
 Firefox profiles are declared with the user's profile itself. They get re-used with any of it's derivitives that can be declared in the same way (LibreWolf, Floorp, etc). By default, LibreWolf is enabled instead of Firefox. 
 
 There may be better ways to declare which one is enabled for the user, such as stating the package that Firefox builds on, but for the moment it's just conditional.
-
 
 * To-Do
 

@@ -16,6 +16,7 @@
 
     config.home.preserve.directories = [
       ".config/darktable"
+      ".cache/darktable"
     ];
   };
 

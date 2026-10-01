@@ -29,6 +29,8 @@
 
       base16Scheme = d osConfig.stylix.base16Scheme;
 
+      # fonts in user modules
+
     };
 
   };
