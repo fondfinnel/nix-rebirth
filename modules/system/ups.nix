@@ -11,14 +11,14 @@
       passwordFile = lib.mkDefault config.sops.secrets."upsmon".path;
     };
     power.ups.upsmon = let d = lib.mkDefault; in {
-      monitor."ups" = {
+      monitor.main = {
         system = d "ups@nate-truenas";
         powerValue = d 1;
         user = d "upsmon";
         passwordFile = d config.sops.secrets."upsmon".path;
         type = d "netclient";
       };
-      settings = lib.mkDefault {
+      settings = d {
         # This configuration file declares how upsmon is to handle
         # NOTIFY events.
 

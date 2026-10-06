@@ -30,6 +30,7 @@
 
     services.tuned.ppdSettings.main.default = "powersave network-throughput";
 
+    # upsd, nut, etc
     power.ups = {
       enable = true;
       mode = "netserver";
@@ -48,8 +49,10 @@
           # "ignorelb"
         ];
       };
+      upsmon.monitor.main.system = "main@localhost";
     };
     
+    # needs work
     services.nfs.server = {
       enable = true;      
       lockdPort = 4001;
