@@ -28,7 +28,8 @@
     users.groups.libvirtd.members = [ "n0ll" ];
     programs.weylus.users = ["n0ll"];
 
-    # likely removing once things are finalized, for testing purposes
+    nix.settings.trusted-users = [ "n0ll" ];
+
     home-manager.users.n0ll.imports = [
       self.homeModules.n0ll-conf
     ];
