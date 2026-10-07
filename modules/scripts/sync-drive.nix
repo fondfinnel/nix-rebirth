@@ -35,6 +35,11 @@
         -ignore 'Name ac-comphist.el' \
         -ignore 'Name elpa' \
         -ignore 'Name elpaca' \
+        -ignore 'Name undo-fu-session' \
+        -ignore 'Name org-persist' \
+        -ignore 'Name recentf' \
+        -ignore 'Name history' \
+        -ignore 'Name bookmarks' \
         -ignore 'Name org-roam.db'&&
 
         

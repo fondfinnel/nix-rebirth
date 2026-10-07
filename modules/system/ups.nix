@@ -12,7 +12,7 @@
     };
     power.ups.upsmon = let d = lib.mkDefault; in {
       monitor.main = {
-        system = d "ups@nate-truenas";
+        system = d "main@192.168.50.100";
         powerValue = d 1;
         user = d "upsmon";
         passwordFile = d config.sops.secrets."upsmon".path;
