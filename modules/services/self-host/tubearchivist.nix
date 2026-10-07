@@ -53,7 +53,7 @@
     virtualisation.oci-containers.containers.tubearchivist-es = {
       image = "docker.io/bbilly1/tubearchivist-es";
       pull = "newer";
-      volumes = [ "${mainDir}/elast-data:/usr/shared/elasticsearch/data" ];
+      volumes = [ "${mainDir}/elast-data:/usr/share/elasticsearch/data" ];
       environmentFiles = [ config.sops.secrets."tubearchivist-es".path ];
       # ports = [ "127.0.0.1:31002:9200" ];
     };
