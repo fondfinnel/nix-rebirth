@@ -30,12 +30,14 @@
       volumes = [
         "${mainDir}/config:/config" # redirect config storage
         "${mainDir}/cache:/cache" # redirect cache storage
-        "/Primary/Personal/Media:/Media:ro" # read only for media
+        "/Primary/Personal/Media:/Media:ro" # read only for media, does not seem to work?
       ];
 
       environment = {
         LOG_LEVEL = "INFO";
         TZ = config.time.timeZone;
+
+        # enable nvidia acceleration with nvidia GPU
         NVIDIA_VISIBLE_DEVICES = lib.mkIf config.hardware.nvidia.modesetting.enable "all";
       };
 
@@ -46,10 +48,7 @@
       image = "docker.io/kuscheltier/jellyfin-ai-upscaler:docker7-intel";
       pull = "newer";
 
-      # with aardvark (podman), no need to open port
-      # ports = [
-      #   "31011:5000" 
-      # ];
+      # opens 5000/tcp internally, no external access
 
       devices = [ "/dev/dri" ];
 
@@ -75,9 +74,12 @@
 
     virtualisation.oci-containers.containers.jellyfin-wizarr = {
       image = "ghcr.io/wizarrrr/wizarr:latest";
+
+      # expose port on localhost, cloudflare picks up service
       ports = [
         "127.0.0.1:31012:5690"
       ];
+
       volumes = [
         "${mainDir}/wizarr:/data"
       ];
