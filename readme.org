@@ -211,3 +211,4 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 - [ ] Sanoid or Syncoid for snapshots
 ** Caddy for reverse proxy?
 If cloudflared doesn't cut it, or if it's easier to manage through nixos itself
+** TODO Set up service to unlock nix-heaven via ssh
