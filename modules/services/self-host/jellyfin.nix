@@ -1,7 +1,7 @@
 { self, inputs, config, ... }: {
 
   flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
-    mainDir = "/services/jellyfin";
+    mainDir = "/Apps/jellyfin";
   in {
  
     systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 1000 1000") [
@@ -22,10 +22,7 @@
         "127.0.0.1:31010:8096" 
       ];
 
-
-      devices = [
-        "/dev/dri:/dev/dri"
-      ];
+      devices = [ "/dev/dri" ];
 
       volumes = [
         "${mainDir}/config:/config" # redirect config storage
@@ -53,7 +50,7 @@
       devices = [ "/dev/dri" ];
 
       volumes = [
-        "${mainDir}/upscale-models:/models" 
+        "${mainDir}/upscale-models:/app/models" 
       ];
 
       # required for vulkan, intel arc

@@ -16,9 +16,6 @@
         "20717350-c41e-4cbc-9ece-bd9a47c3865b" = {
           default = "http_status:404";
           credentialsFile = config.sops.secrets."cloudflared/cred".path;
-          ingress = {
-            "fireshare.nniche.uk" = "http://localhost:1337";
-          };
         };
       };
     };

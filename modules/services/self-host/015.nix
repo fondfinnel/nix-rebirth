@@ -10,7 +10,6 @@
     systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 1000 1000") [
       "${mainDir}"
       "${storeDir}/upload"
-      "${mainDir}/redis-data"
     ];
 
     sops.secrets."oh15" = {};
@@ -98,7 +97,6 @@
       "015-redis" = {
         inherit pull environment;
         image = "docker.io/redis:7";
-        # volumes = [ "${mainDir}/redis-data:/data" ];
 
       };
 

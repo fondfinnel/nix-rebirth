@@ -4,6 +4,7 @@
     # TODO dir
     mainDir = "/services/fireshare";
     storDir = "/Apps/fireshare";
+    exPort = "1337";
   in {
 
     sops.secrets."fireshare" = {};
@@ -17,12 +18,15 @@
       "${storDir}/images"
     ];
 
+    services.cloudflared.tunnels."20717350-c41e-4cbc-9ece-bd9a47c3865b".ingress."fireshare.nniche.uk" = "http://localhost:${exPort}";
+
     virtualisation.oci-containers.containers.fireshare = {
-      image = "docker.io/shaneisrael/fireshare:1.8";
+      image = "docker.io/shaneisrael/fireshare:1.8.5";
       ports = [
-        # untested
-        "127.0.0.1:1337:80"
+        "127.0.0.1:${exPort}:80"
       ];
+
+      devices = [ "/dev/dri" ];
 
       volumes = [
         "${mainDir}/data:/data"
