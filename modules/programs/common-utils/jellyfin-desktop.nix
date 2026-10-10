@@ -9,6 +9,8 @@
 
     config.home.packages = lib.mkIf (config.programs.jellyfin-desktop.enable == true) [ pkgs.jellyfin-desktop ];
 
+    config.home.preserve.directories = [ ".local/share/jellyfin-desktop" ];
+
 
   };
 
