@@ -1,18 +1,14 @@
 { self, inputs, config, ... }: {
 
-  flake.homeModules.common-utils = { lib, config, ... }: let
-    check = config.programs.tmux.enable;
-  in {
+  flake.homeModules.common-utils = { lib, config, ... }: {
 
     programs.tmux = {
-      enable = lib.mkDefault true;
+      enable = lib.mkDefault false;
     };
 
     programs.sesh = {
-      enable = lib.mkDefault check;
+      enable = lib.mkDefault config.programs.tmux.enable;
     };
-
-    programs.fzf.tmux.enableShellIntegration = lib.mkDefault check;
 
   };
 

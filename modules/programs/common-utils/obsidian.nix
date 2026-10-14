@@ -5,7 +5,7 @@
   in {
 
     programs.obsidian = {
-      enable = lib.mkDefault check;
+      enable = lib.mkDefault false;
     };
 
   };
