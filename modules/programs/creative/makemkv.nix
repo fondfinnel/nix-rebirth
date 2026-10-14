@@ -18,7 +18,7 @@
 
     config.home.packages =  with pkgs; lib.mkIf config.programs.makemkv.enable [
       makemkv
-      tvnamer
+      # tvnamer
       mkvtoolnix
 
       mediainfo

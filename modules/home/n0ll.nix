@@ -152,7 +152,7 @@
 
     programs.ledger.enable = true;
 
-    # programs.rimsort.enable = osConfig.headless-check;
+    programs.rimsort.enable = osConfig.headless-check;
 
     programs.firefox.profiles."${config.home.username}" = {
 
@@ -171,13 +171,12 @@
       };
 
       extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [ 
-        # uses rycee flake for extensions, check available ones with `nix flake show "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"`
+        # uses rycee flake for extensions
+        # check available ones with
+        # `nix flake show "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"`
         sponsorblock
-        # dearrow
         adnauseam
         vimium
-        # ublock-origin
-        # tridactyl
         darkreader
         # indie-wiki-buddy
         augmented-steam
