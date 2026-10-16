@@ -5,7 +5,7 @@
   in {
 
     programs.librewolf = {
-      enable = lib.mkDefault false;
+      enable = lib.mkDefault true;
 
       configPath = lib.mkDefault "${config.xdg.configHome}/librewolf";
 
@@ -39,7 +39,7 @@
 
     };
 
-    home.preserve.directories = lib.mkIf config.programs.librewolf.enable [ "${config.home.homeDirectory}/.librewolf" ];
+    home.preserve.directories = lib.mkIf config.programs.librewolf.enable [ ".config/librewolf" ];
 
   };
 

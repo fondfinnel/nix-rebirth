@@ -154,6 +154,9 @@
 
     programs.rimsort.enable = osConfig.headless-check;
 
+    programs.firefox.enable = true;
+    programs.librewolf.enable = true;
+
     programs.firefox.profiles."${config.home.username}" = {
 
       name = config.home.username;
@@ -196,23 +199,22 @@
 
       userChrome = let
         repo =  pkgs.fetchFromGitHub {
-          owner = "cascadefox";
-          repo = "cascade";
+          owner = "Firnschnee";
+          repo = "FoxOne";
           rev = "main";
-          hash = "sha256-MW6E9OaTGlnbHMRl8svgIyqd7BzYOjvUYi92sdgxNCc=";
+          hash = "sha256-zTR/6uZ1zM5gW6fzEN3XeAgbez0WIvHPONo5OFEDXbA=";
         };
-        file = pkgs.concatTextFile {
-          name = "userChrome.css";
-          files = lib.lists.map (x: repo + "/chrome/includes/cascade-" + x) [
-            "config.css"
-            "colours.css"
-            "layout.css"
-            "responsive.css"
-            "floating-panel.css"
-            "nav-bar.css"
-            "tabs.css"
-          ];
+        file = "${repo}/userChrome.css";
+      in builtins.readFile file;
+
+      userContent = let
+        repo =  pkgs.fetchFromGitHub {
+          owner = "Firnschnee";
+          repo = "FoxOne";
+          rev = "main";
+          hash = "sha256-zTR/6uZ1zM5gW6fzEN3XeAgbez0WIvHPONo5OFEDXbA=";
         };
+        file = "${repo}/userContent.css";
       in builtins.readFile file;
       
 
