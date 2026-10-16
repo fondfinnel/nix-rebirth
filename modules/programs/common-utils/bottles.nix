@@ -11,6 +11,7 @@
 
     config.home.packages = lib.mkIf config.programs.bottles.enable [
       (pkgs.bottles.override { removeWarningPopup = true; })
+      pkgs.umu-launcher
     ];
 
 
