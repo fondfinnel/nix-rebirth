@@ -64,9 +64,10 @@
       mountdPort = 4002;
       statdPort = 4000;
 
-      exports."/Primary/Personal"."192.168.50.101" = [
+      exports."/export/Personal"."192.168.50.101" = [
         "rw"
         "sync"
+        "crossmnt"
         "no_subtree_check"
       ];
 
@@ -74,8 +75,8 @@
 
     networking.firewall = {
       enable = true;
-      allowedTCPPorts = [ 4000 4001 4002 ];
-      allowedUDPPorts = [ 4000 4001 4002 ];
+      allowedTCPPorts = [ 111 2049 4000 4001 4002 20048 ];
+      allowedUDPPorts = [ 111 2049 4000 4001 4002 20048 ];
     };
 
     services.samba = let
@@ -169,6 +170,12 @@
       interval = "monthly";
     };
 
+    
+    fileSystems."/export/Personal" = {
+      device = "/Primary/Personal";
+      fsType = "none";
+      options = [ "rbind" ];
+    };
 
     # 4x32GB on host
     # 96GB max, 16GB min
