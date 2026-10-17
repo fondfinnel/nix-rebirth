@@ -21,6 +21,7 @@
         mouse-hide-while-typing = true;
         window-padding-x = 0;
         window-padding-y = 0;
+        resize-overlay = "never";
       };
     };
 

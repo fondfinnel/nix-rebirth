@@ -10,7 +10,7 @@
 
       configPath = lib.mkDefault "${config.xdg.configHome}/mozilla/firefox";
 
-      profiles."${config.home.username}".settings = lib.mkDefault { # Settings inside about:config, writes to user.js
+      profiles."${config.home.username}".settings = { # Settings inside about:config, writes to user.js
         "browser.startup.homepage" =  "about:blank"; # Page that firefox sets home as
         "middlemouse.paste" = false;
         "general.autoScroll" = true;
@@ -26,14 +26,15 @@
         "extensions.ui.mlmodel.hidden" = true;
         "extensions.ui.sitepermission.hidden" = true;
         "extensions.pocket.enabled" = false;
-        "extensions.screenshots.disabled" = true;
-        "extensions.pictureinpicture.enable_picture_in_picture_overrides" = false;
+
+        "extensions.screenshots.disabled" = true; #disable screenshots
+        "media.videocontrols.picture-in-picture.video-toggle.enabled" = false; # disable pnp
+        "images.jxl.enabled" = true; #enable jpeg-xl support
         "browser.topsites.contile.enabled" = false;
         "browser.formfill.enable" = false;
-        # "browser.search.suggest.enabled" = false;
         "browser.search.suggest.enabled.private" = false;
         "browser.urlbar.suggest.searches" = false;
-        # "browser.urlbar.showSearchSuggestionsFirst" = false;
+        "browser.urlbar.showSearchSuggestionsFirst" = false;
         "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
         "browser.newtabpage.activity-stream.feeds.snippets" = false;
         "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
@@ -55,7 +56,7 @@
       };
 
 
-      policies = lib.mkDefault { # ref: https://mozilla.github.io/policy-templates/
+      policies = { # ref: https://mozilla.github.io/policy-templates/
 
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
