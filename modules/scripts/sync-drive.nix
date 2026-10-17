@@ -52,9 +52,9 @@
         -ignore 'Name .org\#' &&
 
       echo -e 'done!'
-      echo -e 'restarting emacs'
 
-      systemctl restart --user emacs
+      # echo -e 'restarting emacs'
+      # systemctl restart --user emacs
 
     '')];
 

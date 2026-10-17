@@ -9,6 +9,12 @@ in {
 
     config.home.packages = lib.mkIf config.programs.audacity.enable [ pkgs.audacity ];
 
+    config.home.preserve.directories = [
+      ".local/share/Audacity"
+      ".config/audacity4"
+      ".config/Audacity"
+    ];
+
   };
 
 
