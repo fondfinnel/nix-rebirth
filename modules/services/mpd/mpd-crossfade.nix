@@ -12,7 +12,7 @@
     config.systemd.user.services.mpd-crossfade = let
       check = (osConfig.device-type == "primary") == (config.services.mpd.enable == true);
     in lib.mkIf check {
-      Unite.Description = "Crossfades track when not playing through an album.";
+      Unit.Description = "Crossfades track when not playing through an album.";
       Install.WantedBy = [ "default.target" ];
 
       Service.Restart = "always";

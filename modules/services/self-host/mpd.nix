@@ -27,7 +27,7 @@
     home-manager.sharedModules = let f = lib.mkForce; in [{
       services.mpd-sima.enable = f false;
       services.mpdscribble.enable = f false;
-      programs.mpd-crossfade.enable = f false;
+      programs.mpd-crossfade.enable = true;
     }];
 
   };
