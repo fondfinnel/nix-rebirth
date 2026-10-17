@@ -14,7 +14,7 @@
       (lib.mkIf osConfig.hardware.amdgpu.opencl.enable pkgs.rocmPackages.migraphx)
     ];
 
-    config.home.preserve.directories = [
+    config.home.preserve.directories = lib.mkIf config.programs.darktable.enable [
       ".config/darktable"
       ".cache/darktable"
     ];

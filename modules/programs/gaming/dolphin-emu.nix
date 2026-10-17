@@ -1,8 +1,8 @@
-{ self, inputs, config, ... }: let
-  check = config.headless-check;
-in {
+{ self, inputs, config, ... }: {
 
-  flake.homeModules.gaming = { lib, config, pkgs, ... }: {
+  flake.homeModules.gaming = { lib, config, osConfig, pkgs, ... }: let
+    check = osConfig.headless-check;
+  in {
 
     options.programs.dolphin-emu.enable = lib.mkEnableOption "dolphin-emu";
     config.programs.dolphin-emu.enable = lib.mkDefault check;

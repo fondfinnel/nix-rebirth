@@ -1,9 +1,9 @@
 { self, inputs, config, ... }: {
 
-  flake.homeModules.wlr-which-key = { lib, config, pkgs, ... }: {
+  flake.homeModules.wlr-which-key = { lib, config, pkgs, osConfig, ... }: {
 
     programs.wlr-which-key = {
-      enable = lib.mkDefault true;
+      enable = lib.mkDefault osConfig.headless-check;
 
       settings = with config.lib.stylix.colors.withHashtag; {
         font = "${config.stylix.fonts.monospace.name} 10";

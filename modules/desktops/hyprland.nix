@@ -15,9 +15,9 @@
       self.homeModules.swaync
     ];
 
-    services.hyprpolkitagent.enable = true;
+    services.hyprpolkitagent.enable = hyprenable;
 
-    xdg.portal.enable = true;
+    xdg.portal.enable = hyprenable;
     xdg.portal.extraPortals = [
       pkgs.xdg-desktop-portal-gtk
       pkgs.xdg-desktop-portal-hyprland

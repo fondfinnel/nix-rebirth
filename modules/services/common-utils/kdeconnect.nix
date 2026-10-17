@@ -6,9 +6,9 @@
 
   flake.homeModules.common-utils = { pkgs, lib, config, osConfig, ... }: {
 
-    services.kdeconnect = rec {
+    services.kdeconnect = {
       enable = lib.mkDefault osConfig.programs.kdeconnect.enable;
-      indicator = lib.mkDefault true;
+      indicator = lib.mkDefault config.services.kdeconnect.enable;
     };
 
     home.preserve.directories = [

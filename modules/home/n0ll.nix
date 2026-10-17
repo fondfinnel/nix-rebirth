@@ -155,8 +155,8 @@
 
     programs.rimsort.enable = osConfig.headless-check;
 
-    programs.firefox.enable = true;
-    programs.librewolf.enable = true;
+    programs.firefox.enable = osConfig.headless-check;
+    programs.librewolf.enable = osConfig.headless-check;
 
     programs.firefox.profiles."${config.home.username}" = {
 

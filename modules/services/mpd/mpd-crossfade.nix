@@ -4,13 +4,13 @@
     check = osConfig.headless-check;
   in {
 
-    config.services.mpd.extraConfig = lib.mkIf config.programs.mpd-crossfade.enable ''mixramp_analyzer "yes"'';
+    config.services.mpd.extraConfig = lib.mkIf config.services.mpd-crossfade.enable ''mixramp_analyzer "yes"'';
 
-    options.programs.mpd-crossfade.enable = lib.mkEnableOption "mpd-crossfade";
-    config.programs.mpd-crossfade.enable = lib.mkDefault check;
+    options.services.mpd-crossfade.enable = lib.mkEnableOption "mpd-crossfade";
+    config.services.mpd-crossfade.enable = lib.mkDefault check;
 
     config.systemd.user.services.mpd-crossfade = let
-      check = (osConfig.device-type == "primary") == (config.services.mpd.enable == true);
+      check = osConfig.headless-check && config.services.mpd-crossfade.enable;
     in lib.mkIf check {
       Unit.Description = "Crossfades track when not playing through an album.";
       Install.WantedBy = [ "default.target" ];
