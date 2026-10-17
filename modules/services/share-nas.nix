@@ -38,12 +38,14 @@
         inherit owner group;
       };
     };
+
+    boot.supportedFilesystems = [ "nfs" ];
     
     # Mount the share on boot
     fileSystems."/mnt/NAS" = {
-      device = "//${nas_ip}/personal";
-      fsType = "cifs";
-      options = automount_opts;
+      device = "${nas_ip}:/export/Personal";
+      fsType = "nfs4";
+      options = [ "x-systemd.automount" "noauto" ];
     };
 
     # no longer around... keeping just in case
