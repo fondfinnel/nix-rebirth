@@ -56,16 +56,27 @@
     # Tune firewall for CIFS
     networking.firewall.extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
 
-    home-manager.sharedModules = [self.homeModules.share-nas];
+    # create service for each user's home to store symlinks for share
+    home-manager.sharedModules = [ self.homeModules.share-nas ];
 
   };
 
-  flake.homeModules.share-nas = { config, lib, ... }: {
+  flake.homeModules.share-nas = { osConfig, config, lib, pkgs, ... }: {
 
-    home.activation.symNAS = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-       run ln -sfn "/mnt/NAS" "${config.home.homeDirectory}/NAS"
-       run ln -sfn "/mnt/Torrent" "${config.home.homeDirectory}/Torrent"
-    ''; 
+    systemd.user.services.nas-symlink = lib.mkIf osConfig.fileSystems."/mnt/NAS".enable {
+      Unit.Description = "Symlink network attach storage directories in user's home";
+      Install.WantedBy = [ "default.target" ];
+
+      Service.Type = "oneshot";
+      Service.RemainAfterExit = true;
+      Service.ExecStart = ( pkgs.writeShellScript "share-nas-service" /*bash*/
+        ''
+         ln -sfn "${osConfig.fileSystems."/mnt/NAS".mountPoint}" "${config.home.homeDirectory}/NAS"
+         ln -sfn "${osConfig.fileSystems."/mnt/Torrent".mountPoint}" "${config.home.homeDirectory}/Torrent"
+        ''
+      );  
+
+    };
 
   };
 
