@@ -1,7 +1,7 @@
 * Info
 :PROPERTIES:
 :ID:       5938d8a7-a512-4160-b51e-09a99e79388d
-:mtime:    [2026-09-30 Wed 21:09]
+:mtime:    [2026-10-19 Mon 17:04]
 :END:
 #+options: toc:nil
 
@@ -17,7 +17,7 @@ To get a specific list to attempt consistency, I am going to spit out some rules
   - Window rules being defined alongside apps when applicable, for example.
 - Building a structure that is solid standing and easier to maintain compared to original repo.
 - Secondarily, aim for efficiency in compilation.
- 
+
 ** File Structure
 
 *** =/modules=
@@ -27,10 +27,10 @@ Contains any /nix code/ to be used within the repo itself. This includes anythin
 Contains basic settings for all devices. Think timezone and all that stuff.
 
 **** =/hosts=
-Any device being managed under this repo has it's own segment of configuration, which takes in the modules it needs using flake-parts. Most settings are not defined here, simply brought together for one use. 
+Any device being managed under this repo has it's own segment of configuration, which takes in the modules it needs using flake-parts. Most settings are not defined here, simply brought together for one use.
 
 ***** nix-solid
-Main desktop machine. Uses preservation between two disks, where =/nix= is in the boot Optane drive and =/persist= is located in the NVME disk, primarily for user files. This is to promote the speed of Optane for boots and other system utilities, where anything that isn't important isn't declared and not managed by Nix directly. 
+Main desktop machine. Uses preservation between two disks, where =/nix= is in the boot Optane drive and =/persist= is located in the NVME disk, primarily for user files. This is to promote the speed of Optane for boots and other system utilities, where anything that isn't important isn't declared and not managed by Nix directly.
 
 
 #+begin_src sh :results sh :results output
@@ -125,7 +125,7 @@ Defines a device's "type", as in broad category of what it's used for. One of fo
       "secondary"
       "server"
       "virtual"
-    ]; 
+    ];
 
     default = "secondary";
   };
@@ -138,7 +138,7 @@ When /true/, a device is intended to have a desktop environment and whatnot. Whe
 
 #+begin_src nix
   options.headless-check = lib.mkOption {
-    type = lib.types.bool; 
+    type = lib.types.bool;
     description = "Is this device intended to have a desktop environment? True for a desktop, false for headless (to simplify logic elsewhere).";
     default = if config.device-type != isheadless then true else false;
   };
@@ -185,7 +185,7 @@ Here is the main chunk of the preservation itself, where everything is merged in
 ** Shared options
 
 *** Firefox
-Firefox profiles are declared with the user's profile itself. They get re-used with any of it's derivitives that can be declared in the same way (LibreWolf, Floorp, etc). By default, LibreWolf is enabled instead of Firefox. 
+Firefox profiles are declared with the user's profile itself. They get re-used with any of it's derivitives that can be declared in the same way (LibreWolf, Floorp, etc). By default, LibreWolf is enabled instead of Firefox.
 
 There may be better ways to declare which one is enabled for the user, such as stating the package that Firefox builds on, but for the moment it's just conditional.
 
@@ -215,7 +215,7 @@ If cloudflared doesn't cut it, or if it's easier to manage through nixos itself
 ** TODO Set up service to unlock nix-heaven via ssh
 ** TODO Get a proper NFS share going
 ** TODO Declare standardized app preferences for each user account
-I've originally thought that this was a bit overengineered, useful but overkill, but doing it in this way can clear out a ton of fluff when it comes to inter-module declarations. 
+I've originally thought that this was a bit overengineered, useful but overkill, but doing it in this way can clear out a ton of fluff when it comes to inter-module declarations.
 
 What I had in mind:
 - browser

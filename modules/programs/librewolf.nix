@@ -5,7 +5,7 @@
   in {
 
     programs.librewolf = {
-      enable = lib.mkDefault true;
+      enable = lib.mkDefault check;
 
       configPath = lib.mkDefault "${config.xdg.configHome}/librewolf";
 

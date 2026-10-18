@@ -156,7 +156,6 @@
 
     programs.rimsort.enable = osConfig.headless-check;
 
-    programs.firefox.enable = osConfig.headless-check;
     programs.librewolf.enable = osConfig.headless-check;
 
     programs.firefox.profiles."${config.home.username}" = {
@@ -236,7 +235,7 @@
           owner = "Firnschnee";
           repo = "FoxOne";
           rev = "main";
-          hash = "sha256-zTR/6uZ1zM5gW6fzEN3XeAgbez0WIvHPONo5OFEDXbA=";
+          hash = "sha256-EpPQoYESqsUtD0BMVyUVNsQ8jjVRLm9wryswy+zoGW0=";
         };
         file = "${repo}/userChrome.css";
       in builtins.readFile file;
@@ -246,7 +245,7 @@
           owner = "Firnschnee";
           repo = "FoxOne";
           rev = "main";
-          hash = "sha256-zTR/6uZ1zM5gW6fzEN3XeAgbez0WIvHPONo5OFEDXbA=";
+          hash = "sha256-EpPQoYESqsUtD0BMVyUVNsQ8jjVRLm9wryswy+zoGW0=";
         };
         file = "${repo}/userContent.css";
       in builtins.readFile file;

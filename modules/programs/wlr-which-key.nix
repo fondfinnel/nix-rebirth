@@ -15,7 +15,7 @@
 
         menu = [
           { key = "f" ; desc = "firefox"; cmd = "librewolf"; }
-          { key = "e" ; desc = "emacs"; cmd = "${pkgs.emacs}/bin/emacsclient"; }
+          { key = "e" ; desc = "emacs"; cmd = "${pkgs.emacs}/bin/emacsclient -c"; }
           { key = "p" ; desc = "darktable"; cmd = "${pkgs.darktable}/bin/darktable"; }
         ];
 

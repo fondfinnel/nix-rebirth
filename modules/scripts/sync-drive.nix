@@ -1,13 +1,13 @@
 { self, inputs, ... }: {
 
-  flake.homeModules.sync-drive = { pkgs, ... }: { 
+  flake.homeModules.sync-drive = { pkgs, ... }: {
 
-    home.packages = let
-      unison = "${pkgs.unison}/bin/unison";
-    in [(pkgs.writeShellScriptBin "sync-drive" /*bash*/ ''
+home.packages = let
+unison = "${pkgs.unison}/bin/unison";
+in [(pkgs.writeShellScriptBin "sync-drive" /*bash*/ ''
 
-      # check if flash drive is available
-      if [ ! -e /dev/disk/by-uuid/5839-5F7F ]; then
+# check if flash drive is available
+if [ ! -e /dev/disk/by-uuid/5839-5F7F ]; then
         echo -e 'Fuck you! 󰜺 '
         exit
       fi
@@ -16,7 +16,7 @@
       computer="/home/n0ll"
 
       # Actually sync!
-      echo -e '\nsyncing pass!\n'      
+      echo -e '\nsyncing pass!\n'
       ${unison} -auto -fat -batch -fastcheck=false "$computer/Keepass/" "$flashdrive/Keepass/" &&
 
       echo -e '\nsyncing emacs!\n'
@@ -42,10 +42,12 @@
         -ignore 'Name bookmarks' \
         -ignore 'Name org-roam.db'&&
 
-        
+
       echo -e '\nsyncing org!\n'
       ${unison} -auto -fat -batch -fastcheck=false "$computer/org/" "$flashdrive/org/" \
         -ignore 'Name .Trash-1000' \
+        -ignore 'Name .git' \
+        -ignore 'Name .github' \
         -ignore 'Name .stfolder' \
         -ignore 'Name .stversions' \
         -ignore 'Name .org\~' \
