@@ -56,6 +56,8 @@
       };
       upsmon.monitor.main.system = "main@localhost";
     };
+
+    users.users.n0ll.linger = true;
     
     # needs work
     services.nfs.server = {

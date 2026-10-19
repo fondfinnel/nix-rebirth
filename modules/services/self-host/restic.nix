@@ -2,16 +2,17 @@
 # TODO test
 { self, inputs, config, ... }: {
 
-  flake.nixosModules.self-host-wait = { lib, config, pkgs, ... }: {
+  flake.homeModules.self-host = { lib, config, pkgs, osConfig, ... }: {
 
     sops.secrets = {
-      "restic/encryption" = {};
-      "restic/photos" = {};
+      "restic" = {};
     };
+
+    home.packages = [ pkgs.restic pkgs.rclone pkgs.megacmd ];
 
     services.restic = let
 
-      initialize = lib.mkDefault true;
+      initialize = true;
       pruneOpts = [
         "--keep-daily 7"
         "--keep-weekly 5"
@@ -20,28 +21,30 @@
       ];
       timerConfig.OnCalendar = "sunday 3:00";
       timerConfig.Persistent = true;
-      passwordFile = config.sops.secrets."restic/encryption".path;
+      passwordFile = config.sops.secrets."restic".path;
 
       # todo 
       # - services.restic.backups.photos: exactly one of repository, repositoryFile or environmentFile should be set
 
     in {
-      server.enable = lib.mkDefault true;
+      enable = !osConfig.headless-check;
 
-
-      
-      backups."photos" = {
+      backups."backup" = {
         inherit initialize pruneOpts timerConfig passwordFile;
-
-        repositoryFile = config.sops.secrets."restic/photos".path;
-
         paths = [
-          "/mnt/NAS/Media/Photos"
+          "/Primary/Personal/Media/Photos"
+          "/Primary/Personal/Media/Videogames/Saves"
+          "/Primary/Personal/Media/Videogames/Saves"
+          "/Primary/Personal/Documents"
+          "/Primary/Personal/Projects"
+          "/Apps/jellyfin"
         ];
 
         exclude = [
           "Other Junk/*"
         ];
+
+        repository = "rclone:mega-webdav:/backup";
 
       };
     };

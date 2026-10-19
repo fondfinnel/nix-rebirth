@@ -63,6 +63,7 @@
       syncthing
       distrobox
       wlr-which-key
+      self-host
     ];
 
     home.sessionVariables = {
