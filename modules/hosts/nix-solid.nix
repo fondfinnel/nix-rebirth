@@ -8,7 +8,7 @@
       nix-solid-hw
       ups
 
-      bluetooth 
+      bluetooth
       share-nas
     ];
 
@@ -25,6 +25,8 @@
     device-type = "primary";
     high-performance = true;
     headless-check = true;
+
+    boot.kernelPackages = pkgs.linuxPackages_zen;
 
     hardware.keyboard.zsa.enable = true;
     hardware.keyboard.qmk.enable = true;
@@ -134,6 +136,6 @@
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  };  
+  };
 
 }
