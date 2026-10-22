@@ -8,7 +8,7 @@
       "restic" = {};
     };
 
-    home.packages = [ pkgs.restic pkgs.rclone pkgs.megacmd ];
+    home.packages = lib.mkIf config.services.restic.enable [ pkgs.restic pkgs.rclone pkgs.megacmd ];
 
     services.restic = let
 

@@ -209,11 +209,11 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 ** TODO calibre-server and calibre-web
 ** TODO ZFS
 *** DONE Sanoid or syncoid for snapshots
-*** TODO Backups online
+*** DONE BACKUPS online
 ** TODO Caddy for reverse proxy?
 If cloudflared doesn't cut it, or if it's easier to manage through nixos itself
 ** TODO Set up service to unlock nix-heaven via ssh
-** TODO Get a proper NFS share going
+** DONE GET A PROPER NFS SHARE going
 ** TODO Declare standardized app preferences for each user account
 I've originally thought that this was a bit overengineered, useful but overkill, but doing it in this way can clear out a ton of fluff when it comes to inter-module declarations.
 

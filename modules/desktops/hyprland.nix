@@ -188,7 +188,7 @@
           "${mainMod} SHIFT, A, movetoworkspace, special:note"
           "${mainMod} SHIFT, D, movetoworkspace, special:discord"
           # Application shortcuts
-          "${mainMod}, return, exec, ${pkgs.ghostty}/bin/ghostty" # open terminal
+          "${mainMod}, return, exec, ${lib.getExe pkgs.ghostty}" # open terminal
 
           "${mainMod}, E, exec, ${pkgs.wlr-which-key}/bin/wlr-which-key"
           "${mainMod}, R, exec, ${pkgs.walker}/bin/walker"

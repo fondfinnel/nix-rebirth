@@ -93,6 +93,7 @@
       "video/quicktime" = [ x ];
       "video/webm" = [ x ];
       "video/x-matroska" = [ x ];
+      "video/matroska" = [ x ];
       "video/vnd.avi" = [ x ];
       "audio/flac" = [ x ];
       "audio/mp4" = [ x ];
