@@ -14,7 +14,8 @@
         border = base0D;
 
         menu = [
-          { key = "f" ; desc = "firefox"; cmd = "librewolf"; }
+          { key = "f" ; desc = "firefox"; cmd = "firefox"; }
+          { key = "F" ; desc = "firefox (private)"; cmd = "firefox --private-window"; }
           { key = "e" ; desc = "emacs"; cmd = "${pkgs.emacs}/bin/emacsclient -c"; }
           { key = "p" ; desc = "darktable"; cmd = "${pkgs.darktable}/bin/darktable"; }
         ];

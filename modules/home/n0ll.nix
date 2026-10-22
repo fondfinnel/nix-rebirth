@@ -4,7 +4,7 @@
     system = config.nixpkgs.hostPlatform;
     check = config.device-type == "primary";
   in {
-    
+
     users.users.n0ll = {
       isNormalUser = true;
       description = "Nathaniel Fagan";
@@ -20,7 +20,7 @@
     sops.secrets."users/n0ll" = rec {
       owner = config.users.users.n0ll.name;
       group = config.users.users.n0ll.group;
-      neededForUsers = true;      
+      neededForUsers = true;
     };
 
     programs.fish.enable = true;
@@ -98,7 +98,7 @@
       secrets."lastfm".name = "lastfm";
       secrets."syncthing/gui".name = "syncthing-gui";
       secrets."syncthing/${osConfig.networking.hostName}/cert".name = "syncthing-cert";
-      secrets."syncthing/${osConfig.networking.hostName}/key".name = "syncthing-key"; 
+      secrets."syncthing/${osConfig.networking.hostName}/key".name = "syncthing-key";
     };
 
     home.preserve.directories = [
@@ -129,10 +129,10 @@
         };
       };
     };
-    
+
     services.mpdscribble.endpoints."last.fm" = {
       username = "natervader13";
-      passwordFile = config.sops.secrets."lastfm".path; 
+      passwordFile = config.sops.secrets."lastfm".path;
     };
 
     programs.ghostty.enable = osConfig.headless-check;
@@ -156,9 +156,17 @@
 
     programs.rimsort.enable = osConfig.headless-check;
 
-    programs.librewolf.enable = osConfig.headless-check;
+    programs.librewolf.enable = false;
+    programs.firefox.enable = osConfig.headless-check;
 
-    programs.firefox.profiles."${config.home.username}" = {
+    programs.firefox.profiles."${config.home.username}" = let
+        repo =  pkgs.fetchFromGitHub {
+          owner = "Firnschnee";
+          repo = "FoxOne";
+          rev = "71f3752";
+          hash = "sha256-FbLSe8KY4pWQI5pox97iskhYUspfVS7UhpJ/RIl+tXk=";
+        };
+    in {
 
       name = config.home.username;
       isDefault = true;
@@ -174,7 +182,7 @@
         #   };
       };
 
-      extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [ 
+      extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
         # uses rycee flake for extensions
         # check available ones with
         # `nix flake show "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"`
@@ -193,63 +201,45 @@
 
       # extensions.settings = {
       #   "uBlock@raymondhill.net".force = true;
-        #   "uBlock@raymondhill.net".settings = {
-        #     userSettings.uiTheme = "dark";
-        #     selectedFilterLists = [
-        #       "user-filters"
-        #       "ublock-filters"
-        #       "ublock-badware"
-        #       "ublock-privacy"
-        #       "ublock-quick-fixes"
-        #       "ublock-unbreak"
-        #       "easylist"
-        #       "easyprivacy"
-        #       "LegitimateURLShortener"
-        #       "adguard-spyware-url"
-        #       "urlhaus-1"
-        #       "curben-phishing"
-        #       "plowe-0"
-        #       "fanboy-cookiemonster"
-        #       "ublock-cookies-easylist"
-        #       "adguard-cookies"
-        #       "ublock-cookies-adguard"
-        #       "fanboy-social"
-        #       "adguard-social"
-        #       "fanboy-thirdparty_social"
-        #       "fanboy-ai-suggestions"
-        #       "easylist-chat"
-        #       "easylist-newsletters"
-        #       "easylist-notifications"
-        #       "easylist-annoyances"
-        #       "adguard-mobile-app-banners"
-        #       "adguard-other-annoyances"
-        #       "adguard-popup-overlays"
-        #       "adguard-widgets"
-        #       "ublock-annoyances" 
-        #     ];
-        #   };
+      #   "uBlock@raymondhill.net".settings = {
+      #     userSettings.uiTheme = "dark";
+      #     selectedFilterLists = [
+      #       "user-filters"
+      #       "ublock-filters"
+      #       "ublock-badware"
+      #       "ublock-privacy"
+      #       "ublock-quick-fixes"
+      #       "ublock-unbreak"
+      #       "easylist"
+      #       "easyprivacy"
+      #       "LegitimateURLShortener"
+      #       "adguard-spyware-url"
+      #       "urlhaus-1"
+      #       "curben-phishing"
+      #       "plowe-0"
+      #       "fanboy-cookiemonster"
+      #       "ublock-cookies-easylist"
+      #       "adguard-cookies"
+      #       "ublock-cookies-adguard"
+      #       "fanboy-social"
+      #       "adguard-social"
+      #       "fanboy-thirdparty_social"
+      #       "fanboy-ai-suggestions"
+      #       "easylist-chat"
+      #       "easylist-newsletters"
+      #       "easylist-notifications"
+      #       "easylist-annoyances"
+      #       "adguard-mobile-app-banners"
+      #       "adguard-other-annoyances"
+      #       "adguard-popup-overlays"
+      #       "adguard-widgets"
+      #       "ublock-annoyances"
+      #     ];
+      #   };
       # };
 
-      userChrome = let
-        repo =  pkgs.fetchFromGitHub {
-          owner = "Firnschnee";
-          repo = "FoxOne";
-          rev = "main";
-          hash = "sha256-EpPQoYESqsUtD0BMVyUVNsQ8jjVRLm9wryswy+zoGW0=";
-        };
-        file = "${repo}/userChrome.css";
-      in builtins.readFile file;
-
-      userContent = let
-        repo =  pkgs.fetchFromGitHub {
-          owner = "Firnschnee";
-          repo = "FoxOne";
-          rev = "main";
-          hash = "sha256-EpPQoYESqsUtD0BMVyUVNsQ8jjVRLm9wryswy+zoGW0=";
-        };
-        file = "${repo}/userContent.css";
-      in builtins.readFile file;
-      
+      userChrome = builtins.readFile "${repo}/userChrome.css";
+      userContent = builtins.readFile "${repo}/userContent.css";
 
     };
 
