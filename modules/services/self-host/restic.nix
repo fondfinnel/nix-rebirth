@@ -12,7 +12,7 @@
 
     services.restic = let
 
-      initialize = true;
+      # initialize = true;
       pruneOpts = [
         "--keep-daily 7"
         "--keep-weekly 5"
@@ -30,18 +30,14 @@
       enable = !osConfig.headless-check;
 
       backups."backup" = {
-        inherit initialize pruneOpts timerConfig passwordFile;
+        inherit pruneOpts timerConfig passwordFile;
         paths = [
           "/Primary/Personal/Media/Photos"
           "/Primary/Personal/Media/Videogames/Saves"
           "/Primary/Personal/Media/Videogames/Saves"
           "/Primary/Personal/Documents"
           "/Primary/Personal/Projects"
-          "/Apps/jellyfin"
-        ];
-
-        exclude = [
-          "Other Junk/*"
+          # "/Apps/jellyfin"
         ];
 
         repository = "rclone:mega-webdav:/backup";
