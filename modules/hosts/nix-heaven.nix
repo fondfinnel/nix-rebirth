@@ -145,13 +145,11 @@
       };
     };
 
-    home-manager.sharedModules = [
-      {
-        # programs.zellij = {          
-        #   enableFishIntegration = lib.mkDefault true;
-        #   enableBashIntegration = lib.mkDefault true;
-        # };
-      }
+
+    virtualisation.containers.registries.settings.registry = [
+      { location = "docker.io"; }
+      { location = "quay.io"; }
+      { location = "ghcr.io"; }
     ];
 
   };
