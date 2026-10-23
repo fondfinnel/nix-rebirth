@@ -21,6 +21,7 @@
     services.cloudflared.tunnels."20717350-c41e-4cbc-9ece-bd9a47c3865b".ingress."fireshare.nniche.uk" = "http://localhost:${exPort}";
 
     virtualisation.oci-containers.containers.fireshare = {
+      # image = "docker.io/shaneisrael/fireshare:1.8.5";
       image = "docker.io/shaneisrael/fireshare:1.8.5";
       ports = [
         "127.0.0.1:${exPort}:80"
