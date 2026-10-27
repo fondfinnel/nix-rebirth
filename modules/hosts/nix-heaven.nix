@@ -183,6 +183,7 @@
     # 1024^3 per GB
     # convert num to string
     # why no builtins.toPower? 
+    boot.kernelPackages = pkgs.linuxPackages_6_18;
     boot.kernelParams = [
       "zfs.zfs_arc_max=${builtins.toString (96 * (1024 * 1024 * 1024))}"
       "zfs.zfs_arc_min=${builtins.toString (16 * (1024 * 1024 * 1024))}"
