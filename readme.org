@@ -40,17 +40,16 @@ fastfetch -s os:kernel:de:wm:cpu:gpu:memory:disk --logo none
 #+RESULTS:
 #+begin_example
 OS  NixOS 26.11 (Zokor) x86_64
-Kernel  Linux 7.2.5
+Kernel  Linux 7.2.10-zen1
 Window Manager  Hyprland 0.56.2 (Wayland)
 CPU  AMD Ryzen 9 3900X (24) @ 4.67 GHz
 GPU  AMD Radeon RX 9070 XT [Discrete]
-Memory  11.39 GiB / 62.71 GiB (18%)
-Disk (/)  699.75 MiB / 31.36 GiB (2%) - tmpfs
-Disk (/nix)  47.12 GiB / 259.81 GiB (18%) - btrfs
-Disk (/persist)  438.64 GiB / 1.82 TiB (24%) - btrfs
-Disk (/run/media/n0ll/5839-5F7F)  43.53 GiB / 114.57 GiB (38%) - vfat [External]
+Memory  11.24 GiB / 62.71 GiB (18%)
+Disk (/)  1.34 GiB / 31.36 GiB (4%) - tmpfs
+Disk (/nix)  64.50 GiB / 259.81 GiB (25%) - btrfs
+Disk (/persist)  818.88 GiB / 1.82 TiB (44%) - btrfs
+Disk (/run/media/n0ll/5839-5F7F)  45.59 GiB / 114.57 GiB (40%) - vfat [External]
 #+end_example
-
 ***** nix-liquid
 Lenovo Thinkpad T480 config. Utilizing disko and preservation for an impermanence setup, as it's light on storage and nothing on it is expected to last long term.
 

@@ -4,7 +4,7 @@
   flake.homeModules.development = { config, lib, pkgs, ... }: let
     # is emacs daemon or program enabled
     ck = (config.services.emacs.enable || config.programs.emacs.enable);
-    alias = "${pkgs.emacs}/bin/emacsclient -nw -c -a ${pkgs.evil-helix}/bin/hx";
+    alias = "${pkgs.emacs}/bin/emacsclient -nw -c";
   in {
 
 stylix.targets.emacs.enable = false;
@@ -26,6 +26,10 @@ services.emacs = lib.mkDefault {
       markdown-oxide # markdown lsp for notes
       # ruff # python
       # black # python
+      git
+      coreutils
+      fd
+      clang
       nixfmt
       fish-lsp
       clang # c++
@@ -46,7 +50,15 @@ services.emacs = lib.mkDefault {
 
     home.shellAliases.em = alias;
 
-    home.preserve.directories = lib.mkIf ck [ ".config/emacs" "org" ];
+    home.preserve.directories = lib.mkIf ck [
+      # config dirs
+      ".config/emacs"
+      ".config/doom"
+      ".config/emacs.bak"
+
+      # notes
+      "org"
+    ];
 
   };
 

@@ -6,13 +6,14 @@
 
   flake.homeModules.common-utils = { pkgs, lib, osConfig, config, ... }: {
 
+    home.packages = [ pkgs.ntfs3g ];
     # udiskie needs udisks2, which is only system scope
     services.udiskie.enable = osConfig.services.udisks2.enable;
     services.udiskie.tray = "never";
 
-    home.activation.symUdiskie = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-     run ln -sfn /run/media/${config.home.username} "${config.home.homeDirectory}/media"
-    '';
+    # home.activation.symUdiskie = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    #  run ln -sfn /run/media/${config.home.username} "${config.home.homeDirectory}/media"
+    # '';
 
     
   };
