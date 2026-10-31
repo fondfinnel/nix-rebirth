@@ -16,7 +16,9 @@
     }:
     let
       # is emacs daemon or program enabled
-      ck = (config.services.emacs.enable || config.programs.emacs.enable);
+      ck = (
+        config.services.emacs.enable || config.programs.emacs.enable || config.programs.doom-emacs.enable
+      );
       alias = "${pkgs.emacs}/bin/emacsclient -nw -c";
     in
     {
@@ -27,7 +29,7 @@
         enable = true;
         client.enable = config.services.emacs.enable;
       };
-      programs.emacs.enable = lib.mkDefault config.services.emacs.enable;
+      # programs.emacs.enable = lib.mkDefault config.services.emacs.enable;
 
       # default to emacs client if enabled, if service unavailable then standalone emacs
       # managing it via the env var makes it easier to integrate elsewhere (i.e. kitty module)

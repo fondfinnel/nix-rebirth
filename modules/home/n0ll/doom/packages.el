@@ -65,9 +65,9 @@
 ;; Org Agenda ;;
 ;;;;;;;;;;;;;;;;
 (package! org-super-agenda)
-(package! calfw-blocks
-  :recipe (:host github :repo "ml729/calfw-blocks")
-  :pin "0fe829035ffa491c3f2610f05a7f1ec936a4497e")
+;; (package! calfw-blocks
+;;   :recipe (:host github :repo "ml729/calfw-blocks")
+;;   :pin "0fe829035ffa491c3f2610f05a7f1ec936a4497e")
 
 ;;;;;;;;;;;;;;
 ;; Org Roam ;;

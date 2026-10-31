@@ -34,7 +34,7 @@
         ];
         shell = pkgs.fish;
         home = "/home/n0ll";
-        openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ../../../keys/n0ll;
+        openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ../../keys/n0ll;
         # uncomment when installing fresh system
         # initialPassword = "123";
         hashedPasswordFile = config.sops.secrets."users/n0ll".path;
@@ -114,7 +114,7 @@
       programs.foot.enable = osConfig.headless-check;
 
       sops = {
-        defaultSopsFile = ./n0ll-secrets.yaml;
+        defaultSopsFile = ./n0ll/secrets.yaml;
         defaultSopsFormat = "yaml";
         age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
         age.sshKeyPaths = [
@@ -171,9 +171,10 @@
 
       programs.doom-emacs = {
         enable = true;
-        doomDir = ./doom;
-        doomLocalDir = "~/.local/share/nix-doom";
+        doomDir = ./n0ll/doom;
+        # doomLocalDir = "~/.local/share/nix-doom";
       };
+      programs.emacs.enable = false;
 
       programs.ghostty.enable = osConfig.headless-check;
 
