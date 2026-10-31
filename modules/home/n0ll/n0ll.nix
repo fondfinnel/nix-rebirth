@@ -1,0 +1,290 @@
+{
+  self,
+  inputs,
+  config,
+  ...
+}:
+{
+
+  flake.nixosModules.users =
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    let
+      system = config.nixpkgs.hostPlatform;
+      check = config.device-type == "primary";
+    in
+    {
+
+      users.users.n0ll = {
+        isNormalUser = true;
+        description = "Nathaniel Fagan";
+        extraGroups = [
+          "uinput"
+          "networkmanager"
+          "wheel"
+          "cdrom"
+          "libvirtd"
+          "kvm"
+          "dialout"
+          "tty"
+        ];
+        shell = pkgs.fish;
+        home = "/home/n0ll";
+        openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ../../../keys/n0ll;
+        # uncomment when installing fresh system
+        # initialPassword = "123";
+        hashedPasswordFile = config.sops.secrets."users/n0ll".path;
+      };
+
+      sops.secrets."users/n0ll" = rec {
+        owner = config.users.users.n0ll.name;
+        group = config.users.users.n0ll.group;
+        neededForUsers = true;
+      };
+
+      programs.fish.enable = true;
+
+      users.groups.libvirtd.members = [ "n0ll" ];
+      programs.weylus.users = [ "n0ll" ];
+
+      nix.settings.trusted-users = [ "n0ll" ];
+
+      home-manager.users.n0ll.imports = [
+        self.homeModules.n0ll-conf
+        inputs.nix-doom-emacs-unstraightened.homeModule
+      ];
+
+    };
+
+  # currently unused, around
+  flake.homeConfigurations.n0ll = inputs.home-manager.lib.homeManagerConfiguration {
+    # use architecture from system
+    pkgs = import inputs.nixpkgs { system = config.nixpkgs.hostPlatform; };
+
+    modules = with self.homeModules; [
+      n0ll-conf
+    ];
+  };
+
+  flake.homeModules.n0ll-conf =
+    {
+      pkgs,
+      osConfig,
+      config,
+      lib,
+      ...
+    }:
+    let
+      check = osConfig.device-type == "primary";
+    in
+    {
+
+      imports = with self.homeModules; [
+        hyprland
+        kitty
+        common-utils
+        gaming
+        creative
+        development
+        keepassxc
+        mpd
+        firefox
+        sync-drive
+        syncthing
+        distrobox
+        wlr-which-key
+        self-host
+      ];
+
+      home.sessionVariables = {
+        EDITOR = "${pkgs.emacs}/bin/emacsclient -c -a -nw ${pkgs.emacs}/bin/emac -nw";
+      };
+
+      home.shellAliases = {
+        nshp = "nix-shell -p"; # installing programs temporarily
+        ":q" = "exit";
+        blkid = "sudo blkid";
+        df = "df -h";
+      };
+
+      programs.foot.enable = osConfig.headless-check;
+
+      sops = {
+        defaultSopsFile = ./n0ll-secrets.yaml;
+        defaultSopsFormat = "yaml";
+        age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
+        age.sshKeyPaths = [
+          config.sops.secrets."ssh".path
+          config.sops.secrets."ssh-basilisk".path
+          config.sops.secrets."ssh-gekko".path
+        ];
+        validateSopsFiles = true;
+
+        secrets."ssh".path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+        secrets."ssh-basilisk".path = "${config.home.homeDirectory}/.ssh/id_basilisk";
+        secrets."ssh-gekko".path = "${config.home.homeDirectory}/.ssh/id_gekko";
+        secrets."u2f_keys".name = "u2f_keys";
+
+        secrets."lastfm".name = "lastfm";
+        secrets."syncthing/gui".name = "syncthing-gui";
+        secrets."syncthing/${osConfig.networking.hostName}/cert".name = "syncthing-cert";
+        secrets."syncthing/${osConfig.networking.hostName}/key".name = "syncthing-key";
+      };
+
+      home.preserve.directories = [
+        ".config/nix-rebirth"
+        ".config/sops"
+      ];
+
+      stylix = {
+        opacity = {
+          applications = 0.90;
+          terminal = 0.90;
+          popups = 0.90;
+        };
+
+        fonts = rec {
+          serif = monospace;
+          sansSerif = monospace;
+          emoji = monospace;
+
+          monospace = {
+            package = pkgs.nerd-fonts.victor-mono;
+            name = "Victor-Mono Nerd Font Mono";
+          };
+
+          sizes = {
+            applications = 10;
+            terminal = 9;
+          };
+        };
+      };
+
+      services.mpdscribble.endpoints."last.fm" = {
+        username = "natervader13";
+        passwordFile = config.sops.secrets."lastfm".path;
+      };
+
+      programs.doom-emacs = {
+        enable = true;
+        doomDir = ./doom;
+        doomLocalDir = "~/.local/share/nix-doom";
+      };
+
+      programs.ghostty.enable = osConfig.headless-check;
+
+      programs.jujutsu.settings.user = {
+        name = "Nathaniel Fagan";
+        email = "natervader13@gmail.com";
+      };
+
+      programs.ssh.matchBlocks."git" = {
+        host = "github.com codeberg.org";
+        user = "git";
+        identityFile = [
+          "~/.ssh/id_basilisk"
+          "~/.ssh/id_gekko"
+          "~/.ssh/id_ed25519"
+        ];
+      };
+
+      programs.ledger.enable = true;
+
+      programs.rimsort.enable = osConfig.headless-check;
+
+      programs.librewolf.enable = false;
+      programs.firefox.enable = osConfig.headless-check;
+
+      programs.firefox.profiles."${config.home.username}" =
+        let
+          repo = pkgs.fetchFromGitHub {
+            owner = "Firnschnee";
+            repo = "FoxOne";
+            rev = "71f3752";
+            hash = "sha256-FbLSe8KY4pWQI5pox97iskhYUspfVS7UhpJ/RIl+tXk=";
+          };
+        in
+        {
+
+          name = config.home.username;
+          isDefault = true;
+
+          search.default = "ddg";
+          search.engines = {
+            # engine terms can be found here https://searchfox.org/mozilla-central/rev/669329e284f8e8e2bb28090617192ca9b4ef3380/toolkit/components/search/SearchEngine.jsm#1138-1177
+            #   "SearXNG" = {
+            #     urls = [{
+            #       template = "http://local.nate.server:30053/?q={searchTerms}";
+            #     }];
+            #     definedAliases = [ "@s" ];
+            #   };
+          };
+
+          extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
+            # uses rycee flake for extensions
+            # check available ones with
+            # `nix flake show "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"`
+            sponsorblock
+            adnauseam
+            vimium
+            darkreader
+            # indie-wiki-buddy
+            augmented-steam
+            keepassxc-browser
+            youtube-high-definition
+            # simple-translate
+            old-reddit-redirect
+            tubearchivist-companion
+          ];
+
+          # extensions.settings = {
+          #   "uBlock@raymondhill.net".force = true;
+          #   "uBlock@raymondhill.net".settings = {
+          #     userSettings.uiTheme = "dark";
+          #     selectedFilterLists = [
+          #       "user-filters"
+          #       "ublock-filters"
+          #       "ublock-badware"
+          #       "ublock-privacy"
+          #       "ublock-quick-fixes"
+          #       "ublock-unbreak"
+          #       "easylist"
+          #       "easyprivacy"
+          #       "LegitimateURLShortener"
+          #       "adguard-spyware-url"
+          #       "urlhaus-1"
+          #       "curben-phishing"
+          #       "plowe-0"
+          #       "fanboy-cookiemonster"
+          #       "ublock-cookies-easylist"
+          #       "adguard-cookies"
+          #       "ublock-cookies-adguard"
+          #       "fanboy-social"
+          #       "adguard-social"
+          #       "fanboy-thirdparty_social"
+          #       "fanboy-ai-suggestions"
+          #       "easylist-chat"
+          #       "easylist-newsletters"
+          #       "easylist-notifications"
+          #       "easylist-annoyances"
+          #       "adguard-mobile-app-banners"
+          #       "adguard-other-annoyances"
+          #       "adguard-popup-overlays"
+          #       "adguard-widgets"
+          #       "ublock-annoyances"
+          #     ];
+          #   };
+          # };
+
+          userChrome = builtins.readFile "${repo}/userChrome.css";
+          userContent = builtins.readFile "${repo}/userContent.css";
+
+        };
+
+    };
+
+}

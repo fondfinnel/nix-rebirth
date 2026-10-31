@@ -4,15 +4,14 @@
   inputs = {
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
     # nixpkgs.url = "github:NixOS/nixpkgs/067f2d5a1099e06f9afb944e96e32724d3c5452b";
-    
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     import-tree.url = "github:denful/import-tree";
 
     home-manager = {
-      url = "github:nix-community/home-manager/master"; 
-      inputs.nixpkgs.follows = "nixpkgs"; 
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-index-database = {
@@ -26,9 +25,9 @@
     };
 
     preservation.url = "github:nix-community/preservation";
-    
+
     disko.url = "github:/nix-community/disko";
-    
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,11 +44,17 @@
       url = "github:JakeStanger/ironbar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-doom-emacs-unstraightened = {
+      url = "github:marienz/nix-doom-emacs-unstraightened";
+    };
   };
 
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; }
-      (inputs.import-tree [
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      inputs.import-tree [
         ./modules
-      ]);
+      ]
+    );
 }
