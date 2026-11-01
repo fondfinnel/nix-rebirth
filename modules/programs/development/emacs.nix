@@ -75,14 +75,10 @@
       home.preserve.directories = lib.mkIf ck [
         # config dirs
         ".config/emacs"
-        ".config/doom"
         ".config/emacs.bak"
-
-        ".local/share/nix-doom"
 
         # notes
         "org"
-        ".local/share/nix-doom"
       ];
 
     };
