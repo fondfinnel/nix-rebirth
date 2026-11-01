@@ -60,7 +60,7 @@
 
     };
 
-  # currently unused, around
+  # currently unused
   flake.homeConfigurations.n0ll = inputs.home-manager.lib.homeManagerConfiguration {
     # use architecture from system
     pkgs = import inputs.nixpkgs { system = config.nixpkgs.hostPlatform; };
@@ -213,17 +213,6 @@
 
           name = config.home.username;
           isDefault = true;
-
-          search.default = "ddg";
-          search.engines = {
-            # engine terms can be found here https://searchfox.org/mozilla-central/rev/669329e284f8e8e2bb28090617192ca9b4ef3380/toolkit/components/search/SearchEngine.jsm#1138-1177
-            #   "SearXNG" = {
-            #     urls = [{
-            #       template = "http://local.nate.server:30053/?q={searchTerms}";
-            #     }];
-            #     definedAliases = [ "@s" ];
-            #   };
-          };
 
           extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
             # uses rycee flake for extensions

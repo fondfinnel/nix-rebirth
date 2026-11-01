@@ -201,7 +201,6 @@ Probably a good idea to have a dedicated area to have apps like this store shit.
 - [ ] karakeep
 - [ ] safeline
 - [ ] flame dashboard
-- [x] paperless-ng
 - [ ] glances (or homepage)
 - [ ] fluxer instance
 
