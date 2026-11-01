@@ -86,6 +86,52 @@
       make-backup-files t
       )
 
+(setq doom-theme 'doom-moonlight)
+
+(setq display-line-numbers-type 'relative)
+
+(use-package! doom-modeline
+  :config
+  (setq doom-modeline-time-icon t
+	doom-modeline-major-mode-color-icon t
+	doom-modeline-buffer-state-icon t
+	doom-modeline-lsp-icon t
+	doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
+	doom-modeline-time t
+	doom-modeline-vcs-max-length 5
+	)
+  (display-time-mode 1)
+  )
+
+(setq doom-modeline-height 15)
+
+;;;;;;;;;;;;;;;
+;; ;;;;;;;;; ;;
+;; ;; Org ;; ;;
+;; ;;;;;;;;; ;;
+;;;;;;;;;;;;;;;
+
+(use-package org-transclusion
+  :after org
+  )
+
+(use-package! org-autolist
+  :hook org-mode)
+
+(use-package! org-appear
+  :commands org-appear-mode
+  :hook (org-mode . org-appear-mode)
+  :custom
+  (org-appear-autoemphasis t)
+  (org-appear-autolinks t)
+  (org-appear-autosubmarkers t)
+  (org-appear-autoentities t)
+  (org-appear-autokeywords t)
+  )
+
+;;;;;;;;;;;;;;;;
+;; Org Agenda ;;
+;;;;;;;;;;;;;;;;
 (setq org-agenda-files '("~/org/agenda"
                          "~/org/roam"
                          "~/org/roam/daily/"
@@ -123,43 +169,6 @@
            nil
            nil)))
   )
-
-                                        ; set theme for specific OS
-(when (eq system-type 'gnu/linux)
-  (setq doom-theme 'doom-moonlight)
-  )
-
-(when (eq system-type 'windows-nt)
-  (setq doom-theme 'doom-ayu-dark)
-  )
-
-;;;;;;;;;;;;;;;
-;; ;;;;;;;;; ;;
-;; ;; Org ;; ;;
-;; ;;;;;;;;; ;;
-;;;;;;;;;;;;;;;
-
-(use-package org-transclusion
-  :after org
-  )
-
-(use-package! org-autolist
-  :hook org-mode)
-
-(use-package! org-appear
-  :commands org-appear-mode
-  :hook (org-mode . org-appear-mode)
-  :custom
-  (org-appear-autoemphasis t)
-  (org-appear-autolinks t)
-  (org-appear-autosubmarkers t)
-  (org-appear-autoentities t)
-  (org-appear-autokeywords t)
-  )
-
-;;;;;;;;;;;;;;;;
-;; Org Agenda ;;
-;;;;;;;;;;;;;;;;
 
 (use-package! org-super-agenda
   ;; is a global package, just best to turn it on after loading
@@ -218,8 +227,6 @@
 	 (prog-mode . org-roam-latte-mode)
          )
   )
-
-(add-hook! 'org-mode #'+zen/toggle)
 
 ;; (use-package! md-roam
 ;;   :config
