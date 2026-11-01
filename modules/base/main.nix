@@ -1,48 +1,66 @@
-# A baseline any derivation is built from.
-{ self, inputs, config, ... }:{
+# A baseline any host is built from
+{
+  self,
+  inputs,
+  config,
+  ...
+}:
+{
 
-  flake.nixosModules.base = { lib, pkgs, config, ... }: let
-    check = config.headless-check;
-  in {
+  flake.nixosModules.base =
+    {
+      lib,
+      pkgs,
+      config,
+      ...
+    }:
+    let
+      check = config.headless-check;
+    in
+    {
 
-    imports = [
-      inputs.home-manager.nixosModules.default
-      inputs.sops-nix.nixosModules.sops
+      imports = [
+        inputs.home-manager.nixosModules.default
+        inputs.sops-nix.nixosModules.sops
 
-      self.nixosModules.common-utils
-      self.nixosModules.greetd
-      ./opts.nix
-    ];
+        self.nixosModules.common-utils
+        self.nixosModules.greetd
+        ./opts.nix
+      ];
 
+      config = {
 
-    config = {
+        zramSwap = {
+          enable = lib.mkDefault true;
+          priority = 100;
+          algorithm = "zstd";
+          memoryPercent = 50;
+        };
 
-      zramSwap = {
-        enable = lib.mkDefault true;
-        priority = 100;
-        algorithm = "zstd";
-        memoryPercent = 50;
+        system.stateVersion = "25.05";
+        nix.settings.experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+        # if they have sudo access, should be trusted by nix daemon
+        nix.settings.trusted-users = [ "@wheel" ];
+
+        # required for good portion of software
+        nixpkgs.config.allowUnfree = true;
+
+        networking.networkmanager.enable = lib.mkDefault true;
+
+        services.printing.enable = lib.mkDefault check;
+
+        users.mutableUsers = false;
+
+        security.polkit.enable = true;
+        security.polkit.adminIdentities = [ "unix-group:wheel" ];
+
+        hardware.enableAllFirmware = true;
+
       };
 
-      system.stateVersion = "25.05";
-      nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-      # required for good portion of software
-      nixpkgs.config.allowUnfree = true;
-
-      networking.networkmanager.enable = lib.mkDefault true;
-
-      services.printing.enable = lib.mkDefault check;
-
-      users.mutableUsers = false;
-
-      security.polkit.enable = true;
-      security.polkit.adminIdentities = [ "unix-group:wheel" ];
-
-      hardware.enableAllFirmware = true;
-      
-    }; 
-
-  };
+    };
 
 }
