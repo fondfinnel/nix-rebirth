@@ -136,6 +136,7 @@
               "match:initial_class ^(steam_app_*)$, tag game"
               "float on, match:title ^(Unlock Database - KeePassXC)" # keepass database prompt
 
+              "float on, match:initial_title ^(emacs-everywhere)"
               "float on, match:initial_title ^(Open Files)" # gtk file type picker
               "float on, match:class ^(org.kde.keditfiletype)" # qt file type picker
               "float on, match:title ^(KeePassXC - Passkey credentials)" # keepass passkey prompt
