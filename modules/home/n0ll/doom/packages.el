@@ -4,6 +4,7 @@
 ;; if it's not in nixpkgs, it needs to be pinned to a revision
 
 (package! sops)
+(package! figlet)
 
 ;;;;;;;;;;;;;;;
 ;; ;;;;;;;;; ;;

@@ -1,4 +1,3 @@
-# todo Sync emacs config in a cleaner way between machines
 {
   self,
   inputs,
@@ -19,7 +18,7 @@
       ck = (
         config.services.emacs.enable || config.programs.emacs.enable || config.programs.doom-emacs.enable
       );
-      alias = "${pkgs.emacs}/bin/emacsclient -nw -c";
+      alias = "${pkgs.emacs}/bin/emacsclient -nw";
     in
     {
 

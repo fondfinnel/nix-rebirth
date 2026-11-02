@@ -1,4 +1,3 @@
-# todo Sync emacs config in a cleaner way between machines
 {
   self,
   inputs,
@@ -14,13 +13,14 @@
       pkgs,
       ...
     }:
+
     let
-      # is emacs daemon or program enabled
-      ck = (
-        config.services.emacs.enable || config.programs.emacs.enable || config.programs.doom-emacs.enable
-      );
-      alias = "${pkgs.emacs}/bin/emacsclient -nw -c";
+      ck = (emacs-ck || config.programs.emacs.enable || doom-ck);
+      emacs-ck = config.services.emacs.enable;
+      doom-ck = config.programs.doom-emacs.enable;
+      alias = "${pkgs.emacs}/bin/emacsclient -nw";
     in
+
     {
 
       stylix.targets.emacs.enable = false;
@@ -29,11 +29,14 @@
         enable = true;
         client.enable = config.services.emacs.enable;
       };
-      # programs.emacs.enable = lib.mkDefault config.services.emacs.enable;
+      programs.doom-emacs.enable = lib.mkDefault true;
+
+      # disable standard emacs if doom is enabled
+      programs.emacs.enable = if doom-ck then lib.mkForce false else lib.mkDefault emacs-ck;
 
       # default to emacs client if enabled, if service unavailable then standalone emacs
       # managing it via the env var makes it easier to integrate elsewhere (i.e. kitty module)
-      home.sessionVariables.EDITOR = lib.mkDefault (lib.mkIf config.services.emacs.enable alias);
+      home.sessionVariables.EDITOR = lib.mkIf ck alias;
 
       home.packages =
         with pkgs;

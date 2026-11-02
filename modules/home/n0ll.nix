@@ -101,7 +101,7 @@
       ];
 
       home.sessionVariables = {
-        EDITOR = "${pkgs.emacs}/bin/emacsclient -c -a -nw ${pkgs.emacs}/bin/emac -nw";
+        # EDITOR = "${pkgs.emacs}/bin/emacsclient -c -a -nw ${pkgs.emacs}/bin/emac -nw";
       };
 
       home.shellAliases = {

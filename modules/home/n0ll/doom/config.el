@@ -212,9 +212,9 @@
    )
   )
 
-(use-package! calfw-blocks
-  :after calfw
-  )
+;; (use-package! calfw-blocks
+;;   :after calfw
+;;   )
 
 ;;;;;;;;;;;;;;
 ;; Org Roam ;;
