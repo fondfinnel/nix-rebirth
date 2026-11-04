@@ -72,18 +72,21 @@
       nix.settings.allowed-users = [ "@users" ];
 
       # needs work
-      services.nfs.server = {
-        enable = true;
-        lockdPort = 4001;
-        mountdPort = 4002;
-        statdPort = 4000;
-
-        exports."/export/Personal"."192.168.50.101" = [
+      services.nfs.server = let
+        exp = [
           "rw"
           "sync"
           "crossmnt"
           "no_subtree_check"
         ];
+      in {
+        enable = true;
+        lockdPort = 4001;
+        mountdPort = 4002;
+        statdPort = 4000;
+
+        exports."/export/Personal"."192.168.50.101" = exp;
+        exports."/export/Personal"."nix-shalashaska" = exp;
 
       };
 
