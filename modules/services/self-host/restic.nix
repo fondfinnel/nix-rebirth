@@ -52,16 +52,16 @@
             paths = [
               "/Primary/Personal/Media/Photos"
               "/Primary/Personal/Media/Videogames/Saves"
+              "/Primary/Personal/Media/Videogames/Saves"
               "/Primary/Personal/Documents"
               "/Primary/Personal/Projects"
               # "/Apps/jellyfin"
             ];
 
-            repository = "rclone:mega-webdav:/backup";
+            repository = "rclone:mega:/backup";
 
           };
         };
-
     };
 
 }
