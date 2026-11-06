@@ -64,9 +64,9 @@
               ];
             };
           };
-        };
 
-      virtualisation.oci-containers.containers.jellyfin.volumes = [ "${storDir}:/fireshare" ];
+          containers.jellyfin.containerConfig.volumes = [ "${storDir}:/fireshare" ];
+        };
 
     };
 
