@@ -81,6 +81,10 @@
         ".local/share/doom"
         ".local/state/doom"
 
+        # nix caches packages on build
+        # without presisting, it pulls each package repeatedly after reboot
+        ".cache/nix"
+
         # keeping old config around
         # synced to drive, used elsewhere
         ".config/emacs.bak"
