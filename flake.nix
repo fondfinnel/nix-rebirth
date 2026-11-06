@@ -31,6 +31,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # better container management
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+
     # store root filesystem onto RAM
     # declare parts of system that actually need to be kept after reboot
     preservation.url = "github:nix-community/preservation";

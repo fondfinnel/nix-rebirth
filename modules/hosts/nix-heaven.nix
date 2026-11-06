@@ -9,6 +9,7 @@
       self.nixosModules.ups
       self.nixosModules.users
       self.nixosModules.self-host
+      inputs.quadlet-nix.nixosModules.quadlet
     ];
   };
 
@@ -45,6 +46,8 @@
         power-saver = "server-powersave";
         performance = "throughput-performance";
       };
+
+      virtualisation.quadlet.networks.internal.networkConfig.subnets = [ "10.0.123.1/24" ];
 
       # upsd, nut, etc
       power.ups = {
