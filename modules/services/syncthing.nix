@@ -27,7 +27,7 @@
 
       services.syncthing = {
         enable = true;
-        guiAddress = "localhost:8384"; # Local access to the GUI
+        guiAddress = if !osConfig.headless-check then "0.0.0.0:8384" else "localhost:8384"; # Local access to the GUI
 
         cert = config.sops.secrets."syncthing/${osConfig.networking.hostName}/cert".path;
         key = config.sops.secrets."syncthing/${osConfig.networking.hostName}/key".path;
@@ -63,7 +63,7 @@
 
               "nix-heaven" = {
                 inherit autoAcceptFolders introducer;
-                id = "MF6NA23-4SGNP2G-R3OOCCW-AQV6PJS-K6SQ4W2-OYEUYOU-J2W7LJG-VZUVKAU";
+                id = "QGXFP5Z-O4KFFG7-H7AAG34-OG2WW4L-VURGEJX-WWGIPG5-6RZJGSM-DWKWOA3";
               };
 
               "fairphone" = {
