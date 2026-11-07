@@ -67,12 +67,10 @@
               };
 
               "fairphone" = {
-                inherit introducer;
                 id = "CQ7UF6K-Q6E4U4B-4GYGMZZ-3EMIWRD-6O423QP-LV36RSV-5DG4TOB-PEQZQAR";
               };
 
               "boox" = {
-                inherit introducer;
                 id = "EJHWUSC-MOXVHOV-3KI2HJ6-GHNOGCU-UHOGCR6-UOOPMN2-6LHGKAK-IITLOQP";
               };
 
@@ -138,11 +136,11 @@
                 devices = mainDevices;
               };
 
-              phoneMusic = lib.mkIf osConfig.networking.hostName == "nix-heaven" = {
+              phoneMusic = lib.mkIf (osConfig.networking.hostName == "nix-heaven") {
                 # symlinked dirs for phone music library
                 # no need to version, only want it on phone
                 devices = [ "fairphone" ];
-                path = "/Primary/Personal/Media/phoneMusic";
+                path = "/Primary/Personal/Media/phone-music";
               };
 
             };
