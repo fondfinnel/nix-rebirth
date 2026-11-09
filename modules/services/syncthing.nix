@@ -136,13 +136,6 @@
                 devices = mainDevices;
               };
 
-              phoneMusic = lib.mkIf (osConfig.networking.hostName == "nix-heaven") {
-                # symlinked dirs for phone music library
-                # no need to version, only want it on phone
-                devices = [ "fairphone" ];
-                path = "/Primary/Personal/Media/phone-music";
-              };
-
             };
 
           overideDevices = true;
