@@ -228,12 +228,12 @@
   )
 
 ;; TODO binds
-(use-package! org-roam-latte
-  :hook (
-         (text-mode . org-roam-latte-mode)
-	 (prog-mode . org-roam-latte-mode)
-         )
-  )
+;; (use-package! org-roam-latte
+;;   :hook (
+;;          (text-mode . org-roam-latte-mode)
+;; 	 (prog-mode . org-roam-latte-mode)
+;;          )
+;;   )
 
 ;; (use-package! md-roam
 ;;   :config

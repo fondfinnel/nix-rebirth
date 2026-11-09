@@ -22,13 +22,13 @@
 ;; (package! calfw-blocks
 ;;   :recipe (:host github :repo "ml729/calfw-blocks")
 ;;   :pin "0fe829035ffa491c3f2610f05a7f1ec936a4497e")
-(package! org-wild-notifier)
+;; (package! org-wild-notifier)
 
 ;;;;;;;;;;;;;;
 ;; Org Roam ;;
 ;;;;;;;;;;;;;;
 (package! org-roam-timestamps) ;; timestamps on files
-(package! org-roam-latte) ;; highlights links available in org notes
+;; (package! org-roam-latte) ;; highlights links available in org notes
 (package! org-roam-ui) ;; webgui graph for notes
 ;; (package! md-roam  ;; markdown files for roam
 ;;   :recipe (:host github :repo "nobiot/md-roam")
