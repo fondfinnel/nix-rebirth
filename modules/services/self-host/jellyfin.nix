@@ -1,3 +1,18 @@
+# Network layout for reference
+#
+# +-------+-----------+----------+
+# |PubPort|Service    |Scope     |
+# +-------+-----------+----------+
+# |31010  |Jellyfin   |Localhost |
+# +-------+-----------+----------+
+# |31012  |Wizarr     |Localhost |
+# +-------+-----------+----------+
+# |31013  |AudioMuse  |LAN       |
+# |       |-> WebGUI  |          |
+# +-------+-----------+----------+
+#
+# TODO move containers into a pod for management
+
 {
   self,
   inputs,
@@ -18,16 +33,21 @@
     in
     {
 
+      # ensure required directories are available, created as root
       systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 1000 1000") [
         "${mainDir}"
         "${mainDir}/config"
         "${mainDir}/cache"
         "${mainDir}/upscale-models"
         "${mainDir}/wizarr"
+        "${mainDir}/audiomuse"
       ];
 
       imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
 
+      sops.secrets."audiomuse" = { };
+
+      # may no longer be necessary down the road
       virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
 
       virtualisation.quadlet =
@@ -42,10 +62,12 @@
             containerConfig = {
               image = "docker.io/jellyfin/jellyfin:latest";
               pull = "newer";
-              networks = [
-                "podman"
-                networks.internal.ref
-              ];
+              pod = pods.jfin.ref;
+              # networks = [
+              #   "podman"
+              #   networks.internal.ref
+              # ];
+
               environments = {
                 LOG_LEVEL = "INFO";
                 TZ = config.time.timeZone;
@@ -96,6 +118,7 @@
           containers.wizarr.containerConfig = {
             image = "ghcr.io/wizarrrr/wizarr:latest";
             pull = "newer";
+            pod = pods.jfin.ref;
 
             volumes = [
               "${mainDir}/wizarr:/data"
@@ -107,7 +130,50 @@
               PUID = "1000";
               GUID = "1000";
             };
-            publishPorts = [ "127.0.0.1:31012:5690" ];
+          };
+
+          containers.audiomuse-worker = {
+            containerConfig = {
+              image = "ghcr.io/neptunehub/audiomuse-ai:latest";
+              pull = "newer";
+              pod = pods.jfin.ref;
+
+              environments = {
+                TZ = config.time.timeZone;
+                MEDIASERVER_TYPE = "jellyfin";
+                POSTGRES_DB = "am-postgresdb";
+
+                # defaults, leaving for clarity
+                POSTGRES_HOST = "localhost";
+                POSTGRES_PORT = "5432";
+                FRONTEND_PORT = "8000";
+              };
+              environmentFiles = [ config.sops.secrets."audiomuse".path ];
+            };
+
+          };
+
+          containers.audiomuse-postgres.containerConfig = {
+            image = "docker.io/postgres:15-alpine";
+            pull = "newer";
+            pod = pods.jfin.ref;
+
+            environments.TZ = config.time.timeZone;
+            environments.POSTGRES_DB = "am-postgresdb";
+            environments.MEDIASERVER_TYPE = "jellyfin";
+            environmentFiles = [ config.sops.secrets."audiomuse".path ];
+
+            volumes = [ "${mainDir}/audiomuse:/var/lib/postgresql/data:U" ];
+          };
+
+          pods.jfin = {
+            podConfig.publishPorts = [
+              # audiomuse webgui
+              "31013:8000"
+
+              # wizarr
+              "127.0.0.1:31012:5690"
+            ];
           };
 
         };
