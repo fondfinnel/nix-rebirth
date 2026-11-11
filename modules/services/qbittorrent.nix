@@ -1,111 +1,146 @@
-{ self, inputs, config, ... }: {
+# Module for setting up qbittorrent service routed through mullvad/tailscale
+# uses qui as alternate webgui, connecting to qbt instance over tailscale, which qui bridges between internally accessible qbt and LAN access for users
+# requires setup inside nixos-container for tailscale service, settings
+{
+  self,
+  inputs,
+  config,
+  ...
+}:
+{
 
+  flake.nixosModules.self-host =
+    {
+      lib,
+      config,
+      pkgs,
+      ...
+    }:
+    let
+      mainDir = "/services/qbittorrent";
+      torrentMount = "/Primary/Torrent";
+    in
+    {
 
-  flake.nixosModules.self-host = { lib, config, pkgs, ... }: let
-    mainDir = "/services/qbittorrent";
-    torrentMount = "/Primary/Torrent";
-  in {
-
-    systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
-      "${mainDir}"
-      "${mainDir}/data"
-      "${mainDir}/vpn"
-      "${mainDir}/qui"
-    ];
-
-    virtualisation.oci-containers.containers.qui = {
-
-      image = "ghcr.io/autobrr/qui:latest";
-      pull = "newer";
-
-      ports = [
-        "30012:7476" 
+      systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 root root") [
+        "${mainDir}"
+        "${mainDir}/data"
+        "${mainDir}/vpn"
+        "${mainDir}/qui"
       ];
 
-      volumes = [
-        "${mainDir}/qui:/config" # redirect config storage
-        "${torrentMount}:${torrentMount}"
-      ];
-
-      environment = {
-        TZ = config.time.timeZone;
-      };
-
-    };
-
-
-    networking.nat.enable = true;
-    networking.nat.internalInterfaces = [ "ve-qbittorrent" ];
-
-    containers.qbittorrent = {
-
-      autoStart = true;
-      ephemeral = false;
-
-      hostAddress = "192.168.100.1";
-      
-      localAddress = "192.168.100.2";
-
-      privateNetwork = true;
-      forwardPorts = [{
-        containerPort = 8080;
-        hostPort = 30011;
-        protocol = "tcp";
-      }];
-
-      enableTun = true;
-
-      bindMounts.app-data = {
-        isReadOnly = false;
-        mountPoint = "/var/lib/qBittorrent";
-        hostPath = "${mainDir}/data";
-      };
-
-      bindMounts.app-vpn = {
-        isReadOnly = false;
-        mountPoint = "/var/lib/tailscale";
-        hostPath = "${mainDir}/vpn";
-      };
-
-      bindMounts.torrent = {
-        isReadOnly = false;
-        # matches mount for qui
-        mountPoint = torrentMount;
-        hostPath = torrentMount;
-      };
-      
-
-      config = {containerPkgs, pkgs, ... }: {
-
-        networking.useHostResolvConf = false;
-        services.resolved.enable = true;
-        networking.firewall.allowedTCPPorts = [ 80 ];
-
-        services.qbittorrent = {
+      virtualisation.quadlet =
+        let
+          inherit (config.virtualisation.quadlet) networks pods;
+        in
+        {
           enable = true;
-          openFirewall = true;
+          containers.qui = {
+            serviceConfig.TiemoutStartSec = "60";
+            containerConfig = {
+              image = "ghcr.io/autobrr/qui:latest";
+              pull = "newer";
 
-          extraArgs = [ "--confirm-legal-notice" ];
-          webuiPort = 8080;
-          profileDir = "/var/lib/qBittorrent";
+              publishPorts = [
+                "30012:7476"
+              ];
 
+              networks = [
+                "podman"
+                networks.internal.ref
+              ];
+
+              volumes = [
+                "${mainDir}/qui:/config" # redirect config storage
+                "${torrentMount}:${torrentMount}"
+              ];
+
+              environments = {
+                TZ = config.time.timeZone;
+              };
+            };
+
+          };
         };
 
-        services.tailscale = {
-          enable = lib.mkDefault true; 
-          extraSetFlags = [ # Sets launch options for tailscaled
-            "--accept-routes"
-            "--exit-node=100.117.167.110" # For Mullvad, choosing which exit node to use. Needs to be an actual IP or else tailscaled-set complains at boot.
-            # To find another mullvad node, run `tailscale exit-node <list/suggest>`
-            "--exit-node-allow-lan-access=true"
-          ];
-          useRoutingFeatures = "client";
+      networking.nat.enable = true;
+      networking.nat.internalInterfaces = [ "ve-qbittorrent" ];
+
+      containers.qbittorrent = {
+
+        autoStart = true;
+        ephemeral = false;
+
+        hostAddress = "192.168.100.1";
+
+        localAddress = "192.168.100.2";
+
+        privateNetwork = true;
+        forwardPorts = [
+          {
+            containerPort = 8080;
+            hostPort = 30011;
+            protocol = "tcp";
+          }
+        ];
+
+        enableTun = true;
+
+        # qbt settings
+        bindMounts.app-data = {
+          isReadOnly = false;
+          mountPoint = "/var/lib/qBittorrent";
+          hostPath = "${mainDir}/data";
+        };
+
+        # bindmount for tailscale service
+        # separate config for vpn access
+        bindMounts.app-vpn = {
+          isReadOnly = false;
+          mountPoint = "/var/lib/tailscale";
+          hostPath = "${mainDir}/vpn";
+        };
+
+        # mount torrent storage path to container
+        bindMounts.torrent = {
+          isReadOnly = false;
+          # matches mount for qui
+          mountPoint = torrentMount;
+          hostPath = torrentMount;
+        };
+
+        config = { containerPkgs, pkgs, ... }: {
+
+          networking.useHostResolvConf = false;
+          services.resolved.enable = true;
+          networking.firewall.allowedTCPPorts = [ 80 ];
+
+          services.qbittorrent = {
+            enable = true;
+            openFirewall = true;
+
+            extraArgs = [ "--confirm-legal-notice" ];
+            webuiPort = 8080;
+            profileDir = "/var/lib/qBittorrent";
+
+          };
+
+          services.tailscale = {
+            enable = lib.mkDefault true;
+            extraSetFlags = [
+              # Sets launch options for tailscaled
+              "--accept-routes"
+              "--exit-node=100.117.167.110" # For Mullvad, choosing which exit node to use. Needs to be an actual IP or else tailscaled-set complains at boot.
+              # To find another mullvad node, run `tailscale exit-node <list/suggest>`
+              "--exit-node-allow-lan-access=true"
+            ];
+            useRoutingFeatures = "client";
+          };
+
         };
 
       };
 
     };
-
-  };
 
 }
