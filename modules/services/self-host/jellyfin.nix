@@ -1,20 +1,19 @@
 # Network layout for reference
 #
-# +-------+-----------+----------+
-# |PubPort|Service    |Scope     |
-# +-------+-----------+----------+
-# |31010  |Jellyfin   |Localhost |
-# +-------+-----------+----------+
-# |31012  |Wizarr     |Localhost |
-# +-------+-----------+----------+
-# |31013  |AudioMuse  |LAN       |
-# |       |-> WebGUI  |          |
-# +-------+-----------+----------+
-#
-# TODO move containers into a pod for management
+# +-------+---------------+----------+
+# |PubPort|Service        |Scope     |
+# +-------+---------------+----------+
+# |31010  |Jellyfin       |Localhost |
+# |       |               |-> CF     |
+# +-------+---------------+----------+
+# |31012  |Wizarr         |Localhost |
+# |       |               |-> CF     |
+# +-------+---------------+----------+
+# |31013  |AudioMuse      |LAN       |
+# |       |WebGUI         |          |
+# +-------+---------------+----------+
 
 {
-  self,
   inputs,
   config,
   ...
@@ -48,7 +47,7 @@
       sops.secrets."audiomuse" = { };
 
       # may no longer be necessary down the road
-      virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
+      # virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
 
       virtualisation.quadlet =
         let
@@ -63,6 +62,8 @@
               image = "docker.io/jellyfin/jellyfin:latest";
               pull = "newer";
               pod = pods.jfin.ref;
+
+              # necessary with pod?
               # networks = [
               #   "podman"
               #   networks.internal.ref
@@ -81,16 +82,16 @@
               volumes = [
                 "${mainDir}/config:/config" # redirect config storage
                 "${mainDir}/cache:/cache" # redirect cache storage
-                "/Primary/Personal/Media:/Media:ro" # read only for media, does not seem to work?
+                "/Primary/Personal/Media:/Media"
               ];
 
-              publishPorts = [ "127.0.0.1:31010:8096" ];
             };
           };
 
           # containers.jellyfin-ai-upscaler.containerConfig = {
           #   image = "docker.io/kuscheltier/jellyfin-ai-upscaler:docker7-intel";
           #   pull = "newer";
+          #   pod = pods.jfin.ref;
 
           #   # opens 5000/tcp internally, no external access
 
@@ -168,6 +169,9 @@
 
           pods.jfin = {
             podConfig.publishPorts = [
+              # publish jellyfin
+              "127.0.0.1:31010:8096"
+
               # audiomuse webgui
               "31013:8000"
 
