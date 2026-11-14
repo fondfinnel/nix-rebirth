@@ -212,6 +212,10 @@
    )
   )
 
+(use-package! org-people
+  ;; TODO binds
+  )
+
 ;; (use-package! calfw-blocks
 ;;   :after calfw
 ;;   )
@@ -233,13 +237,6 @@
 ;;          (text-mode . org-roam-latte-mode)
 ;; 	 (prog-mode . org-roam-latte-mode)
 ;;          )
-;;   )
-
-;; (use-package! md-roam
-;;   :config
-;;   (setq org-roam-file-extension '("org" "md"))
-;;   (md-roam-mode 1)
-;;   (setq md-roam-file-extension '("md"))
 ;;   )
 
 ;;;;;;;;;;;;;

@@ -14,6 +14,7 @@
 (package! org-transclusion)
 (package! org-autolist)
 (package! org-appear)
+(package! org-people)
 
 ;;;;;;;;;;;;;;;;
 ;; Org Agenda ;;
