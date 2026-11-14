@@ -37,8 +37,6 @@
       services.cloudflared.tunnels."20717350-c41e-4cbc-9ece-bd9a47c3865b".ingress."${exURL}" =
         "http://localhost:${exPort}";
 
-      virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
-
       virtualisation.quadlet.enable = true;
       virtualisation.quadlet.pods.ohfifteen.podConfig = {
         publishPorts = [ "${exPort}:80" ];

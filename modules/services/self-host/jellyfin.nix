@@ -42,12 +42,10 @@
         "${mainDir}/audiomuse"
       ];
 
+      # module requires quadlet-nix
       imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
 
       sops.secrets."audiomuse" = { };
-
-      # may no longer be necessary down the road
-      # virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
 
       virtualisation.quadlet =
         let
