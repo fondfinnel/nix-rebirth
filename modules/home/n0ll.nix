@@ -138,6 +138,9 @@
       home.preserve.directories = [
         ".config/nix-rebirth"
         ".config/sops"
+
+        # keeps trusted caches
+        ".local/share/nix"
       ];
 
       stylix = {
