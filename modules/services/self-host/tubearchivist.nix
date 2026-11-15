@@ -22,6 +22,9 @@
 
       sops.secrets."tubearchivist" = { };
 
+      # module requires quadlet-nix
+      imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
+
       # ensure dirs are available for containers
       systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 1000 1000") [
         "${mainDir}"
