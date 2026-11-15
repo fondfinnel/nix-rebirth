@@ -21,7 +21,6 @@
     {
 
       sops.secrets."tubearchivist" = { };
-      sops.secrets."tubearchivist-es" = { };
 
       # ensure dirs are available for containers
       systemd.tmpfiles.rules = lib.map (f: "d ${f} 0755 1000 1000") [
@@ -32,45 +31,77 @@
         "${mainDir}/elast-data"
       ];
 
-      virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
-      virtualisation.oci-containers.containers.tubearchivist = {
+      virtualisation.quadlet.enable = true;
 
-        image = "docker.io/bbilly1/tubearchivist:latest";
-        pull = "newer";
-
-        ports = [ "127.0.0.1:31000:8000" ];
-        volumes = [
-          "${storDir}:/youtube"
-          "${mainDir}/cache:/cache"
-        ];
-
-        environment.TZ = config.time.timeZone;
-        environmentFiles = [ config.sops.secrets."tubearchivist".path ];
-
-        dependsOn = [
-          "tubearchivist-redis"
-          "tubearchivist-es"
-        ];
-
+      virtualisation.quadlet.pods.tubearchivist.podConfig = {
+        publishPorts = [ "127.0.0.1:31000:8000" ];
       };
 
-      virtualisation.oci-containers.containers.tubearchivist-redis = {
-        image = "docker.io/redis:latest";
-        pull = "newer";
-        user = "root";
-        # volumes = [ "${mainDir}/redis-data:/data" ];
-        dependsOn = [ "tubearchivist-es" ];
-      };
+      virtualisation.quadlet.containers =
+        let
+          inherit (config.virtualisation.quadlet) networks pods;
+          pod = pods.tubearchivist.ref;
+          pull = "newer";
+          startWithPod = true;
+          environmentFiles = [ config.sops.secrets."tubearchivist".path ];
+          environments.TZ = config.time.timeZone;
+        in
+        {
 
-      # may need to run on directory
-      # chown 1000:0 -R /dir
-      virtualisation.oci-containers.containers.tubearchivist-es = {
-        image = "docker.io/bbilly1/tubearchivist-es:latest";
-        pull = "newer";
-        volumes = [ "${mainDir}/elast-data:/usr/share/elasticsearch/data" ];
-        environmentFiles = [ config.sops.secrets."tubearchivist-es".path ];
-        # ports = [ "127.0.0.1:31002:9200" ];
-      };
+          tubearchivist-main.unitConfig = rec {
+            Requires = [
+              "tubearchivist-redis.service"
+              "tubearchivist-es.service"
+            ];
+            After = Requires;
+          };
+          tubearchivist-main.containerConfig = {
+            inherit
+              pod
+              pull
+              environments
+              environmentFiles
+              startWithPod
+              ;
+            image = "docker.io/bbilly1/tubearchivist:latest";
+
+            volumes = [
+              "${storDir}:/youtube"
+              "${mainDir}/cache:/cache"
+            ];
+          };
+
+          tubearchivist-redis.unitConfig = rec {
+            Requires = [ "tubearchivist-es.service" ];
+            After = Requires;
+          };
+          tubearchivist-redis.containerConfig = {
+            inherit
+              pod
+              pull
+              environments
+              environmentFiles
+              startWithPod
+              ;
+            image = "docker.io/redis:latest";
+            # user = "root";
+          };
+
+          # may need to run on directory
+          # chown 1000:0 -R /dir
+          tubearchivist-es.containerConfig = {
+            inherit
+              pod
+              pull
+              environments
+              environmentFiles
+              startWithPod
+              ;
+            image = "docker.io/bbilly1/tubearchivist-es:latest";
+            volumes = [ "${mainDir}/elast-data:/usr/share/elasticsearch/data" ];
+          };
+
+        };
 
       services.cloudflared.tunnels."20717350-c41e-4cbc-9ece-bd9a47c3865b".ingress."ta.nniche.uk" =
         "http://localhost:31000";

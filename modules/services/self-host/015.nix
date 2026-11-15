@@ -48,7 +48,6 @@
 
           # write text file for config into nix store, read as vol in container
           # toYAML -> writeTextFile -> path as vol mount
-          # TODO write secrets
           oh15-config = pkgs.writeTextFile {
             name = "oh15-config";
             text = (
