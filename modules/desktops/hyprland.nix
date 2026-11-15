@@ -28,7 +28,7 @@
         self.homeModules.gammastep
         self.homeModules.wpaperd
         self.homeModules.walker
-        # self.homeModules.ironbar
+        self.homeModules.ironbar
         self.homeModules.swaync
         # self.homeModules.noctalia-shell
       ];

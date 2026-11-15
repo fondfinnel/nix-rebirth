@@ -53,9 +53,9 @@
           wayland.windowManager.hyprland.settings = {
             monitor = [
               # Monitors, requires specific placement or else placement is confused
-              "desc:Samsung Electric Company S22C650,preferred,-1920x0,1" # left monitor
+              "desc:Samsung Electric Company S22C650, preferred, auto-left ,1, transform, 3" # left monitor
               "desc:ViewSonic Corporation XG2701 SERIES 0x01010101,highrr,0x0,1" # primary monitor
-              "desc:Hewlett Packard HP w1907 CNN7410T6R,preferred,1920x0,1" # right monitor
+              "desc:Hewlett Packard HP w1907 CNN7410T6R,preferred,auto-right,1" # right monitor
               # other monitors to right
             ];
             exec-once =
