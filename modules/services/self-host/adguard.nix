@@ -25,17 +25,22 @@
       services.adguardhome = {
         enable = lib.mkDefault check;
         mutableSettings = lib.mkDefault false;
-        # openFirewall = true;
         settings = {
           theme = "dark";
           http.address = "0.0.0.0:3000";
           dns = {
             upstream_dns = [
               "1.1.1.1"
-              # "9.9.9.9#dns.quad9.net"
+              "94.140.14.14"
+              "9.9.9.9#dns.quad9.net"
+              "8.8.8.8"
+              "86.54.11.100"
             ];
             bind_hosts = [ "192.168.50.100" ];
-            bootstrap_dns = [ "1.1.1.1" ];
+            bootstrap_dns = [
+              "1.1.1.1"
+              "86.54.11.100"
+            ];
             # ratelimit = 0;
             cache_enabled = true;
           };
@@ -43,6 +48,7 @@
             protection_enabled = true;
             filtering_enabled = true;
           };
+          clients.ignore_querylog = [ "192.168.50.100" ];
           # The following notation uses map
           # to not have to manually create {enabled = true; url = "";} for every filter
           # This is, however, fully optional
