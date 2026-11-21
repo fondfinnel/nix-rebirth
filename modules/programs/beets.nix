@@ -20,6 +20,12 @@
         # alias for splitting cue files
         (pkgs.writeShellScriptBin "split-cue" "${pkgs.fd}/bin/fd cue --exec ${pkgs.unflac}/bin/unflac -o ${config.programs.beets.settings.directory}")
         pkgs.kid3
+
+        # plugin dependencies
+        pkgs.ffmpeg # replaygain
+        pkgs.chromaprint # chroma
+        pkgs.imagemagick # fetchart
+
       ];
 
       programs.beets =
@@ -36,10 +42,20 @@
 
           settings = lib.mkDefault {
             directory = "${mpdDir}/Library";
-            mpdIntegration = {
-              enableStats = true;
-              enableUpdate = true;
-            };
+            library = "${mpdDir}/.database/beets/database.db";
+
+            plugins = [
+              "chroma"
+              "albumtypes"
+              "mbpseudo"
+              "discogs"
+              "missing"
+              "autobpm"
+              "fetchart"
+              "replaygain"
+              "duplicates"
+              "beetcamp"
+            ];
 
             import = {
               # How does beets import music?
@@ -66,17 +82,19 @@
               bracket = "[]";
             };
 
-            # Might reorganize everything into a shallow directory for consistency, playing well with other services (Jellyfin)
-            paths = {
-              # How should filenames be written?
-              # default = "$albumartist/$album ($year)/ $disc-$track $title";
-              default = "$albumartist/$album ($year)/Disc $disc/$track - $title";
-              # comp = "Various Artists/$album [$year]/($disc - track) $title";
-              # albumtype:single = "$albumartist/$album [$year]/($disc - $track) $title";
-              # albumtype:ep = "$albumartist/$album [$year]/($disc - $track) $title";
-            };
+            paths =
+              let
+                shared = "$album ($year)/Disc $disc";
+              in
+              rec {
+                # How should filenames be written?
+                # ref:
+                #   https://beets.readthedocs.io/en/stable/plugins/albumtypes.html
+                #   https://beets.readthedocs.io/en/stable/reference/pathformat.html
+                default = "$albumartist/$atype/${shared}/$track - title";
+                comp = "Various Artists/${shared}/$track - $artist - $title";
+              };
 
-            lyrics.synced = true;
             # Maintanence, mostly defaults left alone. See beets docs for info on the rest.
             duplicates.full = true;
 
@@ -88,17 +106,28 @@
               threads = 4;
             };
 
+            # Other
+            ui.color = true;
+
+            # various plugin settings
+            chroma.auto = true;
+            lyrics = {
+              auto = true;
+              synced = true;
+              translated = "en";
+            };
+            replaygain.backend = "ffmpeg";
             missing = {
               count = true;
               total = true;
             };
-
-            # Other
-            ui.color = true;
+            fetchart.cover_format = "jpeg";
+            fetchart.max_filesize = "1MiB";
           };
         };
 
-      home.preserve.files = [ ".config/beets/library.db" ];
+      # don't want to ditch discogs auth token
+      home.preserve.directories = [ ".config/beets" ];
 
     };
 
