@@ -45,7 +45,7 @@
           containers.fireshare = {
             serviceConfig.TiemoutStartSec = "60";
             containerConfig = {
-              image = "docker.io/shaneisrael/fireshare:1.8.5";
+              image = "docker.io/shaneisrael/fireshare:latest";
               pull = "newer";
               environmentFiles = [ config.sops.secrets."fireshare".path ];
               networks = [
@@ -65,6 +65,7 @@
             };
           };
 
+          # for ./jellyfin.nix
           containers.jellyfin.containerConfig.volumes = [ "${storDir}:/fireshare" ];
         };
 
