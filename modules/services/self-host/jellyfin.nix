@@ -1,17 +1,17 @@
-# Network layout for reference
+# Network layout for jfin pod
 #
-# +-------+---------------+----------+
-# |PubPort|Service        |Scope     |
-# +-------+---------------+----------+
-# |31010  |Jellyfin       |Localhost |
-# |       |               |-> CF     |
-# +-------+---------------+----------+
-# |31012  |Wizarr         |Localhost |
-# |       |               |-> CF     |
-# +-------+---------------+----------+
-# |31013  |AudioMuse      |LAN       |
-# |       |WebGUI         |          |
-# +-------+---------------+----------+
+# +-------+---------------+----------+--------------+
+# |PubPort|Service        |Scope     |File          |
+# +-------+---------------+----------+--------------+
+# |31010  |Jellyfin       |Localhost |./jellyfin.nix|
+# |       |               |-> CF     |              |
+# +-------+---------------+----------+--------------+
+# |31111  |Tunarr WebGUI  |LAN       |./tunarr.nix  |
+# |       |               |          |              |
+# +-------+---------------+----------+--------------+
+# |31012  |Wizarr         |Localhost |./jellyfin.nix|
+# |       |               |-> CF     |              |
+# +-------+---------------+----------+--------------+
 
 {
   inputs,
@@ -44,8 +44,6 @@
 
       # module requires quadlet-nix
       imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
-
-      sops.secrets."audiomuse" = { };
 
       virtualisation.quadlet =
         let
@@ -129,54 +127,16 @@
               PUID = "1000";
               GUID = "1000";
             };
-          };
-
-          containers.audiomuse-worker = {
-            containerConfig = {
-              image = "ghcr.io/neptunehub/audiomuse-ai:latest";
-              pull = "newer";
-              pod = pods.jfin.ref;
-
-              environments = {
-                TZ = config.time.timeZone;
-                MEDIASERVER_TYPE = "jellyfin";
-                POSTGRES_DB = "am-postgresdb";
-
-                # defaults, leaving for clarity
-                POSTGRES_HOST = "localhost";
-                POSTGRES_PORT = "5432";
-                FRONTEND_PORT = "8000";
-              };
-              environmentFiles = [ config.sops.secrets."audiomuse".path ];
-            };
 
           };
 
-          containers.audiomuse-postgres.containerConfig = {
-            image = "docker.io/postgres:15-alpine";
-            pull = "newer";
-            pod = pods.jfin.ref;
+          pods.jfin.podConfig.publishPorts = [
+            # publish jellyfin
+            "127.0.0.1:31010:8096"
 
-            environments.TZ = config.time.timeZone;
-            environments.POSTGRES_DB = "am-postgresdb";
-            environments.MEDIASERVER_TYPE = "jellyfin";
-            environmentFiles = [ config.sops.secrets."audiomuse".path ];
-
-            volumes = [ "${mainDir}/audiomuse:/var/lib/postgresql/data:U" ];
-          };
-
-          pods.jfin = {
-            podConfig.publishPorts = [
-              # publish jellyfin
-              "127.0.0.1:31010:8096"
-
-              # audiomuse webgui
-              "31013:8000"
-
-              # wizarr
-              "127.0.0.1:31012:5690"
-            ];
-          };
+            # wizarr
+            "127.0.0.1:31012:5690"
+          ];
 
         };
 
